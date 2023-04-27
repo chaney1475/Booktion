@@ -1,7 +1,7 @@
 package com.project.Booktion.controller;
 
 
-import com.project.Booktion.Book;
+import com.project.Booktion.model.Book;
 import com.project.Booktion.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

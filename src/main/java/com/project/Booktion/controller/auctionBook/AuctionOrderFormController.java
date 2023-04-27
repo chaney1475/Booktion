@@ -19,7 +19,7 @@ public class AuctionOrderFormController {
     private final AuctionBookService AutionS;
 
     @GetMapping("/{bookId}")
-    public String newForm(@PathVariable String bookId,Model model){
+    public String newForm(@PathVariable String bookId, Model model){
 
         AuctionBook book = AuctionBookService.findById(bookId);
         model.addAttribute("book", book);
@@ -27,7 +27,7 @@ public class AuctionOrderFormController {
     }
 
     @PostMapping("/{bookId}")
-    public String addForm(@PathVariable String bookId,Model model){
+    public String addForm(@PathVariable String bookId, Model model){
 
         Book book = BookService.findById(bookId);
         return "auctionForm";

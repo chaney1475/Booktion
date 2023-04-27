@@ -1,6 +1,6 @@
 package com.project.Booktion.service;
 
-import com.project.Booktion.Book;
+import com.project.Booktion.model.Book;
 
 import java.util.List;
 

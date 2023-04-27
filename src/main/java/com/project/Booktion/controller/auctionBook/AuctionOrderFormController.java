@@ -1,7 +1,7 @@
 package com.project.Booktion.controller.auctionBook;
 
-import com.project.Booktion.AuctionBook;
-import com.project.Booktion.Book;
+import com.project.Booktion.model.AuctionBook;
+import com.project.Booktion.model.Book;
 import com.project.Booktion.service.AuctionBookService;
 import com.project.Booktion.service.BookService;
 import lombok.RequiredArgsConstructor;

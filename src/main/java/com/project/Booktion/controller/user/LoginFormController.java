@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/login")
 @RequiredArgsConstructor
-@SessionAttributes("User")
+@SessionAttributes("user")
 public class LoginFormController {
 
     private UserService userService;
@@ -29,7 +29,6 @@ public class LoginFormController {
         User user = userService.authenticateUser(username, password);
         if (user != null) {
             // 로그인 성공 시 모델 객체에 사용자 정보 저장
-
             model.addAttribute("user", user);
             if (forwardAction != null)
                 return "redirect:" + forwardAction;

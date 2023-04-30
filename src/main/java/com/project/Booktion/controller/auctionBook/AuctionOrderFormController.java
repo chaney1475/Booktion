@@ -1,9 +1,10 @@
 package com.project.Booktion.controller.auctionBook;
 
 import com.project.Booktion.model.AuctionBook;
-import com.project.Booktion.model.Book;
+import com.project.Booktion.model.AuctionOrder;
+import com.project.Booktion.model.AuctionOrderForm;
+import com.project.Booktion.model.User;
 import com.project.Booktion.service.AuctionBookService;
-import com.project.Booktion.service.BookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -14,36 +15,34 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/auction/order")
 @RequiredArgsConstructor
+@SessionAttributes("user")
 public class AuctionOrderFormController {
     // 경매 책 주문 폼 컨트롤러
-    private final AuctionBookService AutionS;
+    private final AuctionBookService auctionS;
+
+
+    @ModelAttribute("book")
+    public AuctionBook createBook() {
+        return new AuctionBook();
+    }
 
     @GetMapping("/{bookId}")
     public String newForm(@PathVariable String bookId, Model model){
 
-        AuctionBook book = AuctionBookService.findById(bookId);
+        AuctionBook book = auctionS.findById(bookId);
         model.addAttribute("book", book);
+
         return "auctionForm";
     }
 
     @PostMapping("/{bookId}")
-    public String addForm(@PathVariable String bookId, Model model){
+    public String submitForm(@SessionAttribute("user") User user, @PathVariable String bookId,
+                             @ModelAttribute() AuctionOrderForm form, Model model){
+        // 오류 처리 생략
+        AuctionOrder auctionOrder = auctionS.newOrder(user.getId(), bookId, form);
 
-        Book book = BookService.findById(bookId);
-        return "auctionForm";
+        return "myPage/orderList";
     }
-
-
-    @PostMapping("/{bookId}")
-    public String addForm(){
-
-        AutionS.submitOrder();
-
-        return "auctionOrder";
-    }
-
-
-
 
 
 }

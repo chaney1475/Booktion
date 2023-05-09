@@ -5,11 +5,12 @@ import com.project.Booktion.model.Book;
 import java.util.List;
 
 public class BookService {
-    public static Book findById(String bookId) {
+    public Book findById(String bookId) {
         return null;
     }
 
     public List<Book> findAll() {
         return null;
     }
+
 }

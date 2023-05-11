@@ -6,6 +6,12 @@ import com.project.Booktion.model.Order;
 import java.util.List;
 
 public class OrderService {
+    public List<Order> findAll() {
+        return null;
+    }
+
+    public List<Order> findById(String userId) {
+    }
 
     public void createOrder(Order order) {
     }
@@ -14,7 +20,4 @@ public class OrderService {
         return null;
     }
 
-    public Order findById(String orderId) {
-        return null;
-    }
 }

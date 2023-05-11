@@ -14,12 +14,11 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j // 로그 찍는 기능
 @Controller
 @RequestMapping("/auction/order")
-@RequiredArgsConstructor
 @SessionAttributes("user")
+@RequiredArgsConstructor
 public class AuctionOrderFormController {
     // 경매 책 주문 폼 컨트롤러
     private final AuctionBookService auctionS;
-
 
     @ModelAttribute("book")
     public AuctionBook createBook() {

@@ -6,6 +6,9 @@ import com.project.Booktion.model.UsedBook;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class UsedBookService {
     public UsedBook getUsedBook(String bookId) {
         return null;

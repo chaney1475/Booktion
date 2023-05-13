@@ -2,9 +2,11 @@ package com.project.Booktion.service;
 
 import com.project.Booktion.model.Book;
 import com.project.Booktion.model.Order;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class OrderService {
     public List<Order> findAll() {
         return null;

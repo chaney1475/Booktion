@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j // 로그 찍는 기능
 @Controller
-@RequestMapping("/used/regist")
+@RequestMapping("/used/registFrom")
 @RequiredArgsConstructor
 public class RegistUsedFormController {
     private final UsedBookService usedBookService;
@@ -21,7 +21,7 @@ public class RegistUsedFormController {
                           @ModelAttribute("usedBookRegist") UsedBookRegist UsedBookRegist){
         //중고책 등록 폼 생성
         UsedBookRegist.setSellerId(sellerId);
-        return "usedRegistForm";
+        return "used/registForm";
     }
 
     @PostMapping
@@ -29,10 +29,10 @@ public class RegistUsedFormController {
                           BindingResult bindingResult, Model model){
         //중고책 등록 폼 제출
         if (bindingResult.hasErrors()) {
-            return "usedRegistForm";//다시 폼으로 이동
+            return "redirect:used/registForm";//다시 폼으로 이동
         }
         UsedBook book = usedBookService.submitRegistForm(UsedBookRegist);
         model.addAttribute("UsedBookRegist", UsedBookRegist);
-        return "usedBookInfo";//등록한 책 상세페이지로 이동
+        return "used/bookInfo";//등록한 책 상세페이지로 이동
     }
 }

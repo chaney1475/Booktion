@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/baseLayout}">
+<head>
+    <meta charset="UTF-8">
+    <title>도서 정보</title>
+</head>
+<body>
+    <h1>책정보</h1>
+
+    <div th:if="${book != null}">
+        <h3>책 제목: <span th:text="${book.title}"></span></h3>
+        <h3>책 이미지: <img th:src="${book.imageUrl}" /></h3>
+        <h3>작가: <span th:text="${book.author}"></span></h3>
+        <h3>isbn: <span th:text="${book.isbn}"></span></h3>
+        <h3>가격: <span th:text="${book.price}"></span></h3>
+        <h3>책 설명: <span th:text="${book.description}"></span></h3>
+        <h3>출판사: <span th:text="${book.publisher}"></span></h3>
+        <h3>출판일: <span th:text="${book.pubDate}"></span></h3>
+        <!-- 책 정보 표시 -->
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Success</title>
+</head>
+<body>
+<h1>주문에 성공하였습니다. 주문 정보를 확인해주세요.</h1>
+<div th:if="${order}">
+  <h2>주문 정보</h2>
+  <p>주문번호 : <span th:text="${order.id}"></span></p>
+  <p>이름 : <span th:text="${order.buyerName}"></span></p>
+  <p>이메일 : <span th:text="${order.buyerEmail}"></span></p>
+  <p>주소 : <span th:text="${order.shippingAddress}"></span>
+  <span th:text="${order.zipCode"></span></p>
+</div>
+<div th:if="${not order}">
+  <h2>주문 정보가 없습니다.</h2>
+</div>
+</body>
+</html>

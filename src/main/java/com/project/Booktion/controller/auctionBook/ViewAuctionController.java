@@ -32,20 +32,20 @@ public class ViewAuctionController {
         model.addAttribute("book", book);
         List<Auction> auctions = auctionS.getAuction();
         model.addAttribute("auctions", auctions);
-        return "/auction/books/{bookId}";
+        return "/auction/book";
     }
 
     @GetMapping("/selling") // userId 읽고 user가 경매중인 책
     public String SellingList(@ModelAttribute User user, Model model){
         List<AuctionBook> sellingBooks = auctionS.findSellingAuctionById(user.getId());
         model.addAttribute("sellingBooks", sellingBooks);
-        return "/auction/books/selling";
+        return "/myPage/selling";
     }
     @GetMapping("/sold") //  userId 읽고 user가 경매 완료 책
     public String SoldList(@ModelAttribute User user, Model model){
         List<AuctionBook> soldBooks = auctionS.findSoldAuctionById(user.getId());
         model.addAttribute("sellingBooks", soldBooks);
-        return "/auction/books/sold";
+        return "/myPage/sold";
     }
 
 }

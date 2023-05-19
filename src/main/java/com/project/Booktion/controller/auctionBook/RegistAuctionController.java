@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j // 로그 찍는 기능
 @Controller
-@RequestMapping("/auction/books")
+@RequestMapping("/auction")
 @RequiredArgsConstructor
 public class RegistAuctionController {
 

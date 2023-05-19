@@ -31,7 +31,7 @@ public class AuctionOrderFormController {
         AuctionBook book = auctionS.findById(bookId);
         model.addAttribute("book", book);
 
-        return "auctionForm";
+        return "auction/orderForm";
     }
 
     @PostMapping("/{bookId}")
@@ -40,7 +40,7 @@ public class AuctionOrderFormController {
         // 오류 처리 생략
         AuctionOrder auctionOrder = auctionS.newOrder(user.getId(), bookId, form);
 
-        return "myPage/orderList";
+        return "redirect:UserController/orderList";
     }
 
 

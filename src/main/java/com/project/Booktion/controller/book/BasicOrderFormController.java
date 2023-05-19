@@ -16,7 +16,7 @@ import java.util.List;
 
 @Slf4j //로그 찍는 기능
 @Controller
-@RequestMapping("/order")
+@RequestMapping("/book/order")
 @RequiredArgsConstructor
 @SessionAttributes("order")
 public class BasicOrderFormController {
@@ -42,38 +42,39 @@ public class BasicOrderFormController {
             }
             model.addAttribute("cartItems", cartItems);
         }
-        model.addAttribute("bookOrder", new OrderForm());
+        model.addAttribute("orderForm", new OrderForm());
         return "orderForm";
     }
 
-    @PostMapping("/{bookId}") // 폼 제출
-    public String submitOrderForm(@PathVariable String bookId, @ModelAttribute("bookOrder") OrderForm orderForm, BindingResult result, Model model) {
+    @PostMapping("/{bookId}") //폼 제출
+    public String submitOrderForm(@PathVariable String bookId, @ModelAttribute("orderForm") OrderForm orderForm, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("book", bookService.findById(bookId));
             return "orderForm";
         }
 
-        Order order = new Order();
-        orderForm.setBook(bookService.findById(bookId));
-        orderService.createOrder(order);
-
-        if (orderForm != null)
-            return "redirect:/order/success?id=" + order.getId();
-        else {
-            model.addAttribute("error", "주문 제출에 실패했습니다. 다시 시도해주세요.");
+        Book book = bookService.findById(bookId);
+        if (book == null) {
+            model.addAttribute("error", "존재하지 않는 책입니다.");
             return "orderForm";
         }
+
+        Order order = new Order();
+        order.setBook(book);
+        orderService.createOrder(order);
+
+        return "redirect:/book/order/success?id=" + order.getId();
     }
 
-    @GetMapping("/success") //폼 제출 성공
+    @GetMapping("/success")
     public String showOrderSuccess(@RequestParam("id") String orderId, Model model) {
         Order order = orderService.findById(orderId);
+        if (order == null) {
+            model.addAttribute("error", "주문 정보를 찾을 수 없습니다.");
+            return "orderForm";
+        }
         model.addAttribute("order", order);
         return "orderSuccess";
     }
-
-
-
-
 
 }

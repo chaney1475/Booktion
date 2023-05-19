@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Book Information</title>
+</head>
+<body>
+<h1>Book Information</h1>
+<div th:if="${book}">
+  <h2 th:text="${book.title}"></h2>
+  <p th:text="${book.author}" th:text="${book.publisher}" th:text="${book.pubDate}"></p>
+  <p th:text="${book.isbn}"></p>
+  <hr>
+  <p th:text="${book.imageUrl}"></p>
+  <table>
+    <tr>
+      <th>가격</th>
+      <th>수량</th>
+      <th>배송비</th>
+    </tr>
+    <tr>
+      <td th:text="${book.price}"></td>
+      <td>
+        <input type="number" min="0" th:value="${book.quantity}">
+      </td>
+      <td th:text="${book.delivery fee}"></td>
+    </tr>
+  </table>
+  <form th:action="@{/book/order/form}" method="get">
+    <input type="hidden" name="bookId" th:value="${book.id}">
+    <button type="submit">바로구매</button>
+  </form>
+  <form th:action="@{/cart/add}" method="post">
+    <input type="hidden" name="bookId" th:value="${book.id}">
+    <button type="submit">장바구니</button>
+  </form>
+</div>
+  <hr>
+  <h3>책 소개</h3>
+  <p th:text="${book.description}"></p>
+  <hr>
+  <h3>구매 후기</h3>
+  <form th:action="@{/book/review}" method="post">
+    <input type="hidden" name="bookId" th:value="${book.id}">
+    <label for="reviewerName">Your Name:</label>
+    <input type="text" id="reviewerName" name="reviewerName">
+    <label for="reviewContent"></label>
+    <textarea id="reviewContent" name="reviewContent"></textarea>
+    <button type="submit">등록</button>
+  </form>
+  <hr>
+  <div th:if="${book.reviews}">
+    <ul>
+      <li th:each="review : ${book.reviews}">
+        <p th:text="${review.reviewerName}"></p>
+        <p th:text="${review.reviewContent}"></p>
+      </li>
+    </ul>
+  </div>
+  <div th:if="${not book.reviews}">
+    <p>구매 후기가 아직 없습니다.</p>
+  </div>
+<div th:if="${not book}">
+  <h2>존재하지 않는 책입니다.</h2>
+</div>
+</body>
+</html>

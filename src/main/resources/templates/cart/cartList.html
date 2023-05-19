@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/baseLayout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart List</title>
+</head>
+<body>
+    <h1>주문내역</h1>
+    <table>
+        <tr>
+            <th>제품명</th>
+            <th>수량</th>
+            <th>가격</th>
+        </tr>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.title"}></td>
+            <td th:text="${order.quantity"}></td>
+            <td th:text="${order.price"}></td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Review Form</title>
+</head>
+<body>
+<h1>리뷰작성</h1>
+<form action="/review" method="post">
+  <div>
+    <label for="title">제목:</label>
+    <input type="text" id="title" name="title" required>
+  </div>
+  <div>
+    <label for="content">내용:</label>
+    <textarea id="content" name="content" required></textarea>
+  </div>
+  <button type="submit">제출하기</button>
+</form>
+</body>
+</html>

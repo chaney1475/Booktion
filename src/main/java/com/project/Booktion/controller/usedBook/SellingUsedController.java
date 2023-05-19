@@ -18,11 +18,11 @@ import java.util.List;
 public class SellingUsedController {
     private final UsedBookService usedBookService;
 
-    @GetMapping("/{userId}/used/selling")
+    @GetMapping("/myPage/used/selling")
     public String getSellingUsedBooks(@PathVariable("memberId") String memberId, Model model) {
         //판매중인 중고책 목록을 가져온다.
         List<UsedBook> sellingUsedBooks = usedBookService.getSellingUsedBooks(memberId);
         model.addAttribute("sellingUsedBooks", sellingUsedBooks);
-        return "sellingUsedBookList";
+        return "redirect:myPage/used/selling";
     }
 }

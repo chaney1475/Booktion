@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/baseLayout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>판매 완료된 중고 도서</h1>
+    <div align="center">
+        <p>
+            <b>판매 완료 중고 도서 목록</b>
+        </p>
+        <table>
+            <tr>
+                <td><b>책 제목</b></td>
+                <td><b>날짜</b></td>
+                <td><b>가격</b></td>
+                <td><b>배송사</b></td>
+            </tr>
+            <tr th:each="sold : ${soldUsedBooks}">
+                <td th:text="${sold.title}"></td>
+                <td th:text="${#dates.format(sold.orderDate, 'yyyy/MM/dd hh:mm:ss')}"></td>
+                <td th:text="${sold.price}"></td>
+                <td th:text="${sold.company}"></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

@@ -9,9 +9,24 @@
 
 <body>
 <section layout:fragment="content">
-    <h1>Home Page</h1>
-    <p>Welcome to my app!</p>
+    <form action="/search" method="post">
+        <div>
+            <select id="type" name="type">
+                <option value="book">일반도서</option>
+                <option value="used">중고 책</option>
+                <option value="auction">경매 책</option>
+            </select>
+            <input type="text" id="query" name="query" required>
+            <button type="submit">Search</button>
+        </div>
+        <div class="book-list">
+            <div th:each="book : ${bookList}" class="book-item">
+                <div class="book-title" th:text="${book.title}"></div>
+                <div class="book-author" th:text="${book.author}"></div>
+            </div>
+        </div>
+    </form>
+    <h1>BOOKTION</h1>
 </section>
 </body>
-
 </html>

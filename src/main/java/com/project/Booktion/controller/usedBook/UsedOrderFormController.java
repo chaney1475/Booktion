@@ -1,5 +1,6 @@
 package com.project.Booktion.controller.usedBook;
 
+import com.project.Booktion.model.User;
 import com.project.Booktion.service.UsedBookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,23 +11,24 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/used/order")
 @RequiredArgsConstructor
-public class UsedOrderFromController {
+public class UsedOrderFormController {
     private final UsedBookService usedBookService;
 
     @GetMapping("/{bookId}")
-    public String newForm(@PathVariable String bookId,
+    public String newForm(@PathVariable int bookId,
                           @ModelAttribute("usedBookOrder") UsedBookOrder usedBookOrder){
         //중고 주문폼 생성
-        //고민이 있음 여기서 주문하는 user의 정보를 어떻게 불러오지?
-        //usedBookOrder.setBuyerId();
-        return "usedForm";
+        usedBookOrder.setUsedBookId(bookId);
+
+        return "used/orderForm";
     }
 
     @PostMapping("/{bookId}")
-    public String addForm(@PathVariable String bookId,
+    public String addForm(@PathVariable int bookId,
+                          @SessionAttribute("user") User user,
                           @ModelAttribute("usedBookOrder") UsedBookOrder usedBookOrder){
         //중고 주문폼 제출
-        usedBookService.submitOrderForm(usedBookOrder);
-        return "";//주문완료 화면이 어디로 가는지?
+        usedBookService.submitOrderForm(user.getId(), usedBookOrder);
+        return "myPage/orderList";
     }
 }

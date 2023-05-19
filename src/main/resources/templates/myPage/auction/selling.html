@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Auctions</title>
+</head>
+<body>
+<h1>Auctions</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Price</th>
+        <th>Details</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="auctionBook : ${auctionBooks}">
+        <td th:text="${auctionBook.title}"></td>
+        <td th:text="${auctionBook.author}"></td>
+        <td th:text="${auctionBook.price}"></td>
+        <td>
+            <a th:href="@{/auction/books/{bookId}(bookId=${auctionBook.bookId})}">Details</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

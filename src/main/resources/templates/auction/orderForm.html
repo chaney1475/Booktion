@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Form</title>
+</head>
+<body>
+<h1>Order Form</h1>
+
+<form th:action="@{/order}" method="post">
+    <!-- 배송지 -->
+    <h2>Shipping Address</h2>
+    <input type="radio" name="shippingOption" value="same" checked="checked"> Same as Customer Address<br>
+    <input type="radio" name="shippingOption" value="new"> New Address<br>
+
+    <div th:if="${shippingOption == 'new'}">
+        <label for="shippingAddress1">Address Line 1:</label>
+        <input type="text" id="shippingAddress1" name="shippingAddress1"><br>
+
+        <label for="shippingAddress2">Address Line 2:</label>
+        <input type="text" id="shippingAddress2" name="shippingAddress2"><br>
+
+        <label for="zipcode">Zipcode:</label>
+        <input type="text" id="zipcode" name="zipcode"><br>
+    </div>
+
+    <!-- 결제 방법 -->
+    <h2>Payment</h2>
+    <select name="payment" id="payment">
+        <option value="cash">Cash</option>
+        <option value="creditCard">Credit Card</option>
+        <option value="bankTransfer">Bank Transfer</option>
+    </select><br>
+
+    <div th:if="${payment == 'creditCard'}">
+        <!-- 카드 선택 -->
+        <h3>Select Card</h3>
+        <select name="card" id="card">
+            <option value="card1">Card 1</option>
+            <option value="card2">Card 2</option>
+            <option value="card3">Card 3</option>
+            <option value="card4">Card 4</option>
+        </select><br>
+    </div>
+
+    <!-- 배송 메시지 -->
+    <h2>Shipping Message</h2>
+    <textarea name="shippingMessage" id="shippingMessage" rows="4" cols="50"></textarea><br>
+
+    <input type="submit" value="Place Order">
+</form>
+</body>
+</html>

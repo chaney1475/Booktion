@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Slf4j // 로그 찍는 기능
 @Controller
-@RequestMapping("/used")
+@RequestMapping("/used/bookInfo")
 @RequiredArgsConstructor
 public class ViewUsedController {
     private final UsedBookService usedBookService;
@@ -24,6 +24,6 @@ public class ViewUsedController {
             return "noBook"; //상품이 없다는 페이지로 이동
         }
         model.addAttribute("book", book);
-        return "usedBookInfo";
+        return "used/bookInfo";
     }
 }

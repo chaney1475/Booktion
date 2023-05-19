@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/baseLayout}">
+<head>
+    <meta charset="UTF-8">
+    <title>중고 도서 주문</title>
+</head>
+<body>
+    <h1>Used Book Order Form</h1>
+
+    <form th:action="@{/usedBook/UsedOrderFormController}" th:method="post" th:object="${usedBookRegist}">
+        <input type="hidden" th:field="*{sellerId}" /> <!-- sellerId는 hidden 필드로 전달 -->
+
+        <!-- 주문정보 정보 입력 필드들 -->
+        <label for="address">주소:</label>
+        <input type="text" id="address" th:field="*{address}" />
+        <br/>
+        <label for="payment">결제방식:</label>
+        <input type="String" id="payment" th:field="*{payment}" />
+        <br/>
+        <label for="shipMessage">배송메세지:</label>
+        <input type="String" id="shipMessage" th:field="*{shipMessage}" />
+        <br/>
+        <label for="company">배송사:</label>
+        <input type="company" id="company" th:field="*{company}" />
+        <br/>
+
+        <!-- Submit 버튼 -->
+        <button type="submit">Submit</button>
+    </form>
+
+</body>
+</html>

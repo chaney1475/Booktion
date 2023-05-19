@@ -5,10 +5,10 @@ import com.project.Booktion.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/main/review")
@@ -16,21 +16,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class reviewController {
     private final ReviewService reviewService;
 
+    private List<Review> reviewList = new ArrayList<>();
     @GetMapping("/review/write") // 리뷰 폼 쓰기
-    public String reviewForm(){
-        return "reviewForm";
+    public String reviewForm(@ModelAttribute Review review){
+        reviewList.add(review);
+        return "redirect:/review";
     }
 
-    @PostMapping("/review/writeComplete") // 리뷰 폼 제출
-    public String reviewWrite(Review review, Model model) {
+    @PostMapping("/review") // 리뷰 폼 제출
+    public String reviewWrite(@ModelAttribute Review review) {
 
         if(review == null) {
             return "reviewForm";
         }
         reviewService.write(review);
-        model.addAttribute("message", "글작성이 완료되었습니다.");
-
         return "review";
     }
 
+        @GetMapping("/reviewList")
+        public String showReviewList(Model model) {
+            model.addAttribute("reviewList", reviewList);
+            return "reviewList";
+        }
 }

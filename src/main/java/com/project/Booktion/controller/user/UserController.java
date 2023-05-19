@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/user")
 @RequiredArgsConstructor
-public class UserController {
+public class UserController { // 내 정보 보기
     private final UserService userService;
 
     @GetMapping("/{userId}")

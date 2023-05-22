@@ -23,6 +23,6 @@ public class SoldUsedController {
         //판매완료된 중고책 목록을 가져온다.
         List<UsedOrder> soldUsedBooks = usedBookService.getSoldUsedBooks(memberId);
         model.addAttribute("soldUsedBooks", soldUsedBooks);
-        return "redirect:myPage/used/sold";
+        return "myPage/used/sold";
     }
 }

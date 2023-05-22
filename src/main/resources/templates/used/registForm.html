@@ -20,7 +20,7 @@
     <br>
     <br>
     <!-- 판매 정보 입력-->
-    <form th:action="@{/used/registFrom}" th:method="post" th:object="${usedBookRegist}">
+    <form th:action="@{/used/registFrom/submit}" th:method="post" th:object="${usedBookRegist}">
         <input type="hidden" th:field="*{sellerId}" /> <!-- sellerId는 hidden 필드로 전달 -->
 
         <!-- 중고책 정보 입력 필드들 -->

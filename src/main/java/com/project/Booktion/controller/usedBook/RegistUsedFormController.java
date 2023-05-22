@@ -18,13 +18,19 @@ public class RegistUsedFormController {
 
     @GetMapping
     public String newForm(@RequestParam int sellerId,
-                          @ModelAttribute("usedBookRegist") UsedBookRegist UsedBookRegist){
+                          @ModelAttribute("usedBookRegist") UsedBookRegist usedBookRegist){
         //중고책 등록 폼 생성
-        UsedBookRegist.setSellerId(sellerId);
+        usedBookRegist.setSellerId(sellerId);
         return "used/registForm";
     }
 
     @PostMapping
+    public String secondForm(@ModelAttribute("usedBookRegist") UsedBookRegist UsedBookRegist){
+        //등록할 책 지정완료
+        return "used/registForm";//등록한 책 상세페이지로 이동
+    }
+
+    @RequestMapping("/submit")
     public String addForm(@ModelAttribute("usedBookRegist") UsedBookRegist UsedBookRegist,
                           BindingResult bindingResult, Model model){
         //중고책 등록 폼 제출
@@ -32,7 +38,7 @@ public class RegistUsedFormController {
             return "redirect:used/registForm";//다시 폼으로 이동
         }
         UsedBook book = usedBookService.submitRegistForm(UsedBookRegist);
-        model.addAttribute("UsedBookRegist", UsedBookRegist);
+        model.addAttribute("UsedBookRegist", UsedBookRegist); //이거 필요한지 좀 고민 해봐야할듯
         return "used/bookInfo";//등록한 책 상세페이지로 이동
     }
 }

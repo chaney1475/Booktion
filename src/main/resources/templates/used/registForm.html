@@ -8,20 +8,38 @@
 </head>
 <body>
     <h1>Regist Used Book Form</h1>
-
-    <form th:action="@{/used/registFrom}" th:method="post" th:object="${usedBookRegist}">
+    <!-- 판매할 책 정보 입력 영역 -->
+    <form th:action="@{/search/usedForm}" th:method="get" th:object="${keyword}">
+        <select id="type">
+            <option value="title">제목</option>
+            <option value="isbn">isbn</option>
+        </select>
+        <input type="text" id="keyword"/>
+        <input type="submit" value="검색" />
+    </form>
+    <br>
+    <br>
+    <!-- 판매 정보 입력-->
+    <form th:action="@{/used/registFrom/submit}" th:method="post" th:object="${usedBookRegist}">
         <input type="hidden" th:field="*{sellerId}" /> <!-- sellerId는 hidden 필드로 전달 -->
 
         <!-- 중고책 정보 입력 필드들 -->
         <label for="isbn">ISBN:</label>
-        <input type="text" id="isbn" th:field="*{isbn}" />
-        <button type="button" th:onclick="'window.location.href=\'' + @{/search/isbn} + '\''">검색</button> <!-- 책 검색 버튼 추가 -->
+        <input type="text" id="isbn" th:field="*{isbn}" th:value="${usedBookRegist.isbn}" readonly/>
+        <br/>
+        <label for="title">제목:</label>
+        <input type="text" id="title" th:field="*{title}" th:value="${usedBookRegist.title}" readonly/>
         <br/>
         <label for="price">가격:</label>
         <input type="number" id="price" th:field="*{price}" />
         <br/>
         <label for="company">배송사:</label>
-        <input type="company" id="company" th:field="*{company}" />
+        <select id="company" th:field="*{company}">
+            <option value="CJ">CJ택배</option>
+            <option value="EPOST">우체국택배</option>
+            <option value="CVS">편의점택배</option>
+            <option value="ETC">기타</option>
+        </select>
         <br/>
 
         <!-- Submit 버튼 -->

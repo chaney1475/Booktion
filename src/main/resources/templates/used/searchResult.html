@@ -4,17 +4,15 @@
       layout:decorate="~{layouts/baseLayout}">
 <head>
   <meta charset="UTF-8">
-  <title>isbn 검색 결과</title>
+  <title>검색 결과</title>
 </head>
 <body>
-  <h1>isbn 검색 결과</h1>
+  <h1>검색 결과</h1>
   <div>
-    <p>
-      <b>검색 결과</b>
-    </p>
     <table>
       <tr>
         <td><b>책 제목</b></td>
+        <td><b>isbn</b></td>
         <td><b>이미지</b></td>
         <td><b>저자</b></td>
         <td><b>출판사</b></td>
@@ -26,11 +24,17 @@
             <span th:text="${book.title}"></span>
           </a>
         </td>
+        <td th:text="${book.isbn}"></td>
+        <td>
+          <img th:src="${book.img}" alt="Book Image" />
+        </td>
         <td th:text="${book.author}"></td>
         <td th:text="${book.publisher}"></td>
         <td>
-          <form th:action="@{/used/select}" th:method="post">
-            <input type="hidden" name="bookId" th:value="${book.id}" /> <!-- 선택된 책의 ID를 숨은 필드로 전송 -->
+          <form th:action="@{/used/registFrom}" th:method="post" th:object="${usedBookRegist}">
+            <input type="hidden" th:field="*{sellerId}" />
+            <input type="hidden" th:field=*{book.isbn}" />
+            <input type="hidden" th:field=*{book.title}" /><!-- 선택된 책의 ID를 숨은 필드로 전송 -->
             <button type="submit">선택</button> <!-- 선택 버튼 -->
           </form>
         </td>

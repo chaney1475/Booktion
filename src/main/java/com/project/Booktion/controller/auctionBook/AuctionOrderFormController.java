@@ -8,8 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Slf4j // 로그 찍는 기능
 @Controller
 @RequestMapping("/auction/order")

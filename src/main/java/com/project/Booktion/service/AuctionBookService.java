@@ -3,7 +3,7 @@ package com.project.Booktion.service;
 import com.project.Booktion.model.Bid;
 import com.project.Booktion.model.AuctionBook;
 import com.project.Booktion.model.AuctionOrder;
-import com.project.Booktion.model.AuctionOrderForm;
+import com.project.Booktion.controller.auctionBook.AuctionOrderForm;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

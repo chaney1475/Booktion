@@ -1,15 +1,14 @@
 package com.project.Booktion.controller.auctionBook;
 
-import com.project.Booktion.model.AuctionBook;
-import com.project.Booktion.model.AuctionOrder;
-import com.project.Booktion.model.AuctionOrderForm;
-import com.project.Booktion.model.User;
+import com.project.Booktion.model.*;
 import com.project.Booktion.service.AuctionBookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j // 로그 찍는 기능
 @Controller

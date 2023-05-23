@@ -1,0 +1,23 @@
+spring:
+  jpa:
+    defer-datasource-initialization : 'true'
+    show-sql : 'true'
+  datasource:         # Oracle dataSource
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@dblab_high?TNS_ADMIN=C:/Oracle/Wallet_DBLab    # use Oracle Wallet
+    username: ss230205
+    password: Spring_100259
+    hikari:          # HikariCP settings
+      minimumIdle: 5
+      maximumPoolSize: 20
+      idleTimeout: 30000
+      connectionTimeout: 30000
+      maxLifetime: 2000000
+      poolName: HikariPool
+
+  devtools:
+    livereload:
+      enabled: 'true'
+
+server:
+  port: 8080

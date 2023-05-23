@@ -1,5 +1,7 @@
 package com.project.Booktion.controller.usedBook;
 
+import com.project.Booktion.model.Address;
+
 import java.util.Date;
 
 public class UsedBookOrder {
@@ -11,8 +13,7 @@ public class UsedBookOrder {
     private String payment; //결제 방식
     private String company; //택배 배송사
     private String shipMessage; //배송 메세지
-
-    //private String address1; //이거 과제처럼 수정하는게 어떤지?
+    private Address address;
     public int getUsedBookId() {
         return usedBookId;
     }
@@ -69,6 +70,14 @@ public class UsedBookOrder {
         this.shipMessage = shipMessage;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
     @Override
     public String toString() {
         return "UsedBookOrder{" +
@@ -79,6 +88,7 @@ public class UsedBookOrder {
                 ", payment='" + payment + '\'' +
                 ", company='" + company + '\'' +
                 ", shipMessage='" + shipMessage + '\'' +
+                ", address=" + address +
                 '}';
     }
 }

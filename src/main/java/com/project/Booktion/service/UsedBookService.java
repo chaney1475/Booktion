@@ -32,4 +32,8 @@ public class UsedBookService {
 
     public UsedBook findById(String bookId) { return null;
     }
+
+    public List<UsedBook> getUsedBookList() {
+        return null;
+    }
 }

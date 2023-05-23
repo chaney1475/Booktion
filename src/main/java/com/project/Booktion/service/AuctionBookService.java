@@ -1,6 +1,6 @@
 package com.project.Booktion.service;
 
-import com.project.Booktion.model.Auction;
+import com.project.Booktion.model.Bid;
 import com.project.Booktion.model.AuctionBook;
 import com.project.Booktion.model.AuctionOrder;
 import com.project.Booktion.model.AuctionOrderForm;
@@ -42,8 +42,8 @@ public class AuctionBookService {
         return soldBooks;
     }
 
-    public List<Auction> getAuction() {
-        List<Auction> auctions = new ArrayList<>();
-        return auctions;
+    public List<Bid> getAuction() {
+        List<Bid> bids = new ArrayList<>();
+        return bids;
     }
 }

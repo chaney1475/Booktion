@@ -1,6 +1,6 @@
 package com.project.Booktion.controller.auctionBook;
 
-import com.project.Booktion.model.Auction;
+import com.project.Booktion.model.Bid;
 import com.project.Booktion.model.AuctionBook;
 import com.project.Booktion.model.User;
 import com.project.Booktion.service.AuctionBookService;
@@ -30,8 +30,8 @@ public class ViewAuctionController {
     public String viewBook(@PathVariable String bookId, Model model){
         AuctionBook book = auctionS.findById(bookId);
         model.addAttribute("book", book);
-        List<Auction> auctions = auctionS.getAuction();
-        model.addAttribute("auctions", auctions);
+        List<Bid> bids = auctionS.getAuction();
+        model.addAttribute("auctions", bids);
         return "/auction/book";
     }
 

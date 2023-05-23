@@ -21,7 +21,7 @@
     <h2>Bidding Information</h2>
     <h3>Bid Prices</h3>
     <ul>
-        <li th:each="auction : ${auctions}">
+        <li th:each="auction : ${bids}">
             <span th:text="${auction.price}"></span>
         </li>
     </ul>

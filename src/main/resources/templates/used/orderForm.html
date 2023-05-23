@@ -9,25 +9,68 @@
 <body>
     <h1>Used Book Order Form</h1>
 
-    <form th:action="@{/usedBook/UsedOrderFormController}" th:method="post" th:object="${usedBookRegist}">
-        <input type="hidden" th:field="*{sellerId}" /> <!-- sellerId는 hidden 필드로 전달 -->
+    <form th:action="@{/used/order/{bookId}}" th:method="post">
+        <!-- 배송지 -->
+        <h2>Shipping Address</h2>
+        <input type="radio" name="shippingOption" value="same" > Same as Customer Address<br>
+        <input type="radio" name="shippingOption" value="new" checked="checked"> New Address<br>
 
-        <!-- 주문정보 정보 입력 필드들 -->
-        <label for="address">주소:</label>
-        <input type="text" id="address" th:field="*{address}" />
-        <br/>
-        <label for="payment">결제방식:</label>
-        <input type="String" id="payment" th:field="*{payment}" />
-        <br/>
-        <label for="shipMessage">배송메세지:</label>
-        <input type="String" id="shipMessage" th:field="*{shipMessage}" />
-        <br/>
-        <label for="company">배송사:</label>
-        <input type="company" id="company" th:field="*{company}" />
-        <br/>
+        <div th:id="shippingAddressFields">
+            <label for="shippingAddress1">Address Line 1:</label>
+            <input type="text" id="shippingAddress1" name="shippingAddress1"><br>
 
-        <!-- Submit 버튼 -->
-        <button type="submit">Submit</button>
+            <label for="shippingAddress2">Address Line 2:</label>
+            <input type="text" id="shippingAddress2" name="shippingAddress2"><br>
+
+            <label for="zipcode">Zipcode:</label>
+            <input type="text" id="zipcode" name="zipcode"><br>
+        </div>
+
+        <script th:inline="javascript">
+     /* 자바스크립트 코드 */
+    var shippingOptionInput = document.querySelectorAll('input[name="shippingOption"]');
+    var shippingAddressFields = document.getElementById('shippingAddressFields');
+
+    function toggleShippingAddressFields() {
+        if (shippingOptionInput[1].checked) {
+            shippingAddressFields.style.display = 'block';
+        } else {
+            shippingAddressFields.style.display = 'none';
+        }
+    }
+
+    for (var i = 0; i < shippingOptionInput.length; i++) {
+        shippingOptionInput[i].addEventListener('change', toggleShippingAddressFields);
+    }
+
+    toggleShippingAddressFields();
+</script>
+
+
+        <!-- 결제 방법 -->
+        <h2>Payment</h2>
+        <select name="payment" id="payment">
+            <option value="cash">Cash</option>
+            <option value="creditCard">Credit Card</option>
+            <option value="bankTransfer">Bank Transfer</option>
+        </select><br>
+
+        <div th:if="${payment == 'creditCard'}">
+            <!-- 카드 선택 -->
+            <h3>Select Card</h3>
+            <select name="card" id="card">
+                <option value="card1">Card 1</option>
+                <option value="card2">Card 2</option>
+                <option value="card3">Card 3</option>
+                <option value="card4">Card 4</option>
+            </select><br>
+        </div>
+
+        <!-- 배송 메시지 -->
+        <h2>Shipping Message</h2>
+        <textarea name="shippingMessage" id="shippingMessage" rows="4" cols="50"></textarea><br>
+
+        <input type="submit" value="Place Order">
     </form>
 
 </body>

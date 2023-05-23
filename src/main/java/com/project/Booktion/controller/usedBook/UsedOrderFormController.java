@@ -1,5 +1,6 @@
 package com.project.Booktion.controller.usedBook;
 
+import com.project.Booktion.model.UsedBook;
 import com.project.Booktion.model.User;
 import com.project.Booktion.service.UsedBookService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,11 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UsedOrderFormController {
     private final UsedBookService usedBookService;
+
+    @ModelAttribute("usedBookOrder")
+    public UsedBookOrder formData(){
+        return new UsedBookOrder();
+    }
 
     @GetMapping("/{bookId}")
     public String newForm(@PathVariable int bookId,

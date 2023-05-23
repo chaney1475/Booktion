@@ -7,13 +7,13 @@
 <body>
 <h1>Order Form</h1>
 
-<form th:action="@{/order}" method="post">
+<form th:action="@{/auction/order/{bookId}}" method="post">
     <!-- 배송지 -->
     <h2>Shipping Address</h2>
-    <input type="radio" name="shippingOption" value="same" checked="checked"> Same as Customer Address<br>
-    <input type="radio" name="shippingOption" value="new"> New Address<br>
+    <input type="radio" name="shippingOption" value="same" > Same as Customer Address<br>
+    <input type="radio" name="shippingOption" value="new" checked="checked"> New Address<br>
 
-    <div th:if="${shippingOption == 'new'}">
+    <div th:id="shippingAddressFields">
         <label for="shippingAddress1">Address Line 1:</label>
         <input type="text" id="shippingAddress1" name="shippingAddress1"><br>
 
@@ -23,6 +23,27 @@
         <label for="zipcode">Zipcode:</label>
         <input type="text" id="zipcode" name="zipcode"><br>
     </div>
+
+    <script th:inline="javascript">
+     /* 자바스크립트 코드 */
+    var shippingOptionInput = document.querySelectorAll('input[name="shippingOption"]');
+    var shippingAddressFields = document.getElementById('shippingAddressFields');
+
+    function toggleShippingAddressFields() {
+        if (shippingOptionInput[1].checked) {
+            shippingAddressFields.style.display = 'block';
+        } else {
+            shippingAddressFields.style.display = 'none';
+        }
+    }
+
+    for (var i = 0; i < shippingOptionInput.length; i++) {
+        shippingOptionInput[i].addEventListener('change', toggleShippingAddressFields);
+    }
+
+    toggleShippingAddressFields();
+</script>
+
 
     <!-- 결제 방법 -->
     <h2>Payment</h2>

@@ -12,4 +12,5 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @RequiredArgsConstructor
 @SessionAttributes("user")
 public class SoldAuctionController {
+
 }

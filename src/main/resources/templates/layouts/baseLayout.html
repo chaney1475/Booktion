@@ -1,18 +1,29 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<head>
-    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">My App</title>
-    <link rel="stylesheet" th:href="@{/css/main.css}" />
-</head>
+<!-- 공통 헤드-->
+<th:block th:replace="/layouts/header :: headFragment"></th:block>
 
-<body>
-<header th:replace="fragments/header :: header" />
-<div layout:fragment="content"></div>
-<footer th:replace="fragments/footer :: footer" />
+<body id="page-top">
+<div id="wrapper">
+    <!-- 사이드바 -->
+    <!--
+    <th:block th:replace="/layout/fragments/sidebar :: sidebarFragment"></th:block>
+    -->
 
-<script th:src="@{/js/main.js}" ></script>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <!-- 상단바-->
+            <th:block th:replace="/layouts/top :: topbarFragment"></th:block>
+
+            <!-- 본문-->
+            <th:block layout:fragment="content"></th:block>
+        </div>
+
+        <!-- 공통 하단-->
+        <th:block th:replace="/layouts/footer :: footerFragment"></th:block>
+    </div>
+</div>
+
 </body>
-
 </html>

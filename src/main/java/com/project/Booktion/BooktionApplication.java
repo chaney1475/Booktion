@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 import org.springframework.context.annotation.ComponentScan;
 
 @ComponentScan(basePackages = "com.project.Booktion")
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
+@SpringBootApplication
 public class BooktionApplication {
 
 	public static void main(String[] args) {

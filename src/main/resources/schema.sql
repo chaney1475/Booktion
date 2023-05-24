@@ -1,15 +1,15 @@
-DROP TABLE IF EXISTS used_book_order;
-DROP TABLE IF EXISTS auction_book_order;
-DROP TABLE IF EXISTS order_item;
-DROP TABLE IF EXISTS cart_item;
-DROP TABLE IF EXISTS cart;
-DROP TABLE IF EXISTS review;
-DROP TABLE IF EXISTS "order";
-DROP TABLE IF EXISTS bid;
-DROP TABLE IF EXISTS auction_book;
-DROP TABLE IF EXISTS used_book;
-DROP TABLE IF EXISTS book;
-DROP TABLE IF EXISTS "user";
+DROP TABLE used_book_order;
+DROP TABLE auction_book_order;
+DROP TABLE order_item;
+DROP TABLE cart_item;
+DROP TABLE cart;
+DROP TABLE review;
+DROP TABLE "order";
+DROP TABLE bid;
+DROP TABLE auction_book;
+DROP TABLE used_book;
+DROP TABLE book;
+DROP TABLE "user";
 
 CREATE TABLE auction_book
 (

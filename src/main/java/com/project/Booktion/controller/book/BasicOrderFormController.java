@@ -60,10 +60,11 @@ public class BasicOrderFormController {
         }
 
         Order order = new Order();
-        order.setBook(book);
+       // order.setBook(book);
         orderService.createOrder(order);
 
-        return "redirect:/book/order/success?id=" + order.getId();
+        //return "redirect:/book/order/success?id=" + order.getId();
+        return null;
     }
 
     @GetMapping("/success")

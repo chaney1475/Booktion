@@ -1,7 +1,6 @@
 package com.project.Booktion.controller.usedBook;
 
 import com.project.Booktion.model.UsedBook;
-import com.project.Booktion.model.UsedOrder;
 import com.project.Booktion.service.UsedBookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

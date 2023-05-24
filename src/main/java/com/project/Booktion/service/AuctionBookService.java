@@ -2,7 +2,7 @@ package com.project.Booktion.service;
 
 import com.project.Booktion.model.Bid;
 import com.project.Booktion.model.AuctionBook;
-import com.project.Booktion.model.AuctionOrder;
+import com.project.Booktion.model.AuctionBookOrder;
 import com.project.Booktion.controller.auctionBook.AuctionOrderForm;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +17,9 @@ public class AuctionBookService {
     public void submitOrder() {
     }
 
-    public AuctionOrder newOrder(String id, String bookId, AuctionOrderForm form) {
-        AuctionOrder auctionOrder = new AuctionOrder();
-        return auctionOrder;
+    public AuctionBookOrder newOrder(String id, String bookId, AuctionOrderForm form) {
+        AuctionBookOrder auctionBookOrder = new AuctionBookOrder();
+        return auctionBookOrder;
     }
 
     public String addNewBook(AuctionBook book) {

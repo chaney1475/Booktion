@@ -1,12 +1,11 @@
 package com.project.Booktion.service;
 
-import com.project.Booktion.controller.usedBook.UsedBookOrder;
 import com.project.Booktion.controller.usedBook.UsedBookRegist;
 import com.project.Booktion.model.UsedBook;
 
 import java.util.List;
 
-import com.project.Booktion.model.UsedOrder;
+import com.project.Booktion.model.UsedBookOrder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,7 +14,7 @@ public class UsedBookService {
         return null;
     }
 
-    public void submitOrderForm(String userId, UsedBookOrder usedBookOrder) {
+    public void submitOrderForm(String userId, com.project.Booktion.controller.usedBook.UsedBookOrder usedBookOrder) {
     }
 
     public UsedBook submitRegistForm(UsedBookRegist usedBookRegist) {
@@ -26,7 +25,7 @@ public class UsedBookService {
         return null;
     }
 
-    public List<UsedOrder> getSoldUsedBooks(String memberId) {
+    public List<UsedBookOrder> getSoldUsedBooks(String memberId) {
         return null;
     }
 

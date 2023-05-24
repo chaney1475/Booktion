@@ -35,7 +35,7 @@ public class AuctionOrderFormController {
     public String submitForm(@SessionAttribute("user") User user, @PathVariable String bookId,
                              @ModelAttribute() AuctionOrderForm form, Model model){
         // 오류 처리 생략
-        AuctionBookOrder auctionBookOrder = auctionS.newOrder(user.getId(), bookId, form);
+        AuctionBookOrder auctionBookOrder = auctionS.newOrder(user.getUserId(), bookId, form);
 
         return "redirect:UserController/orderList";
     }

@@ -1,5 +1,8 @@
 package com.project.Booktion.model;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Address {
     private String zipcode;
     private String address1;

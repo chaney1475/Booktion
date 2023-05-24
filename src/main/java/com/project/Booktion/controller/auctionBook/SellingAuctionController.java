@@ -26,7 +26,7 @@ public class SellingAuctionController {
     @GetMapping
     public String SellingList(@ModelAttribute User user, Model model){
 
-        List<AuctionBook> sellingBooks = auctionS.findSellingAuctionById(user.getId());
+        List<AuctionBook> sellingBooks = auctionS.findSellingAuctionById(user.getUserId());
         model.addAttribute("sellingBooks", sellingBooks);
         return "/user/selling";
     }

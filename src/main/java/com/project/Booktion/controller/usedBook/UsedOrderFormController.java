@@ -1,6 +1,5 @@
 package com.project.Booktion.controller.usedBook;
 
-import com.project.Booktion.model.UsedBook;
 import com.project.Booktion.model.User;
 import com.project.Booktion.service.UsedBookService;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +33,7 @@ public class UsedOrderFormController {
                           @SessionAttribute("user") User user,
                           @ModelAttribute("usedBookOrder") UsedBookOrder usedBookOrder){
         //중고 주문폼 제출
-        usedBookService.submitOrderForm(user.getId(), usedBookOrder);
+        usedBookService.submitOrderForm(user.getUserId(), usedBookOrder);
         return "myPage/orderList";
     }
 }

@@ -46,4 +46,9 @@ public class AuctionBookService {
         List<Bid> bids = new ArrayList<>();
         return bids;
     }
+
+    public List<AuctionBookOrder> findOrderBySeller(String id) {
+        List<AuctionBookOrder> orderList = new ArrayList<>();
+        return orderList;
+    }
 }

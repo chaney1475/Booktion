@@ -28,7 +28,7 @@ public class SellingAuctionController {
 
         List<AuctionBook> sellingBooks = auctionS.findSellingAuctionById(user.getId());
         model.addAttribute("sellingBooks", sellingBooks);
-        return "/user/selling";
+        return "/user/auction/selling";
     }
 
 }

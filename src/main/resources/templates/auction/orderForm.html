@@ -10,22 +10,21 @@
 <form th:action="@{/auction/order/{bookId}}" method="post">
     <!-- 배송지 -->
     <h2>Shipping Address</h2>
-    <input type="radio" name="shippingOption" value="same" > Same as Customer Address<br>
-    <input type="radio" name="shippingOption" value="new" checked="checked"> New Address<br>
+    <input type="radio" name="shippingOption" value="same" > 고객의 기본 주소로 배송하기 <br>
+    <input type="radio" name="shippingOption" value="new" checked="checked"> 새로운 주소 입력하기 <br>
 
     <div th:id="shippingAddressFields">
-        <label for="shippingAddress1">Address Line 1:</label>
+        <label for="shippingAddress1">도로명 주소 : </label>
         <input type="text" id="shippingAddress1" name="shippingAddress1"><br>
 
-        <label for="shippingAddress2">Address Line 2:</label>
+        <label for="shippingAddress2">상세 주소 : </label>
         <input type="text" id="shippingAddress2" name="shippingAddress2"><br>
 
-        <label for="zipcode">Zipcode:</label>
+        <label for="zipcode">우편번호 : </label>
         <input type="text" id="zipcode" name="zipcode"><br>
     </div>
 
     <script th:inline="javascript">
-     /* 자바스크립트 코드 */
     var shippingOptionInput = document.querySelectorAll('input[name="shippingOption"]');
     var shippingAddressFields = document.getElementById('shippingAddressFields');
 
@@ -42,30 +41,47 @@
     }
 
     toggleShippingAddressFields();
-</script>
+    </script>
 
 
     <!-- 결제 방법 -->
-    <h2>Payment</h2>
+    <h2>결제방법</h2>
     <select name="payment" id="payment">
-        <option value="cash">Cash</option>
-        <option value="creditCard">Credit Card</option>
-        <option value="bankTransfer">Bank Transfer</option>
+        <option value="cash">현금</option>
+        <option value="creditCard">신용카드</option>
+        <option value="bankTransfer">계좌이체</option>
     </select><br>
 
-    <div th:if="${payment == 'creditCard'}">
+    <div id="creditCardFields">
         <!-- 카드 선택 -->
         <h3>Select Card</h3>
         <select name="card" id="card">
-            <option value="card1">Card 1</option>
-            <option value="card2">Card 2</option>
-            <option value="card3">Card 3</option>
-            <option value="card4">Card 4</option>
+            <option value="card1">삼성카드</option>
+            <option value="card2">신한카드</option>
+            <option value="card3">현대카드</option>
+            <option value="card4">우리카드</option>
         </select><br>
     </div>
 
+    <script th:inline="javascript">
+    var paymentSelect = document.getElementById('payment');
+    var creditCardFields = document.getElementById('creditCardFields');
+
+    function toggleCreditCardFields() {
+        if (paymentSelect.value === 'creditCard') {
+            creditCardFields.style.display = 'block';
+        } else {
+            creditCardFields.style.display = 'none';
+        }
+    }
+
+    paymentSelect.addEventListener('change', toggleCreditCardFields);
+
+    toggleCreditCardFields();
+    </script>
+
     <!-- 배송 메시지 -->
-    <h2>Shipping Message</h2>
+    <h2>배송 메시지</h2>
     <textarea name="shippingMessage" id="shippingMessage" rows="4" cols="50"></textarea><br>
 
     <input type="submit" value="Place Order">

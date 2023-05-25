@@ -1,8 +1,6 @@
 package com.project.Booktion.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -10,7 +8,8 @@ import java.util.Date;
 @Table(name="book")
 public class Book implements Serializable {
     @Id
-    private int bookId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long bookId;
     private int bookType;
     private String isbn;
     private String title;
@@ -19,14 +18,15 @@ public class Book implements Serializable {
     private String imageUrl;
     private String publisher;
     private Date pubDate;
-    private int sellerId;
+    @JoinColumn(name = "clientId")
+    private User user;
 
     /*getter & setter*/
-    public int getBookId() {
+    public long getBookId() {
         return bookId;
     }
 
-    public void setBookId(int bookId) {
+    public void setBookId(long bookId) {
         this.bookId = bookId;
     }
 
@@ -94,12 +94,12 @@ public class Book implements Serializable {
         this.pubDate = pubDate;
     }
 
-    public int getSellerId() {
-        return sellerId;
+    public User getUser() {
+        return user;
     }
 
-    public void setSellerId(int sellerId) {
-        this.sellerId = sellerId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Book() {

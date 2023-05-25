@@ -48,6 +48,6 @@ public class RegistUsedFormController {
         UsedBook book = usedBookService.submitRegistForm(UsedBookRegist);
         model.addAttribute("book", book); //이거 맞나?
         sessionStatus.setComplete();
-        return "redirect:/used/bookInfo/" + book.getBookId();//등록한 책 상세페이지로 이동
+        return "redirect:/used/bookInfo/" + book.getUsedBookId();//등록한 책 상세페이지로 이동
     }
 }

@@ -1,78 +1,56 @@
 package com.project.Booktion.model;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "used_book")
 public class UsedBook {
-    private int bookId;
-    private String isbn;
-    private String author;
-    private int usedPrice;
-    private String imageUrl;
-    private String description;
-    private String publisher;
-    private Date pubdate;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    private long usedBookId;
 
-    public int getBookId() {
-        return bookId;
+    @Column
+    private int status;
+
+    @ManyToOne
+    @JoinColumn(name = "bookId")
+    private Book book;
+
+    // Constructors, getters and setters, etc.
+
+    public UsedBook() {
     }
 
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
+    public UsedBook(Integer status, Book book) {
+        this.status = status;
+        this.book = book;
     }
 
-    public String getIsbn() {
-        return isbn;
+    // Getters and setters
+
+    public long getUsedBookId() {
+        return usedBookId;
     }
 
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
+    public void setUsedBookId(long usedBookId) {
+        this.usedBookId = usedBookId;
     }
 
-    public String getAuthor() {
-        return author;
+    public int getStatus() {
+        return status;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
-    public int getUsedPrice() {
-        return usedPrice;
+    public Book getBook() {
+        return book;
     }
 
-    public void setUsedPrice(int usedPrice) {
-        this.usedPrice = usedPrice;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
-    public Date getPubdate() {
-        return pubdate;
-    }
-
-    public void setPubdate(Date pubdate) {
-        this.pubdate = pubdate;
+    public void setBook(Book book) {
+        this.book = book;
     }
 }

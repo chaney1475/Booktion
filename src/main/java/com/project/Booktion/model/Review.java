@@ -9,10 +9,11 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long reviewId;
+    private long reviewId;
 
     @Column
-    private String clientId;
+    @JoinColumn(name = "clientId")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "bookId")
@@ -32,8 +33,9 @@ public class Review {
     public Review() {
     }
 
-    public Review(String clientId, Book book, String title, String contents, Date createDate) {
-        this.clientId = clientId;
+    public Review(long reviewId, User user, Book book, String title, String contents, Date createDate) {
+        this.reviewId = reviewId;
+        this.user = user;
         this.book = book;
         this.title = title;
         this.contents = contents;
@@ -42,20 +44,20 @@ public class Review {
 
     // Getters and setters
 
-    public Long getReviewId() {
+    public long getReviewId() {
         return reviewId;
     }
 
-    public void setReviewId(Long reviewId) {
+    public void setReviewId(long reviewId) {
         this.reviewId = reviewId;
     }
 
-    public String getClientId() {
-        return clientId;
+    public User getUser() {
+        return user;
     }
 
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Book getBook() {

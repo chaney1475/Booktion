@@ -1,14 +1,13 @@
 package com.project.Booktion.model;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-@Table
-public class User {
+@Table(name="clients")
+public class User implements Serializable {
     @Id
+    @Column(name="clientId")
     private String userId;
     private String password;
     private String name;

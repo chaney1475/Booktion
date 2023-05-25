@@ -1,14 +1,18 @@
 package com.project.Booktion.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name="order")
-public class Order {
+@Table(name="orders")
+public class Order implements Serializable {
     @Id
-    private int orderId;
-    private int userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long orderId;
+    @ManyToOne
+    @JoinColumn(name="clientId")
+    private User user;
     @Temporal(TemporalType.DATE)
     private Date orderDate;
     private String name;
@@ -16,23 +20,22 @@ public class Order {
     private Address address;
     private String shipMessage;
     private int price;
+    private String payment;
+    private String card;
+    private String orderType;
 
     /*getter & setter*/
-    public int getOrderId() {
+    public long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(int orderId) {
+    public void setOrderId(long orderId) {
         this.orderId = orderId;
     }
 
-    public int getUserId() {
-        return userId;
-    }
+    public User getUser() { return user; }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
+    public void setUser(User user) { this.user = user;}
 
     public Date getOrderDate() {
         return orderDate;
@@ -72,6 +75,30 @@ public class Order {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public String getPayment() {
+        return payment;
+    }
+
+    public void setPayment(String payment) {
+        this.payment = payment;
+    }
+
+    public String getCard() {
+        return card;
+    }
+
+    public void setCard(String card) {
+        this.card = card;
+    }
+
+    public String getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(String orderType) {
+        this.orderType = orderType;
     }
 
     public Order() {

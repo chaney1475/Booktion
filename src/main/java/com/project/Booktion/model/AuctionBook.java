@@ -8,13 +8,13 @@ public class AuctionBook {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long auctionBookId;
+    private long auctionBookId;
 
     @Column
-    private Double startPrice;
+    private double startPrice;
 
     @Column
-    private Integer status;
+    private int status;
 
     @ManyToOne
     @JoinColumn(name = "bookId")
@@ -25,7 +25,8 @@ public class AuctionBook {
     public AuctionBook() {
     }
 
-    public AuctionBook(Double startPrice, Integer status, Book book) {
+    public AuctionBook(long auctionBookId, double startPrice, int status, Book book) {
+        this.auctionBookId = auctionBookId;
         this.startPrice = startPrice;
         this.status = status;
         this.book = book;
@@ -33,27 +34,27 @@ public class AuctionBook {
 
     // Getters and setters
 
-    public Long getAuctionBookId() {
+    public long getAuctionBookId() {
         return auctionBookId;
     }
 
-    public void setAuctionBookId(Long auctionBookId) {
+    public void setAuctionBookId(long auctionBookId) {
         this.auctionBookId = auctionBookId;
     }
 
-    public Double getStartPrice() {
+    public double getStartPrice() {
         return startPrice;
     }
 
-    public void setStartPrice(Double startPrice) {
+    public void setStartPrice(double startPrice) {
         this.startPrice = startPrice;
     }
 
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

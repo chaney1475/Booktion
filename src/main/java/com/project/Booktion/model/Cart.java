@@ -8,9 +8,10 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long cartId;
+    private long cartId;
 
     @Column
+    @JoinColumn(name = "clientId")
     private String clientId;
 
     // Constructors, getters and setters, etc.
@@ -24,11 +25,11 @@ public class Cart {
 
     // Getters and setters
 
-    public Long getCartId() {
+    public long getCartId() {
         return cartId;
     }
 
-    public void setCartId(Long cartId) {
+    public void setCartId(long cartId) {
         this.cartId = cartId;
     }
 

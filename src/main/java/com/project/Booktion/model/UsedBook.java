@@ -9,10 +9,10 @@ public class UsedBook {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long usedBookId;
+    private long usedBookId;
 
     @Column
-    private Integer status;
+    private int status;
 
     @ManyToOne
     @JoinColumn(name = "bookId")
@@ -30,19 +30,19 @@ public class UsedBook {
 
     // Getters and setters
 
-    public Long getUsedBookId() {
+    public long getUsedBookId() {
         return usedBookId;
     }
 
-    public void setUsedBookId(Long usedBookId) {
+    public void setUsedBookId(long usedBookId) {
         this.usedBookId = usedBookId;
     }
 
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

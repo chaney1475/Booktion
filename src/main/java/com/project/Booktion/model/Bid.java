@@ -8,13 +8,14 @@ public class Bid {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long bidId;
+    private long bidId;
 
     @ManyToOne
     @JoinColumn(name = "auctionBookId")
     private AuctionBook auctionBook;
 
     @Column
+    @JoinColumn(name = "clientId")
     private String bidderId;
 
     // Constructors, getters and setters, etc.
@@ -29,11 +30,11 @@ public class Bid {
 
     // Getters and setters
 
-    public Long getBidId() {
+    public long getBidId() {
         return bidId;
     }
 
-    public void setBidId(Long bidId) {
+    public void setBidId(long bidId) {
         this.bidId = bidId;
     }
 

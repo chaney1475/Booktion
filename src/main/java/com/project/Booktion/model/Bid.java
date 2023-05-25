@@ -1,10 +1,11 @@
 package com.project.Booktion.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "bids")
-public class Bid {
+public class Bid implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column

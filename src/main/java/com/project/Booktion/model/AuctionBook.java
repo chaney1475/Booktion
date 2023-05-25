@@ -1,10 +1,11 @@
 package com.project.Booktion.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "auction_book")
-public class AuctionBook {
+public class AuctionBook implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -19,6 +20,8 @@ public class AuctionBook {
     @ManyToOne
     @JoinColumn(name = "bookId")
     private Book book;
+
+    private String shippingCompany;
 
     // Constructors, getters and setters, etc.
 
@@ -64,5 +67,13 @@ public class AuctionBook {
 
     public void setBook(Book book) {
         this.book = book;
+    }
+
+    public String getShippingCompany() {
+        return shippingCompany;
+    }
+
+    public void setShippingCompany(String shippingCompany) {
+        this.shippingCompany = shippingCompany;
     }
 }

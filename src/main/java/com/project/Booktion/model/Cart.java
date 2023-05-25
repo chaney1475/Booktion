@@ -1,10 +1,12 @@
 package com.project.Booktion.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "cart")
-public class Cart {
+public class Cart implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -13,6 +15,9 @@ public class Cart {
     @Column
     @JoinColumn(name = "clientId")
     private String clientId;
+    @OneToMany
+    @JoinColumn(name="cartItemId")
+    private List<CartItem> cartItemList;
 
     // Constructors, getters and setters, etc.
 

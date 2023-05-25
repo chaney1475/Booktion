@@ -26,6 +26,7 @@ public class ViewAuctionController {
         model.addAttribute("auctionBooks", auctionBooks);
         return "/auction/books";
     }
+
     @GetMapping("/{bookId}") // 경매책 상세 보기
     public String viewBook(@PathVariable String bookId, Model model){
         AuctionBook book = auctionS.findById(bookId);

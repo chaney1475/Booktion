@@ -22,7 +22,7 @@ import java.util.List;
 public class SearchBooksController {
     private final SearchBookService searchBookService;
 
-    @GetMapping("/main/search")
+    @GetMapping
     public String searchBooks(String keyword, Model model) {
         List<Book> searchList = searchBookService.search(keyword);
 

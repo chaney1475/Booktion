@@ -1,4 +1,4 @@
 package com.project.Booktion.repository;
 
-public class ReviewRepository {
+public interface ReviewRepository {
 }

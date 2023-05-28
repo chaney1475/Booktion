@@ -6,35 +6,38 @@ import java.util.Date;
 
 public class UsedBookOrder {
     //중고책 OrderForm command class
-    private int usedBookId;
-    private int usedBookOrderId;
-    private int buyerId;
+    private long usedBookId;
+    private long usedBookOrderId;
+    private long buyerId;
     private Date orderDate;
     private String payment; //결제 방식
     private String company; //택배 배송사
     private String shipMessage; //배송 메세지
     private Address address;
-    public int getUsedBookId() {
+
+    private String card; //카드 선택시 카드명
+    private String orderName; //배송받는 사람 이름
+    public long getUsedBookId() {
         return usedBookId;
     }
 
-    public void setUsedBookId(int usedBookId) {
+    public void setUsedBookId(long usedBookId) {
         this.usedBookId = usedBookId;
     }
 
-    public int getUsedBookOrderId() {
+    public long getUsedBookOrderId() {
         return usedBookOrderId;
     }
 
-    public void setUsedBookOrderId(int usedBookOrderId) {
+    public void setUsedBookOrderId(long usedBookOrderId) {
         this.usedBookOrderId = usedBookOrderId;
     }
 
-    public int getBuyerId() {
+    public long getBuyerId() {
         return buyerId;
     }
 
-    public void setBuyerId(int buyerId) {
+    public void setBuyerId(long buyerId) {
         this.buyerId = buyerId;
     }
 
@@ -76,6 +79,22 @@ public class UsedBookOrder {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public String getCard() {
+        return card;
+    }
+
+    public void setCard(String card) {
+        this.card = card;
+    }
+
+    public String getOrderName() {
+        return orderName;
+    }
+
+    public void setOrderName(String orderName) {
+        this.orderName = orderName;
     }
 
     @Override

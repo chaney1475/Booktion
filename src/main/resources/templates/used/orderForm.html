@@ -11,6 +11,10 @@
 
     <form th:action="@{/used/order/{bookId}}" th:method="post">
         <!-- 배송지 -->
+        <h2>이름</h2>
+        <label for="orderName">배송받는 사람 이름:</label>
+        <input type="text" id="orderName" name="orderName"><br>
+
         <h2>Shipping Address</h2>
         <input type="radio" name="shippingOption" value="same" > Same as Customer Address<br>
         <input type="radio" name="shippingOption" value="new" checked="checked"> New Address<br>

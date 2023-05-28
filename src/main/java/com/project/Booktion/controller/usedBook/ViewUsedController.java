@@ -19,9 +19,9 @@ public class ViewUsedController {
     private final UsedBookService usedBookService;
 
     @RequestMapping("/bookInfo/{bookId}")
-    public String showBookInfo(@PathVariable String bookId, Model model){
+    public String showBookInfo(@PathVariable long bookId, Model model){
         //책 상세페이지로 이동
-        UsedBook book = usedBookService.getUsedBook(bookId);
+        UsedBook book = usedBookService.getUsedBookById(bookId);
         if(book == null){
             return "noBook"; //상품이 없다는 페이지로 이동
         }
@@ -32,7 +32,7 @@ public class ViewUsedController {
     @RequestMapping("/main")
     public String showUsedMain(Model model){
         //중고책 메인화면으로 이동
-        List<UsedBook> bookList = usedBookService.getUsedBookList();
+        List<UsedBook> bookList = usedBookService.getAllUsedBookList();
         return "used/usedMain";
     }
 }

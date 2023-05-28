@@ -1,5 +1,6 @@
 package com.project.Booktion.controller.usedBook;
 
+import com.project.Booktion.model.Order;
 import com.project.Booktion.model.User;
 import com.project.Booktion.service.UsedBookService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class UsedOrderFormController {
     }
 
     @GetMapping("/{bookId}")
-    public String newForm(@PathVariable int bookId,
+    public String newForm(@PathVariable long bookId,
                           @ModelAttribute("usedBookOrder") UsedBookOrder usedBookOrder){
         //중고 주문폼 생성
         usedBookOrder.setUsedBookId(bookId);
@@ -29,11 +30,11 @@ public class UsedOrderFormController {
     }
 
     @PostMapping("/{bookId}")
-    public String addForm(@PathVariable int bookId,
+    public String addForm(@PathVariable long bookId,
                           @SessionAttribute("user") User user,
-                          @ModelAttribute("usedBookOrder") UsedBookOrder usedBookOrder){
+                          @ModelAttribute("usedBookOrder") UsedBookOrder order){
         //중고 주문폼 제출
-        usedBookService.submitOrderForm(user.getUserId(), usedBookOrder);
+        usedBookService.submitOrderForm(user, order);
         return "myPage/orderList";
     }
 }

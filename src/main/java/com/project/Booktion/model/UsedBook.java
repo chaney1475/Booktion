@@ -8,7 +8,8 @@ import java.util.Date;
 @Table(name = "used_book")
 public class UsedBook implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "used_book_seq_generator")
+    @SequenceGenerator(name = "used_book_seq_generator", sequenceName = "USED_BOOK_SEQ")
     @Column
     private long usedBookId;
 

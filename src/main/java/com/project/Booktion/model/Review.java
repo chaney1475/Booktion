@@ -8,7 +8,8 @@ import java.util.Date;
 @Table(name="review")
 public class Review implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "review_seq_generator")
+    @SequenceGenerator(name = "review_seq_generator", sequenceName = "REVIEW_SEQ")
     @Column
     private long reviewId;
 

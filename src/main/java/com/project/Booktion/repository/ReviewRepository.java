@@ -1,4 +1,17 @@
 package com.project.Booktion.repository;
 
-public interface ReviewRepository {
+import com.project.Booktion.model.Book;
+import com.project.Booktion.model.Review;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+@Repository
+public interface ReviewRepository<Review, Long> {
+    List<Review> findByBook(Book book);
+
+    Review save(Review review);
+
+    void deleteByUserIdAndReviewId(String userId, Long reviewId);
+
+    long count();
 }

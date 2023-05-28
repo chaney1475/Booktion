@@ -1,61 +1,44 @@
 package com.project.Booktion.controller.book;
 
+import com.project.Booktion.model.Address;
 import com.project.Booktion.model.Book;
+import com.project.Booktion.model.Order;
+
+import java.util.List;
 
 public class OrderForm {
     //일반책 OrderForm command class
-    private Book book;
-    private String name;
-    private String payment;
-    private String phone;
-    private String shipMessage;
-    private int quantity;
+    private List<BookForm> books;
+    private Order order;
 
-    public Book getBook() {
-        return book;
+    public List<BookForm> getBooks() {
+        return books;
     }
 
-    public void setBook(Book book) {
-        this.book = book;
+    public void setBooks(List<BookForm> books) {
+        this.books = books;
     }
 
-    public String getName() {
-        return name;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
-    public String getPayment() {
-        return payment;
+    public OrderForm(List<BookForm> books) {
+        this.books = books;
     }
 
-    public void setPayment(String payment) {
-        this.payment = payment;
+    public OrderForm() {
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getShipMessage() {
-        return shipMessage;
-    }
-
-    public void setShipMessage(String shipMessage) {
-        this.shipMessage = shipMessage;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void calculateTotalOrderPrice() {
+        int totalOrderPrice = 0;
+        for (BookForm bookForm : books) {
+            totalOrderPrice += bookForm.getBook().getPrice() * bookForm.getQuantity();
+        }
+        order.setPrice(totalOrderPrice);
     }
 }

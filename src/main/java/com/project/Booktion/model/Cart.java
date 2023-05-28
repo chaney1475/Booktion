@@ -8,11 +8,9 @@ import java.util.List;
 @Table(name = "cart")
 public class Cart implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cart_seq_generator")
+    @SequenceGenerator(name = "cart_seq_generator", sequenceName = "CART_SEQ")
     private long cartId;
-
-    @Column
     @JoinColumn(name = "clientId")
     private String clientId;
     @OneToMany

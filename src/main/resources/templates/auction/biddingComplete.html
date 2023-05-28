@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Auction Completed</title>
+</head>
+<body>
+<h2>경매가 종료되었습니다!</h2>
+<p th:text="'경매가 ' + ${price} + '원에 낙찰되었습니다!'"></p>
+<p>주문자가 주문서를 완성하면 배송이 시작됩니다.</p>
+<a href="/order-form" class="btn btn-primary">주문서 작성</a>
+</body>
+</html>

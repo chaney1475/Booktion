@@ -22,7 +22,7 @@ public class Order implements Serializable {
     private int price;
     private String payment;
     private String card;
-    private String orderType;
+    private int orderType;
 
     /*getter & setter*/
     public long getOrderId() {
@@ -93,11 +93,11 @@ public class Order implements Serializable {
         this.card = card;
     }
 
-    public String getOrderType() {
+    public int getOrderType() {
         return orderType;
     }
 
-    public void setOrderType(String orderType) {
+    public void setOrderType(int orderType) {
         this.orderType = orderType;
     }
 

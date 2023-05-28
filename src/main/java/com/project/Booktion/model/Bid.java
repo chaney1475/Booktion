@@ -19,6 +19,16 @@ public class Bid implements Serializable {
     @JoinColumn(name = "clientId")
     private String bidderId;
 
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    private int price;
+
     // Constructors, getters and setters, etc.
 
     public Bid() {

@@ -8,4 +8,9 @@ public class UserService {
     public User authenticateUser(String username, String password) {
         return null;
     }
+
+    public User getUser(String userId) {
+        User user = new User();
+        return user;
+    }
 }

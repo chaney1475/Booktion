@@ -1,0 +1,18 @@
+package com.project.Booktion.repository;
+
+import com.project.Booktion.model.Bid;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface BidRepository extends JpaRepository<Bid,Long> {
+
+    @Query(value = "SELECT b FROM Bid b WHERE b.auctionBookId = :auctionBookId", nativeQuery = true)
+    Bid findByABId(Long auctionBookId);
+    @Query(value = "SELECT b FROM Bid b WHERE b.auctionBook.id = :auctionBookId ORDER BY b.price DESC", nativeQuery = true)
+    Bid gethighestBid(@Param("auctionBookId") Long auctionBookId);
+
+
+}

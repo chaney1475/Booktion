@@ -28,7 +28,7 @@ public class ViewAuctionController {
     }
 
     @GetMapping("/{bookId}") // 경매책 상세 보기
-    public String viewBook(@PathVariable String bookId, Model model){
+    public String viewBook(@PathVariable Long bookId, Model model){
         AuctionBook book = auctionS.findById(bookId);
         model.addAttribute("book", book);
         List<Bid> bids = auctionS.getAuction();

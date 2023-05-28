@@ -1,6 +1,7 @@
 package com.project.Booktion.controller;
 
 import com.project.Booktion.model.Order;
+import com.project.Booktion.service.OrderSearchService;
 import com.project.Booktion.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,9 +16,10 @@ import java.util.List;
 @RequestMapping("/user/order")
 @RequiredArgsConstructor
 public class OrderListController {
-    private final OrderService orderService;
+    private final OrderSearchService orderService;
+
     @GetMapping("{userId}")
     public String orderList(@PathVariable String userId, Model model) {  // 주문내역
-        return "user";
+        return "myPage/user";
     }
 }

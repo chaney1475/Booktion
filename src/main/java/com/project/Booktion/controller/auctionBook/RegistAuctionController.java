@@ -23,7 +23,8 @@ public class RegistAuctionController {
     @PostMapping("/registForm")
     public String registForm(@ModelAttribute AuctionBook book){
         // 검증 코드 생략
-        String bookId = auctionS.addNewBook(book);
-        return "/auction/books/{bookId}";
+        AuctionBook auctionBook = auctionS.addNewBook(book);
+        long bookId = auctionBook.getAuctionBookId();
+        return "redirect:/auction/book/{bookId}";
     }
 }

@@ -7,7 +7,8 @@ import java.io.Serializable;
 @Table(name = "auction_book")
 public class AuctionBook implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "auction_book_seq_generator")
+    @SequenceGenerator(name = "auction_book_seq_generator", sequenceName = "AUCTION_BOOK_SEQ")
     @Column
     private long auctionBookId;
 

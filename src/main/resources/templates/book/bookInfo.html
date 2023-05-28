@@ -5,10 +5,12 @@
   <title>Book Information</title>
 </head>
 <body>
-<h1>Book Information</h1>
+<h1>책 정보</h1>
 <div th:if="${book}">
   <h2 th:text="${book.title}"></h2>
-  <p th:text="${book.author}" th:text="${book.publisher}" th:text="${book.pubDate}"></p>
+  <p th:text="${book.author}"></p>
+  <p th:text="${book.publisher}"></p>
+  <p th:text="${book.pubDate}"></p>
   <p th:text="${book.isbn}"></p>
   <hr>
   <p th:text="${book.imageUrl}"></p>
@@ -23,43 +25,47 @@
       <td>
         <input type="number" min="0" th:value="${book.quantity}">
       </td>
-      <td th:text="${book.delivery fee}"></td>
+      <td th:text="${book.deliveryFee}"></td>
     </tr>
   </table>
   <form th:action="@{/book/order/form}" method="get">
-    <input type="hidden" name="bookId" th:value="${book.id}">
+    <input type="hidden" name="bookId" th:value="${book.bookId}">
     <button type="submit">바로구매</button>
   </form>
   <form th:action="@{/cart/add}" method="post">
-    <input type="hidden" name="bookId" th:value="${book.id}">
+    <input type="hidden" name="bookId" th:value="${book.bookId}">
     <button type="submit">장바구니</button>
   </form>
 </div>
-  <hr>
-  <h3>책 소개</h3>
-  <p th:text="${book.description}"></p>
-  <hr>
-  <h3>구매 후기</h3>
-  <form th:action="@{/book/review}" method="post">
-    <input type="hidden" name="bookId" th:value="${book.id}">
-    <label for="reviewerName">Your Name:</label>
-    <input type="text" id="reviewerName" name="reviewerName">
-    <label for="reviewContent"></label>
-    <textarea id="reviewContent" name="reviewContent"></textarea>
-    <button type="submit">등록</button>
-  </form>
-  <hr>
-  <div th:if="${book.reviews}">
-    <ul>
-      <li th:each="review : ${book.reviews}">
-        <p th:text="${review.reviewerName}"></p>
-        <p th:text="${review.reviewContent}"></p>
-      </li>
-    </ul>
-  </div>
-  <div th:if="${not book.reviews}">
-    <p>구매 후기가 아직 없습니다.</p>
-  </div>
+<hr>
+<h3>책 소개</h3>
+<p th:text="${book.description}"></p>
+<hr>
+<h3>리뷰</h3>
+<form th:action="@{/book/review}" method="post">
+  <input type="hidden" name="bookId" th:value="${book.bookId}">
+  <label for="reviewerName">이름 :</label>
+  <input type="text" id="reviewerName" name="reviewerName">
+  <label for="reviewContent">리뷰 내용 :</label>
+  <textarea id="reviewContent" name="reviewContent"></textarea>
+  <button type="submit">등록</button>
+</form>
+<hr>
+<div th:if="${book.reviews}">
+  <ul>
+    <li th:each="review : ${book.reviews}">
+      <p th:text="${review.user.username}"></p>
+      <p th:text="${review.contents}"></p>
+      <form th:action="@{/book/review/delete}" method="post">
+        <input type="hidden" name="reviewId" th:value="${review.reviewId}">
+        <button type="submit">삭제</button>
+      </form>
+    </li>
+  </ul>
+</div>
+<div th:if="${not book.reviews}">
+  <p>리뷰가 아직 없습니다.</p>
+</div>
 <div th:if="${not book}">
   <h2>존재하지 않는 책입니다.</h2>
 </div>

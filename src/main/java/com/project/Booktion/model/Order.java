@@ -8,7 +8,8 @@ import java.util.Date;
 @Table(name="orders")
 public class Order implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_seq_generator")
+    @SequenceGenerator(name = "order_seq_generator", sequenceName = "ORDER_SEQ")
     private long orderId;
     @ManyToOne
     @JoinColumn(name="clientId")

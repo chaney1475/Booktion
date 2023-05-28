@@ -3,88 +3,132 @@
 <head>
   <meta charset="UTF-8">
   <title>Order Form</title>
+  <style>
+       table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .book-image {
+            max-width: 100px;
+        }
+        .center-text {
+            text-align: center;
+        }
+        .right-text {
+            text-align: right;
+        }
+    </style>
 </head>
 <body>
-<h1>주문하기</h1>
-<div th:if="${error}">
-  <p th:text="${error}" style="color: red;"></p>
-</div>
+  <h1>주문하기</h1>
+  <div th:if="${error}">
+    <p th:text="${error}" style="color: red;"></p>
+  </div>
+  <form action="/book/order/{bookId}" method="post" th:object="${orderForm}">
+    <table>
+      <thead>
+        <tr>
+          <th>책 제목</th>
+          <th>작가</th>
+          <th>출판사</th>
+          <th>출판일</th>
+          <th>수량</th>
+          <th>가격</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="bookForm, stat : ${orderForm.books}">
+          <td><img th:src="${bookForm.book.imageUrl}" alt="Book Image" class="book-image"></td>
+          <td th:text="${bookForm.book.title}" class="center-text"></td>
+          <td th:text="${bookForm.book.author}" class="center-text"></td>
+          <td th:text="${bookForm.book.publisher}" class="center-text"></td>
+          <td th:text="${bookForm.book.pubDate}" class="center-text"></td>
+          <td class="right-text">
+            <select name="orderForm.books[__${stat.index}__].quantity" onchange="calculatePrice(__${stat.index}__);"
+                    required>
+              <option th:each="quantity : ${#numbers.sequence(1, 10)}" th:value="${quantity}"
+                      th:text="${quantity}"></option>
+            </select>
+            <input type="hidden" name="orderForm.books[__${stat.index}__].book.bookId"
+                   th:value="${bookForm.book.bookId}">
+          </td>
+          <td>
+            <span th:text="${bookForm.book.price}" id="price__${stat.index}__" class="right-text"></span>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="5"></td>
+          <td class="right-text">총 가격:</td>
+          <td class="right-text"><span id="orderPrice"></span></td>
+        </tr>
+      </tfoot>
+    </table>
 
-<div th:if="${book}">
-  <h2>책 상세정보</h2>
-  <h3>제목 : <span th:text="${book.title}"></span></h3>
-  <p>저자 : <span th:text="${book.author}"></span></p>
-  <p>출판사 : <span th:text="${book.publisher}"></span></p>
-  <p>출판일 : <span th:text="${book.pubDate}"></span></p>
-  <p>가격 : <span th:text="${book.price}"></span></p>
-  <p>수량 : <span th:text="${book.quantity}"></span></p>
-  <p>배송비 : <span th:text="${book.deliveryFee}"></span></p>
+    <h2>주문자 정보</h2>
+    <div>
+      <label for="name">이름</label>
+      <input type="text" id="name" th:field="*{order.name}" required>
+    </div>
+    <div>
+      <label for="zipcode">우편번호</label>
+      <input type="text" id="zipcode" th:field="*{order.address.zipcode}" required>
+    </div>
+    <div>
+      <label for="address1">주소1</label>
+      <input type="text" id="address1" th:field="*{order.address.address1}" required>
+      <label for="address2"></label>
+      <input type="text" id="address2" th:field="*{order.address.address2}">
+    </div>
 
-  <hr>
-
-  <h2>주문 정보</h2>
-  <form th:action="@{/book/order/submit}" method="post">
-    <input type="hidden" name="bookId" th:value="${book.id}">
-
-    <label for="buyerName">이름 : </label>
-    <input type="text" id="buyerName" name="buyerName" required>
-
-    <label for="buyerPhoneNum">전화번호 :</label>
-    <input type="email" id="buyerPhoneNum" name="buyerPhoneNum" required>
-
-    <label for="buyerEmail">이메일 :</label>
-    <input type="email" id="buyerEmail" name="buyerEmail" required>
-
-    <label for="shippingAddress">주소 :</label>
-    <textarea id="shippingAddress" name="shippingAddress" required></textarea>
-
-    <label for="zipCode"></label>
-    <textarea id="zipCode" name="zipCode" required></textarea>
+    <h2>주문 정보</h2>
+    <div>
+      <label for="shipMessage">배송 메시지</label>
+      <input type="text" id="shipMessage" th:field="*{order.shipMessage}">
+    </div>
+    <div>
+      <label for="payment">결제 방법</label>
+      <input type="text" id="payment" th:field="*{order.payment}">
+    </div>
+    <div>
+      <label for="card">카드 정보</label>
+      <input type="text" id="card" th:field="*{order.card}">
+    </div>
+    <div>
+      <label for="orderType">주문 유형</label>
+      <input type="text" id="orderType" th:field="*{order.orderType}">
+    </div>
 
     <button type="submit">주문하기</button>
   </form>
-</div>
 
-<div th:if="${cartItems}">
-  <h2>장바구니</h2>
-  <ul>
-    <li th:each="item : ${cartItems}">
-      <h3>제목 : <span th:text="${item.title}"></span></h3>
-      <p>저자 : <span th:text="${item.author}"></span></p>
-      <p>출판사 : <span th:text="${item.publisher}"></span></p>
-      <p>출판일 : <span th:text="${item.pubDate}"></span></p>
-      <p>가격 : <span th:text="${item.price}"></span></p>
-      <p>수량 : <span th:text="${item.quantity}"></span></p>
-      <p>배송비 : <span th:text="${item.deliveryFee}"></span></p>
-      <hr>
-    </li>
-  </ul>
+  <script>
+    function calculatePrice(index) {
+      const quantity = document.querySelector(`select[name='orderForm.books[${index}].quantity']`).value;
+      const price = document.querySelector(`#price__${index}__`).textContent;
+      const totalPrice = quantity * price;
+      document.querySelector(`#price__${index}__`).textContent = totalPrice;
+      calculateTotalPrice();
+    }
 
-  <h2>주문 정보</h2>
-  <form th:action="@{/book/order/submit}" method="post">
-    <input type="hidden" name="isCartOrder" value="true">
+    function calculateTotalPrice() {
+      const bookPrices = document.querySelectorAll('[id^="price__"]');
+      let totalPrice = 0;
+      bookPrices.forEach((priceElement) => {
+        const quantityElement = priceElement.closest('tr').querySelector('select');
+        const quantity = quantityElement.value;
+        const price = parseInt(priceElement.textContent);
+        totalPrice += quantity * price;
+      });
+      document.getElementById('orderPrice').textContent = totalPrice;
+    }
+  </script>
 
-    <label for="buyerName">이름 : </label>
-    <input type="text" id="buyerName" name="buyerName" required>
-
-    <label for="buyerPhoneNum">전화번호 :</label>
-    <input type="email" id="buyerPhoneNum" name="buyerPhoneNum" required>
-
-    <label for="buyerEmail">이메일 :</label>
-    <input type="email" id="buyerEmail" name="buyerEmail" required>
-
-    <label for="shippingAddress">주소 :</label>
-    <textarea id="shippingAddress" name="shippingAddress" required></textarea>
-
-    <label for="zipCode"></label>
-    <textarea id="zipCode" name="zipCode" required></textarea>
-
-    <button type="submit">주문하기</button>
-  </form>
-</div>
-
-<div th:if="${not book and not cartItems}">
-  <p>책을 선택해주세요.</p>
-</div>
 </body>
 </html>

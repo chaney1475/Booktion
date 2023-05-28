@@ -1,6 +1,15 @@
 package com.project.Booktion.controller.auctionBook;
 
 public class AuctionOrderForm {
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    private int price;
     private String shippingOption;
     private String shippingAddress1;
     private String shippingAddress2;

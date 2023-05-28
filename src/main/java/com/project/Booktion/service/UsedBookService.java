@@ -15,6 +15,7 @@ import com.project.Booktion.repository.OrderRepository;
 import com.project.Booktion.repository.UsedBookRepository;
 import com.project.Booktion.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -85,9 +86,6 @@ public class UsedBookService {
         return null;
     }
 
-    public List<UsedBook> getSellingUsedBooks(String memberId) {
-        return usedBookRepository.findByStatusAndBook_User_SellerId(0, memberId);
-    }
 
     public List<UsedBook> getSoldUsedBooks(String memberId) {
         return usedBookRepository.findByStatusAndBook_User_SellerId(1, memberId);

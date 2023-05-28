@@ -9,6 +9,7 @@ import java.util.List;
 public interface ReviewRepository<Review, Long> {
     List<Review> findByBook(Book book);
 
+    Review findByReviewIdAndClientId(Long reviewId, Long clientId);
     Review save(Review review);
 
     void deleteByUserIdAndReviewId(String userId, Long reviewId);

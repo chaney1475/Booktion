@@ -21,7 +21,7 @@ public class AuctionBook implements Serializable {
     @ManyToOne
     @JoinColumn(name = "bookId")
     private Book book;
-
+    @Column
     private String shippingCompany;
 
     // Constructors, getters and setters, etc.

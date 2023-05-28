@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order List</title>
+</head>
+<body>
+<h1>주문 목록</h1>
+<div>
+    <h2>경매 완료 목록</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>책 제목</th>
+            <th>낙찰가</th>
+            <th>이미지</th>
+            <th>주문 완성하기</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="tempOrder : ${tempOrderList}">
+            <td th:text="${tempOrder.bookInfo.title}"></td>
+            <td th:text="${tempOrder.auctionBook.startPrice}"></td>
+            <td><img th:src="${tempOrder.bookInfo.imageUrl}" alt="Book Image" width="100"></td>
+            <td><a th:href="@{/order/complete(tempOrderId=${tempOrder.tempOrderId})}">Complete Order</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <h2>주문 완료 목록</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>주문 종류</th>
+            <th>책 제목</th>
+            <th>가격</th>
+            <th>이미지</th>
+            <th>주문 상세보기</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orderList}">
+            <td th:text="${order.book.bookType}"></td>
+            <td th:text="${order.bookInfo.title}"></td>
+            <td th:text="${order.price}"></td>
+            <td><img th:src="${order.bookInfo.imageUrl}" alt="Book Image" width="100"></td>
+            <td><a th:href="@{/order/detail(orderId=${order.orderId})}">주문 바로가기</a></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr th:each="auctionOrder : ${auctionOrderList}">
+            <td>경매</td>
+            <td th:text="${auctionOrder.order.book.bookType}"></td>
+            <td th:text="${auctionOrder.order.book.title}"></td>
+            <td th:text="${auctionOrder.order.price}"></td>
+            <td><img th:src="${auctionOrder.order.book.imageUrl}" alt="Book Image" width="100"></td>
+            <td><a th:href="@{/order/detail(orderId=${auctionOrder.order.orderId})}">주문 바로가기</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>

@@ -21,7 +21,6 @@ public class SoldUsedController {
     @GetMapping("/myPage/used/sold")
     public String getSellingUsedBooks(@PathVariable("memberId") String memberId, Model model) {
         //판매완료된 중고책 목록을 가져온다.
-        List<UsedBook> soldUsedBooks = usedBookService.getSoldUsedBooks(memberId);
         model.addAttribute("soldUsedBooks", soldUsedBooks);
         return "myPage/used/sold";
     }

@@ -12,21 +12,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 // 팔린 경매책
 @Slf4j // 로그 찍는 기능
 @Controller
 @RequestMapping("/user/sold")
 @RequiredArgsConstructor
-@SessionAttributes("user")
 public class SoldAuctionController {
 
     AuctionBookService auctionS;
     @GetMapping
-    public String SellingList(@ModelAttribute User user, Model model){
+    public String SellingList(HttpServletRequest request, Model model){
+        String userId = (String) request.getAttribute("userId");
 
-        List<AuctionBookOrder> orderList = auctionS.findOrderBySeller(user.getUserId());
+        List<AuctionBookOrder> orderList = auctionS.findOrderBySeller(userId);
         model.addAttribute("orderList", orderList);
-        return "/user/auction/sold";
+        return "/myPage/auction/sold";
     }
 }

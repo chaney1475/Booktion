@@ -2,38 +2,38 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Auction</title>
+    <title th:text="${auctionBook.title}">책 제목</title>
 </head>
 <body>
-<h1>Book Details</h1>
+<h1>책 정보</h1>
 <div>
     <h2 th:text="${auctionBook.title}"></h2>
-    <p><strong>Author:</strong> <span th:text="${auctionBook.author}"></span></p>
+    <p><strong>저자:</strong> <span th:text="${auctionBook.author}"></span></p>
     <p><strong>ISBN:</strong> <span th:text="${auctionBook.isbn}"></span></p>
-    <p><strong>Description:</strong> <span th:text="${auctionBook.description}"></span></p>
-    <p><strong>Publisher:</strong> <span th:text="${auctionBook.publisher}"></span></p>
-    <p><strong>Publication Date:</strong> <span th:text="${#dates.format(auctionBook.pubDate, 'yyyy-MM-dd')}"></span></p>
-    <p><strong>Start Price:</strong> <span th:text="${auctionBook.startPrice}"></span></p>
-    <p><strong>Current Price:</strong> <span th:text="${auctionBook.price}"></span></p>
+    <p><strong>줄거리:</strong> <span th:text="${auctionBook.description}"></span></p>
+    <p><strong>출판사:</strong> <span th:text="${auctionBook.publisher}"></span></p>
+    <p><strong>출판일:</strong> <span th:text="${#dates.format(auctionBook.pubDate, 'yyyy-MM-dd')}"></span></p>
+    <p><strong>시작가:</strong> <span th:text="${auctionBook.startPrice}"></span></p>
+    <p><strong>정가:</strong> <span th:text="${auctionBook.price}"></span></p>
     <img th:src="${auctionBook.imageUrl}" alt="Book Image">
 </div>
 <div>
-    <h2>Bidding Information</h2>
-    <h3>Bid Prices</h3>
+    <h2>경매 현황</h2>
+    <h3>경매가</h3>
     <ul>
         <li th:each="auction : ${bids}">
             <span th:text="${auction.price}"></span>
         </li>
     </ul>
 
-    <h3>Place a Bid</h3>
+    <h3>경매 참여하기</h3>
     <form th:action="@{/auction/placeBid}" method="post">
         <input type="hidden" name="bookId" th:value="${auctionBook.id}">
 
         <label for="bidAmount">Bid Amount:</label>
         <input type="text" id="bidAmount" name="bidAmount"><br>
 
-        <input type="submit" value="Place Bid">
+        <input type="submit" value="입찰하기">
     </form>
 </div>
 </body>

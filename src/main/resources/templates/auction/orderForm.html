@@ -7,7 +7,20 @@
 <body>
 <h1>Order Form</h1>
 
-<form th:action="@{/auction/order/{bookId}}" method="post">
+
+<!-- 책 정보 표시 -->
+<div>
+    <h2>주문 하실 책</h2>
+    <div>
+        <img th:src="${tempOrder.bookInfo.image}" alt="Book Image" width="200">
+    </div>
+    <div>
+        <h3>Title: <span th:text="${tempOrder.bookInfo.title}"></span></h3>
+        <h3>Price: <span th:text="${tempOrder.bookInfo.price}"></span>원</h3>
+    </div>
+</div>
+
+<form th:action="@{/auction/order/{tempOrderId}}" method="post" th:object="${tempOrder}">
     <!-- 배송지 -->
     <h2>Shipping Address</h2>
     <input type="radio" name="shippingOption" value="same" > 고객의 기본 주소로 배송하기 <br>

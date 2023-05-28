@@ -1,6 +1,6 @@
 package com.project.Booktion.controller.usedBook;
 
-import com.project.Booktion.model.UsedBookOrder;
+import com.project.Booktion.model.Order;
 import com.project.Booktion.service.UsedBookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ public class SoldUsedController {
     @GetMapping("/myPage/used/sold")
     public String getSellingUsedBooks(@PathVariable("memberId") String memberId, Model model) {
         //판매완료된 중고책 목록을 가져온다.
-        List<UsedBookOrder> soldUsedBooks = usedBookService.getSoldUsedBooks(memberId);
+        List<Order> soldUsedBooks = usedBookService.getSoldUsedBooks(memberId);
         model.addAttribute("soldUsedBooks", soldUsedBooks);
         return "myPage/used/sold";
     }

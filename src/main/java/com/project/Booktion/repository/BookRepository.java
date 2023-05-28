@@ -26,5 +26,4 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
 //    long count();
 
-
 }

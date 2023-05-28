@@ -19,7 +19,6 @@ public class AuctionBookOrder implements Serializable {
     @OneToOne
     @JoinColumn(name="bidId")
     private Bid bid;
-    private int bidId;
 
     public int getAuctionOrderId() {
         return auctionOrderId;
@@ -53,11 +52,4 @@ public class AuctionBookOrder implements Serializable {
         this.bid = bid;
     }
 
-    public int getBidId() {
-        return bidId;
-    }
-
-    public void setBidId(int bidId) {
-        this.bidId = bidId;
-    }
 }

@@ -16,10 +16,12 @@ spring:
       poolName: HikariPool
   profiles:
     active: test
-
   devtools:
     livereload:
       enabled: 'true'
+  mvc:
+   interceptor:
+    include: /**
 
 server:
   port: 8080

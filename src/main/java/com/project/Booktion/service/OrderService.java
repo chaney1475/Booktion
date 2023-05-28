@@ -12,7 +12,7 @@ public class OrderService {
         return null;
     }
 
-    public Order findById(String userId) {
+    public Order findById(long userId) {
         return null;
     }
 

@@ -11,10 +11,10 @@ public class Address {
     public Address() {
     }
 
-    public Address(String zipcode, String address1, String address) {
+    public Address(String zipcode, String address1, String address2) {
         this.zipcode = zipcode;
         this.address1 = address1;
-        this.address2 = address;
+        this.address2 = address2;
     }
 
     public String getZipcode() {

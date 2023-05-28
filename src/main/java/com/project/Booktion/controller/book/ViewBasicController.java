@@ -24,9 +24,9 @@ public class ViewBasicController {
     private final ReviewService reviewService;
 
     @GetMapping("/{id}")
-    public String viewBook(@PathVariable("id") String bookId, Model model) {
+    public String viewBook(@PathVariable("id") long bookId, Model model) {
         //책 상세페이지로 이동, 책이 없으면 noBook 페이지로 이동
-        Book book = bookService.findById(bookId);
+        Book book = bookService.findByIdAndBookType(bookId, 0); // 북타입이 일반책인 것만으로 조건 추가
         if(book == null) {
             return "noBook";
         }
@@ -36,16 +36,19 @@ public class ViewBasicController {
         List<Review> reviews = reviewService.getReviewsByBook(book);
         model.addAttribute("reviews", reviews);
 
+        // 리뷰 등록을 위한 빈 Review 객체도 모델에 추가
+        model.addAttribute("review", new Review());
+
         return "bookInfo";
     }
 
     @PostMapping("/review") // 추가: 리뷰 작성 처리를 위한 POST 요청 핸들러
-    public String addReview(@RequestParam("bookId") String bookId, @ModelAttribute("review") Review review, BindingResult result, Model model) {
+    public String addReview(@RequestParam("bookId") long bookId, @ModelAttribute("review") Review review, BindingResult result, Model model) {
 //        if (result.hasErrors()) {
 //            // 에러 처리 로직 추가
 //        }
 
-        Book book = bookService.findById(bookId);
+        Book book = bookService.findByIdAndBookType(bookId, 0); //일반책만 나오게
         if (book == null) {
             return "noBook";
         }

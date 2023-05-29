@@ -17,7 +17,7 @@ public class UsedBook implements Serializable {
     private int status;
 
     @ManyToOne
-    @JoinColumn(name = "bookId")
+    @JoinColumn(name = "book_id")
     private Book book;
 
     private String shippingCompany;

@@ -11,13 +11,13 @@ public class AuctionBookOrder implements Serializable {
     @SequenceGenerator(name = "auction_book_order_seq_generator", sequenceName = "AUCTION_BOOK_ORDER_SEQ")
     private int auctionOrderId;
     @OneToOne
-    @JoinColumn(name="orderId")
+    @JoinColumn(name="order_id")
     private Order order;
     @OneToOne
-    @JoinColumn(name="auctionBookId")
+    @JoinColumn(name="auction_book_id")
     private AuctionBook auctionBook;
     @OneToOne
-    @JoinColumn(name="bidId")
+    @JoinColumn(name="bid_id")
     private Bid bid;
 
     public int getAuctionOrderId() {

@@ -13,11 +13,11 @@ public class Bid implements Serializable {
     private long bidId;
 
     @ManyToOne
-    @JoinColumn(name = "auctionBookId")
+    @JoinColumn(name = "auction_book_id")
     private AuctionBook auctionBook;
 
     @Column
-    @JoinColumn(name = "clientId")
+    @JoinColumn(name = "client_id")
     private String bidderId;
 
     public int getPrice() {

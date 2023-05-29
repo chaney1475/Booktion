@@ -20,7 +20,7 @@ public class Book implements Serializable {
     private String publisher;
     private Date pubDate;
     @ManyToOne //다대일 관계가 맞을까.. 한방향으로 해도 될까..
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "seller_id")
     private User user;
 
     /*getter & setter*/

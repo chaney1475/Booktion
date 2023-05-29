@@ -7,7 +7,7 @@ import java.io.Serializable;
 @Table(name="clients")
 public class User implements Serializable {
     @Id
-    @Column(name="clientId")
+    @Column(name="client_id")
     private String userId;
     private String password;
     private String name;

@@ -1,5 +1,6 @@
 package com.project.Booktion.controller.usedBook;
 
+import com.project.Booktion.model.Book;
 import com.project.Booktion.model.UsedBook;
 import com.project.Booktion.service.UsedBookService;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,7 @@ public class ViewUsedController {
     @RequestMapping("/main")
     public String showUsedMain(Model model){
         //중고책 메인화면으로 이동
-        List<UsedBook> bookList = usedBookService.getAllUsedBookList();
+        List<Book> bookList = usedBookService.getAllUsedBookList(2);
         return "used/usedMain";
     }
 }

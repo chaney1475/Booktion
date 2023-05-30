@@ -1,7 +1,5 @@
 package com.project.Booktion.model;
 
-import org.springframework.data.annotation.Id;
-
 import javax.persistence.*;
 
 @Entity
@@ -10,18 +8,18 @@ public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_item_seq")
     @SequenceGenerator(name = "order_item_seq", sequenceName = "ORDER_ITEM_SEQ", allocationSize = 1)
-    @Column(name = "orderItemId")
+    @Column(name = "order_item_id")
     private Long orderItemId;
 
     @ManyToOne
-    @JoinColumn(name = "orderId")
+    @JoinColumn(name = "order_id")
     private Order order;
 
     @Column(name = "quantity")
     private int quantity;
 
     @ManyToOne
-    @JoinColumn(name = "bookId")
+    @JoinColumn(name = "book_id")
     private Book book;
 
     public Long getOrderItemId() {

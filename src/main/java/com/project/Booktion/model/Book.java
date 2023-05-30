@@ -36,19 +36,9 @@ public class Book implements Serializable {
     @JsonProperty("contents")
     private String description;
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     @ManyToOne //다대일 관계가 맞을까.. 한방향으로 해도 될까..
     @JoinColumn(name = "seller_id")
     private User user;
-
-    private String description;
 
     /*getter & setter*/
     public long getBookId() {

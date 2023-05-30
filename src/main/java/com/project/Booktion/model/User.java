@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class User implements Serializable {
     @Id
     @Column(name="client_id")
-    private Long userId;
+    private String userId;
     private String password;
     private String name;
     private String email;
@@ -16,11 +16,11 @@ public class User implements Serializable {
     @Embedded
     private Address address;
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

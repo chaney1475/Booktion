@@ -37,12 +37,13 @@ public class RegistAuctionController {
         Book bookByISBN = getBookByISBN(books, selectedISBN);
 
         bookByISBN.setBookType(bookType);
-        User user = userRepository.findByUserId((Long) request.getAttribute("userId"));
+        User user = userRepository.findByUserId((String) request.getAttribute("userId"));
         if(user != null){
             bookByISBN.setUser(user);
         }else{
             System.out.println("user error: no user");
         }
+
         AuctionBook auctionBook = new AuctionBook();
         auctionBook.setBook(bookByISBN);
 

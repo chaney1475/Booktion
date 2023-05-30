@@ -24,12 +24,7 @@ public class SearchBookWithAPI {
     }
     @PostMapping("/{bookType}")
     public String searchBook(@RequestParam String keyword, Model model, @PathVariable String bookType) {
-        if(bookType == "used"){
-            model.addAttribute("bookType", 2);
-        }
-        else{
-            model.addAttribute("bookType", 3);
-        }
+        model.addAttribute(bookType);
         List<Book> books = bookApiService.getBooksByTitle(keyword);
         model.addAttribute("books", books);
         return "searchApi";

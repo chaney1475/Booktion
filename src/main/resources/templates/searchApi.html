@@ -76,7 +76,7 @@
 
   <div th:if="${books}">
     <h2>검색 결과</h2>
-    <form method="post" action="/">
+    <form method="post" action="/${bookType}/selected">
       <div th:each="book : ${books}" class="card">
         <div class="card-body">
           <img class="book-image" th:src="${book.imageUrl}" alt="Book Image">
@@ -90,6 +90,10 @@
               <strong>출간일:</strong> <span th:text="${#dates.format(book.pubDate, 'yyyy-MM-dd')}">출간일 없음</span><br/>
               <strong>설명:</strong> <span th:text="${book.description}">설명 없음</span>
             </p>
+            <div>
+              <input type="radio" th:id="'book-' + ${book.isbn}" th:name="selectedBook" th:value="${book.isbn}" />
+              <label th:for="'book-' + ${book.isbn}">선택</label>
+            </div>
           </div>
         </div>
       </div>

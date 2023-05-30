@@ -60,12 +60,12 @@ public class AuctionBookService {
         return auctionBooks;
     }
 
-    public List<AuctionBook> findSellingAuctionById(Long id) {
+    public List<AuctionBook> findSellingAuctionById(String id) {
         List<AuctionBook> sellingBooks = new ArrayList<>();
         return sellingBooks;
     }
 
-    public List<AuctionBook> findSoldAuctionById(Long id) {
+    public List<AuctionBook> findSoldAuctionById(String id) {
         List<AuctionBook> soldBooks = new ArrayList<>();
         return soldBooks;
     }

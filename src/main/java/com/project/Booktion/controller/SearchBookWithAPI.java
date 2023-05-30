@@ -16,18 +16,22 @@ import java.util.List;
 @RequestMapping("/search")
 public class SearchBookWithAPI {
     final private BookApiService bookApiService;
-    @GetMapping
-    public String searchBook(@RequestParam String keyword, Model model) {
-        List<Book> books = bookApiService.getBooksByTitle(keyword);
-        for (Book book : books) {
-            System.out.println("Title: " + book.getTitle());
-            System.out.println("Author: " + book.getAuthor());
-            System.out.println("ISBN: " + book.getIsbn());
-            System.out.println("Publisher: " + book.getPublisher());
-            System.out.println("Publication Date: " + book.getPubDate());
-            System.out.println("----------------------------------");
+
+    @GetMapping("/{bookType}")
+    public String searchBook( Model model, @PathVariable String bookType) {
+        model.addAttribute("bookType",bookType);
+        return "searchApi";
+    }
+    @PostMapping("/{bookType}")
+    public String searchBook(@RequestParam String keyword, Model model, @PathVariable String bookType) {
+        if(bookType == "used"){
+            model.addAttribute("bookType", 2);
         }
+        else{
+            model.addAttribute("bookType", 3);
+        }
+        List<Book> books = bookApiService.getBooksByTitle(keyword);
         model.addAttribute("books", books);
-        return "searchResultForApi";
+        return "searchApi";
     }
 }

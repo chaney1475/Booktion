@@ -3,38 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${auctionBook.title}">책 제목</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 900px;
+        }
+
+        .card {
+            border: 2px solid #b2d8e5;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .card-body {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .book-image {
+            flex-shrink: 0;
+            width: 150px;
+            margin-right: 20px;
+        }
+
+        .book-title {
+            font-family: 'Nanum Gothic', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .book-info {
+            font-family: 'Nanum Gothic', sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .form-group.row {
+            margin-bottom: 20px;
+        }
+
+        .col-form-label {
+            font-family: 'Nanum Gothic', sans-serif;
+        }
+
+        .form-control {
+            font-family: 'Nanum Gothic', sans-serif;
+        }
+
+        button[type="submit"] {
+            margin-top: 20px;
+            font-family: 'Nanum Gothic', sans-serif;
+            background-color: #b2d8e5;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: 2px solid #b2d8e5;
+        }
+
+        .auction-info {
+            background-color: #b2d8e5;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .auction-info h4, .auction-info p {
+            color: #fff;
+            margin: 0;
+        }
+
+        .auction-info ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin-top: 0;
+        }
+
+        .auction-info li {
+            color: #fff;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .auction-form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .auction-form label {
+            font-size: 18px;
+            color: #fff;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .auction-form input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .auction-form input[type="submit"] {
+            background-color: #b2d8e5;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: 2px solid #b2d8e5;
+        }
+    </style>
 </head>
 <body>
-<h1>책 정보</h1>
-<div>
-    <h2 th:text="${auctionBook.title}"></h2>
-    <p><strong>저자:</strong> <span th:text="${auctionBook.author}"></span></p>
-    <p><strong>ISBN:</strong> <span th:text="${auctionBook.isbn}"></span></p>
-    <p><strong>줄거리:</strong> <span th:text="${auctionBook.description}"></span></p>
-    <p><strong>출판사:</strong> <span th:text="${auctionBook.publisher}"></span></p>
-    <p><strong>출판일:</strong> <span th:text="${#dates.format(auctionBook.pubDate, 'yyyy-MM-dd')}"></span></p>
-    <p><strong>시작가:</strong> <span th:text="${auctionBook.startPrice}"></span></p>
-    <p><strong>정가:</strong> <span th:text="${auctionBook.price}"></span></p>
-    <img th:src="${auctionBook.imageUrl}" alt="Book Image">
-</div>
-<div>
-    <h2>경매 현황</h2>
-    <h3>경매가</h3>
-    <ul>
-        <li th:each="auction : ${bids}">
-            <span th:text="${auction.price}"></span>
-        </li>
-    </ul>
-
-    <h3>경매 참여하기</h3>
-    <form th:action="@{/auction/placeBid}" method="post">
-        <input type="hidden" name="bookId" th:value="${auctionBook.id}">
-
-        <label for="bidAmount">Bid Amount:</label>
-        <input type="text" id="bidAmount" name="bidAmount"><br>
-
-        <input type="submit" value="입찰하기">
-    </form>
+<div class="container">
+    <h1>책 정보</h1>
+    <div style="display: flex;">
+        <img class="book-image" th:src="${auctionBook.imageUrl}" alt="Book Image">
+        <div>
+            <h2 class="book-title" th:text="${auctionBook.title}"></h2>
+            <p class="book-info"><strong>저자:</strong> <span th:text="${auctionBook.author}"></span></p>
+            <p class="book-info"><strong>ISBN:</strong> <span th:text="${auctionBook.isbn}"></span></p>
+            <p class="book-info"><strong>줄거리:</strong> <span th:text="${auctionBook.description}"></span></p>
+            <p class="book-info"><strong>출판사:</strong> <span th:text="${auctionBook.publisher}"></span></p>
+            <p class="book-info"><strong>출판일:</strong> <span th:text="${#dates.format(auctionBook.pubDate, 'yyyy-MM-dd')}"></span></p>
+            <p class="book-info"><strong>시작가:</strong> <span th:text="${auctionBook.startPrice}"></span></p>
+            <p class="book-info"><strong>정가:</strong> <span th:text="${auctionBook.price}"></span></p>
+        </div>
+    </div>
+    <div class="auction-info">
+        <h4>경매 현황</h4>
+        <ul>
+            <li th:each="auction : ${bids}" class="auction-price" th:text="${auction.price}"></li>
+        </ul>
+    </div>
+    <div class="auction-info">
+        <h4>경매 참여하기</h4>
+        <form class="auction-form" th:action="@{/auction/placeBid}" method="post">
+            <input type="hidden" name="bookId" th:value="${auctionBook.id}">
+            <label for="price">경매가:</label>
+            <input type="text" id="price" name="bidAmount">
+            <input type="submit" value="입찰하기">
+        </form>
+    </div>
 </div>
 </body>
 </html>

@@ -33,7 +33,7 @@ public class ViewAuctionController {
         model.addAttribute("book", book);
         List<Bid> bids = auctionS.getAuction();
         model.addAttribute("auctions", bids);
-        return "/auction/book";
+        return "auction/book";
     }
 
     @GetMapping("/selling") // userId 읽고 user가 경매중인 책

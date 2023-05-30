@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Book Search</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>등록할 도서 검색</h1>
+<form action="#" th:action="@{/search/{keyword}(keyword=${keyword})}" method="get">
+  <input type="text" th:name="keyword" placeholder="검색어를 입력하세요"/>
+  <button type="submit">검색</button>
+</form>
+</body>
+</html>

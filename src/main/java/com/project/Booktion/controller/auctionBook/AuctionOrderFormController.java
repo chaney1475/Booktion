@@ -31,6 +31,7 @@ public class AuctionOrderFormController {
     @GetMapping("/{tempOrderId}")
     public String newOrder(HttpServletRequest request, @PathVariable("tempOrderId") Long tempOrderId, Model model) throws NotFoundException {
 
+        AuctionBook auctionBook = new AuctionBook();
         // tempOrderId를 사용하여 TempOrder를 조회하고 필요한 데이터를 모델에 담음
         TempOrder tempOrder = biddingS.findTempOrder(tempOrderId);
 

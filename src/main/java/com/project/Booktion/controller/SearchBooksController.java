@@ -22,15 +22,6 @@ import java.util.List;
 public class SearchBooksController {
     private final SearchBookService searchBookService;
 
-    @GetMapping
-    public String searchBooks(String keyword, Model model) {
-        List<Book> searchList = searchBookService.search(keyword);
-
-        model.addAttribute("searchList", searchList);
-
-        return "searchList";
-    }
-
     @GetMapping("/usedForm")
     public String searchForUsedForm(@RequestParam String type,
                                     @RequestParam String keyword,

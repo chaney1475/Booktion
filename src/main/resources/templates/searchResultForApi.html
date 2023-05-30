@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/baseLayout}">
+<head>
+    <title>도서 검색 결과</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+</head>
+<body>
+<div class="container">
+    <h1 class="my-4">Book Search Results</h1>
+    <div th:each="book : ${books}" class="card mb-4">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img th:src="${book.imageUrl}" class="card-img" alt="Book Image" />
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${book.title}">책 제목</h5>
+                    <p class="card-text">
+                        <strong>ISBN:</strong> <span th:text="${book.isbn}">ISBN</span><br/>
+                        <strong>저자:</strong> <span th:text="${book.author}">저자</span><br/>
+                        <strong>출판사:</strong> <span th:text="${book.publisher}">출판사</span><br/>
+                        <strong>출판일:</strong> <span th:text="${#dates.format(book.pubDate, 'yyyy-MM-dd')}">출판일</span><br/>
+                        <strong>설명:</strong> <span th:utext="${book.description}"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- 책을 선택하는 form -->
+        <form th:action="@{/selected}" th:method="post">
+            <!-- 선택된 책의 정보를 숨은 필드로 전송 -->
+            <input type="hidden" th:field="*{selectedBook.bookId}" th:value="${book.bookId}" />
+            <div class="form-group row">
+                <label for="deliveryCompany" class="col-sm-2 col-form-label">배송사:</label>
+                <div class="col-sm-10">
+                    <select id="deliveryCompany" name="deliveryCompany" class="form-control">
+                        <option value="company1">대한통운cj</option>
+                        <option value="company2">로젠택배</option>
+                        <option value="company3">우체국택배</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="price" class="col-sm-2 col-form-label">가격:</label>
+                <div class="col-sm-10">
+                    <input type="text" id="price" name="price" class="form-control" required>
+                </div>
+            </div>
+            <button type="submit">선택</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

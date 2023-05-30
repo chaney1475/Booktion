@@ -7,9 +7,18 @@ import com.project.Booktion.model.Order;
 import java.util.List;
 
 public class OrderForm {
-    //일반책 OrderForm command class
     private List<BookForm> books;
+    private List<Long> selectedCartItemIds;
     private Order order;
+
+    public OrderForm(List<BookForm> books) {
+        this.books = books;
+        this.order = new Order();
+    }
+
+    public OrderForm() {
+        this.order = new Order();
+    }
 
     public List<BookForm> getBooks() {
         return books;
@@ -17,6 +26,14 @@ public class OrderForm {
 
     public void setBooks(List<BookForm> books) {
         this.books = books;
+    }
+
+    public List<Long> getSelectedCartItemIds() {
+        return selectedCartItemIds;
+    }
+
+    public void setSelectedCartItemIds(List<Long> selectedCartItemIds) {
+        this.selectedCartItemIds = selectedCartItemIds;
     }
 
     public Order getOrder() {
@@ -27,13 +44,6 @@ public class OrderForm {
         this.order = order;
     }
 
-    public OrderForm(List<BookForm> books) {
-        this.books = books;
-    }
-
-    public OrderForm() {
-    }
-
     public void calculateTotalOrderPrice() {
         int totalOrderPrice = 0;
         for (BookForm bookForm : books) {
@@ -42,3 +52,4 @@ public class OrderForm {
         order.setPrice(totalOrderPrice);
     }
 }
+

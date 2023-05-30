@@ -42,4 +42,9 @@ public class Cart implements Serializable {
         this.clientId = clientId;
     }
 
+    public Cart(long cartId, String clientId, List<CartItem> cartItemList) {
+        this.cartId = cartId;
+        this.clientId = clientId;
+        this.cartItemList = cartItemList;
+    }
 }

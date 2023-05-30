@@ -19,7 +19,7 @@ public class BookService {
         return null;
     }
 
-    public Book findByIdAndBookType(long bookId, int i) {
+    public Book findByBookIdAndBookType(long bookId, int i) {
         return bookRepository.findByBookIdAndBookType(bookId, i);
     }
 }

@@ -26,7 +26,7 @@ public class ViewBasicController {
     @GetMapping("/{id}")
     public String viewBook(@PathVariable("id") long bookId, Model model) {
         //책 상세페이지로 이동, 책이 없으면 noBook 페이지로 이동
-        Book book = bookService.findByIdAndBookType(bookId, 0); // 북타입이 일반책인 것만으로 조건 추가
+        Book book = bookService.findByBookIdAndBookType(bookId, 1); // 북타입이 일반책인 것만으로 조건 추가
         if(book == null) {
             return "noBook";
         }
@@ -48,7 +48,7 @@ public class ViewBasicController {
 //            // 에러 처리 로직 추가
 //        }
 
-        Book book = bookService.findByIdAndBookType(bookId, 0); //일반책만 나오게
+        Book book = bookService.findByBookIdAndBookType(bookId, 1); //일반책만 나오게
         if (book == null) {
             return "noBook";
         }

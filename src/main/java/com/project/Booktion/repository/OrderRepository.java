@@ -1,6 +1,7 @@
 package com.project.Booktion.repository;
 
 import com.project.Booktion.model.Order;
+import com.project.Booktion.model.OrderItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -11,7 +12,11 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Order, Long> {
     Order save(Order order); //주문 생성
 
-    //void createOrder(Order order);
+    Order findByOrderId(long orderId);
+
+    // 주문 ID를 기반으로 주문에 속한 OrderItem들을 조회
+//    List<OrderItem> findOrderItemsByOrderId(Long orderId);
+
 
     // Book과 조인하여 Order를 조회하는 메서드
     @Query(value="SELECT o FROM Order o JOIN FETCH o.book WHERE o.id = :orderId", nativeQuery = true)

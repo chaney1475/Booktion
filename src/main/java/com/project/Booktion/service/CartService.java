@@ -68,7 +68,7 @@ public class CartService {
     }
 
     public String removeCart(long cartItemId) {
-        cartItemRepository.deleteAllById(cartItemId);
+        cartItemRepository.deleteByCartId(cartItemId);
         return "cart";
     }
 

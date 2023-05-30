@@ -11,25 +11,22 @@ import java.util.List;
 import java.util.Optional;
 
 import com.project.Booktion.model.User;
+import com.project.Booktion.repository.BookRepository;
 import com.project.Booktion.repository.OrderRepository;
 import com.project.Booktion.repository.UsedBookRepository;
 import com.project.Booktion.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
-
+@RequiredArgsConstructor
 @Service
 public class UsedBookService {
     private final UsedBookRepository usedBookRepository;
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
+    private final BookRepository bookRepository;
 
-    @Autowired
-    public UsedBookService(UsedBookRepository usedBookRepository, OrderRepository orderRepository, UserRepository userRepository) {
-        this.usedBookRepository = usedBookRepository;
-        this.orderRepository = orderRepository;
-        this.userRepository = userRepository;
-    }
     public UsedBook getUsedBookById(long bookId) {
         Optional<UsedBook> result = usedBookRepository.findById(bookId);
         if(result.isPresent()) return result.get();
@@ -53,7 +50,7 @@ public class UsedBookService {
         //newOrder.setPrice(); //order시의 정보를 어떻게 가져오는?
         newOrder.setPayment(order.getPayment());
         newOrder.setCard(order.getCard());
-        newOrder.setOrderType("Used Book");//이거 orderType int아니었음?
+        newOrder.setOrderType(2);
 
         // Order 엔티티 저장
         orderRepository.save(newOrder);
@@ -86,12 +83,17 @@ public class UsedBookService {
         return null;
     }
 
-
-    public List<UsedBook> getSoldUsedBooks(String memberId) {
-        return usedBookRepository.findByStatusAndBook_User_SellerId(1, memberId);
+    public List<UsedBook> getSellingUsedBooks(String memberId) {
+        return usedBookRepository.findByStatusAndBook_User_UserId(0, memberId);
     }
 
-    public List<UsedBook> getAllUsedBookList() {
-        return usedBookRepository.findAll();
+
+    public List<Order> findOrderBySeller(String memberId) {
+        //return orderRepository.findByUserUserIdAndOrderTypeAndBookBookTypeAndBookStatus(memberId, 2, 2, 1);
+        return null;
+    }
+
+    public List<Book> getAllUsedBookList(int bookType) {
+        return bookRepository.findByBookType(bookType);
     }
 }

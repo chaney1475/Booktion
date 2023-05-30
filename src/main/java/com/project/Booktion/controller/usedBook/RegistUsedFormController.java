@@ -1,6 +1,7 @@
 package com.project.Booktion.controller.usedBook;
 
 import com.project.Booktion.model.UsedBook;
+import com.project.Booktion.model.User;
 import com.project.Booktion.service.UsedBookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 @Slf4j // 로그 찍는 기능
 @Controller
-@RequestMapping("/used/registFrom")
+@RequestMapping("/used/registForm")
 @RequiredArgsConstructor
 @SessionAttributes("RegistUsedForm")
 public class RegistUsedFormController {
@@ -24,10 +25,11 @@ public class RegistUsedFormController {
     }
 
     @GetMapping
-    public String newForm(@RequestParam int sellerId,
+    public String newForm(@SessionAttribute("user") User user,
                           @ModelAttribute("usedBookRegist") UsedBookRegist usedBookRegist){
         //중고책 등록 폼 생성
-        usedBookRegist.setSellerId(sellerId);
+        log.info("RegsitUsedFormController getMapping newForm start!!");
+        usedBookRegist.setSellerId(user.getUserId());
         return "used/registForm";
     }
 

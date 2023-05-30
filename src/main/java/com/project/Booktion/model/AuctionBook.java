@@ -19,7 +19,7 @@ public class AuctionBook implements Serializable {
     private int status;
 
     @ManyToOne
-    @JoinColumn(name = "bookId")
+    @JoinColumn(name = "book_id")
     private Book book;
     @Column
     private String shippingCompany;

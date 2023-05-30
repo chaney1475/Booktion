@@ -1,31 +1,121 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
+    <meta charset="UTF-8">
     <title>Home</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nanum Gothic', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #b2d8e5;
+            color: #f2f2f2;
+            padding: 10px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .navbar a {
+            margin-right: 10px;
+            color: #f2f2f2;
+            text-decoration: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            background-color: #b2d8e5;
+        }
+
+        .navbar a:hover {
+            background-color: #70a9bd;
+            color: #f2f2f2;
+        }
+
+        .search-form {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            border: 2px solid #b2d8e5;
+            border-radius: 10px;
+            padding: 10px;
+            width: 920px;
+            margin: 0 auto;
+        }
+
+        .search-box select,
+        .search-box input[type="text"],
+        .search-box button {
+            padding: 8px;
+            font-size: 16px;
+            border: none;
+            background-color: transparent;
+            color: #000;
+            outline: none;
+        }
+
+        .search-box select {
+            margin-right: 10px;
+        }
+
+        .search-box input[type="text"] {
+            flex-grow: 1;
+            background-color: #fff;
+            border: none;
+        }
+
+        .search-box button {
+            background-color: #b2d8e5;
+            color: #000;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .search-box button:hover {
+            background-color: #70a9bd;
+        }
+    </style>
 </head>
 
 <body>
-    <form action="/search" method="post">
-        <div>
-            <select id="type" name="type">
-                <option value="book">일반도서</option>
-                <option value="used">중고 책</option>
-                <option value="auction">경매 책</option>
-            </select>
-            <input type="text" id="query" name="query" required>
-            <button type="submit">Search</button>
-        </div>
-        <div class="book-list">
-            <div th:each="book : ${bookList}" class="book-item">
-                <div class="book-title" th:text="${book.title}"></div>
-                <div class="book-author" th:text="${book.author}"></div>
-            </div>
-        </div>
-    </form>
-    <a th:href="@{/auction/order/{orderId}(orderId=1)}">주문 페이지로 이동</a><br>
-    <a th:href="@{/used/registForm}">usedRegistForm</a><br>
-    <a th:href="@{/used/main}">중고도서</a><br>
-    <a th:href="@{/search/auction}">도서 검색 api</a>
+<div class="navbar">
+    <a href="#" th:if="${userId == null}">로그인</a>
+    <a href="#" th:if="${userId != null}">로그아웃</a>
+    <a href="#">마이페이지</a>
+    <a href="#">장바구니</a>
+</div>
+
+<form class="search-form" action="/search" method="post">
+    <div class="search-box">
+        <select id="type" name="type">
+            <option value="book">일반도서</option>
+            <option value="used">중고 책</option>
+            <option value="auction">경매 책</option>
+        </select>
+        <input type="text" id="query" name="query" required style="color: #000;">
+        <button type="submit">Search</button>
+    </div>
+</form>
+
+<div class="book-list">
+    <div th:each="book : ${bookList}" class="book-item">
+        <div class="book-title" th:text="${book.title}"></div>
+        <div class="book-author" th:text="${book.author}"></div>
+    </div>
+</div>
+
+<a href="/auction/order/1">주문 페이지로 이동</a><br>
+<a href="/used/registForm">usedRegistForm</a><br>
+<a href="/used/main">중고도서</a><br>
+<a href="/search/auction">도서 검색 api</a>
 </body>
+
 </html>

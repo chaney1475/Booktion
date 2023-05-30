@@ -1,7 +1,9 @@
 package com.project.Booktion.controller.user;
 
 import com.project.Booktion.model.User;
+import com.project.Booktion.repository.UserRepository;
 import com.project.Booktion.service.UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,13 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j // 로그 찍는 기능
 @Controller
 @RequestMapping("/user")
+@RequiredArgsConstructor
 public class SignFormController { // 회원가입
-    private final UserService userService;
-
-    public SignFormController(UserService userService) {
-        this.userService = userService;
-    }
-
+    private final UserRepository userRepository;
     @GetMapping("/signup")
     public String showSignUpForm(Model model) {
         model.addAttribute("user", new User());
@@ -29,8 +27,8 @@ public class SignFormController { // 회원가입
 
     @PostMapping("/signup")
     public String processSignupForm(@ModelAttribute("user") User user, Model model) {
-        userService.registerUser(user);
-        model.addAttribute("successMessage", "회원가입이 완료되었습니다!");
+        User save = userRepository.save(user);
+        model.addAttribute("name", save.getName());
         return "signupSuccess";
     }
 }

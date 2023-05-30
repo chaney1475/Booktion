@@ -13,27 +13,27 @@ import javax.servlet.http.HttpSession;
 
 @Slf4j // 로그 찍는 기능
 @Controller
-@RequestMapping("/login")
+@RequestMapping("/signIn")
 @RequiredArgsConstructor
-@SessionAttributes("user")
 public class LoginFormController {
 
     private UserService userService;
     @GetMapping
-    public String showLoginForm() {
-        return "login";
+    public String signIn() {
+        return "signIn";
     }
 
     @PostMapping
-    public String processLogin(@RequestParam String username, @RequestParam String password, Model model) {
+    public String processLogin(@RequestParam String username, @RequestParam String password, Model model, HttpSession session) {
         User user = userService.authenticateUser(username, password);
         if (user != null) {
             // 로그인 성공 시 모델 객체에 사용자 정보 저장
-            model.addAttribute("user", user);
+            String userId = user.getUserId();
+            session.setAttribute("userId",userId);
             return "redirect:/main"; // 로그인 성공 시 리다이렉트할 URL
         } else {
-            model.addAttribute("error", "Invalid username or password");
-            return "login"; // 로그인 폼으로 돌아가기
+            model.addAttribute("error", "로그인에 실패하였습니다 다시 시도해 주세요");
+            return "signIn"; // 로그인 폼으로 돌아가기
         }
     }
 

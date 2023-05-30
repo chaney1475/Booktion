@@ -13,4 +13,18 @@ public class UserService {
         User user = new User();
         return user;
     }
+
+    public User registerUser(User userDto) {
+        return null;
+    }
+
+    public User getUserById(String userId) {
+        return null;
+    }
+
+    public void updateUser(String userId, User user) {
+    }
+
+    public void deleteUser(String userId) {
+    }
 }

@@ -3,6 +3,7 @@ package com.project.Booktion.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="orders")
@@ -12,7 +13,7 @@ public class Order implements Serializable {
     @SequenceGenerator(name = "order_seq_generator", sequenceName = "ORDER_SEQ")
     private long orderId;
     @ManyToOne
-    @JoinColumn(name="client_id")
+    @JoinColumn(name="clientId")
     private User user;
     @Temporal(TemporalType.DATE)
     private Date orderDate;
@@ -24,6 +25,11 @@ public class Order implements Serializable {
     private String payment;
     private String card;
     private int orderType;
+
+    private String status;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> orderItems;
 
     /*getter & setter*/
     public long getOrderId() {
@@ -100,6 +106,26 @@ public class Order implements Serializable {
 
     public void setOrderType(int orderType) {
         this.orderType = orderType;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+
+    public void addOrderItem(OrderItem orderItem) {
+        orderItems.add(orderItem);
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Order() {

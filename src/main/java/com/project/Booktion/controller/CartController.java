@@ -2,13 +2,16 @@ package com.project.Booktion.controller;
 
 import com.project.Booktion.model.Book;
 import com.project.Booktion.model.Cart;
+import com.project.Booktion.model.CartItem;
+import com.project.Booktion.repository.BookRepository;
+import com.project.Booktion.repository.CartItemRepository;
+import com.project.Booktion.repository.CartRepository;
 import com.project.Booktion.service.CartService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,20 +19,27 @@ import java.util.List;
 @RequestMapping("/cart")
 @RequiredArgsConstructor
 public class CartController {
+
     private final CartService cartService;
-    public String cartList(Model model){
-        List<Book> carts = cartService.findAll(); // 카트에 담긴 책 리스트를 보여줌
-        // 여기서 findAll이 맞는지 모르겠어요..
 
-        //@PostMapping("/cart/{clientId}/{bookId}")
-        //public String addCartItem(@PathVariable("clientId") Integer clientId, )
+    @PostMapping("{cartId}/add")
+    public String  addCart(@PathVariable long cartId, @RequestBody CartItem cartItem, Model model) {
 
-        if(carts.isEmpty()) {
-            model.addAttribute("error", "장바구니가 비어있습니다.");
-            return "cart";
-        }
-        model.addAttribute("carts", carts);
-        return "order"; // 주문화면으로 넘어가기
+        cartService.addCartItem(cartId, cartItem, model);
+        return "cart";
+    }
+
+    @DeleteMapping("/{cartItemId}/remove")
+    public String removeCart(@PathVariable long cartItemId) {
+
+        cartService.removeCartItem(cartItemId);
+        return "cart";
+    }
+
+    @PutMapping("/{cartItemId}/quantity")
+    public String updateCartItemQuantity(@PathVariable long cartItemId, @RequestParam int quantity) {
+        cartService.updateCartItemQuantity(cartItemId, quantity);
+        return "cart";
     }
 
 }

@@ -1,24 +1,77 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/baseLayout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/baseLayout}">
 <head>
     <meta charset="UTF-8">
     <title>Cart List</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        .checkbox-cell {
+            text-align: center;
+        }
+
+         .quantity-input {
+            width: 70px;
+        }
+        .delete-button {
+            text-align: left;
+            margin-top: 10px;
+        }
+        .total-price-container {
+            text-align: right;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <h1>주문내역</h1>
+<h1>주문내역</h1>
+<form th:action="@{/cart/remove}" method="post">
     <table>
         <tr>
+            <th class="checkbox-cell"> </th>
             <th>제품명</th>
             <th>수량</th>
             <th>가격</th>
         </tr>
         <tr th:each="order : ${orders}">
-            <td th:text="${order.title"}></td>
-            <td th:text="${order.quantity"}></td>
-            <td th:text="${order.price"}></td>
+            <td class="checkbox-cell">
+                <input type="checkbox" name="delete" value="${order.cartItemId}" />
+            </td>
+            <td th:text="${order.title}"></td>
+            <td>
+                <form th:action="@{/cart/update}" method="post">
+                    <input type="hidden" th:name="cartItemId" th:value="${order.cartItemId}" />
+                    <input type="number" th:name="quantity" th:value="${order.quantity}" min="1" />
+                    <button type="submit">수정</button>
+                </form>
+            </td>
+            <td th:text="${order.price}"></td>
         </tr>
     </table>
+    <div class="delete-button">
+        <button type="submit">선택한 제품 삭제</button>
+    </div>
+    <div class="total-price-container">
+        총 가격: <span th:text="${totalPrice}"></span>
+    </div>
+</form>
 </body>
 </html>

@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/baseLayout}">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>도서 정보</title>
@@ -17,9 +15,10 @@
         <h3>가격: <span th:text="${book.price}"></span></h3>
         <h3>책 설명: <span th:text="${book.description}"></span></h3>
         <h3>출판사: <span th:text="${book.publisher}"></span></h3>
-        <h3>출판일: <span th:text="${book.pubDate}"></span></h3>
+        <h3>출판일: <span th:text="${#dates.format(book.pubDate, 'yyyy년 MM월 dd일')}"></span></h3>
         <!-- 책 정보 표시 -->
     </div>
+    <div><button>주문하기</button></div>
 
 </body>
 </html>

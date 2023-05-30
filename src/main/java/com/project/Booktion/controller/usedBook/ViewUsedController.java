@@ -22,11 +22,11 @@ public class ViewUsedController {
     @RequestMapping("/bookInfo/{bookId}")
     public String showBookInfo(@PathVariable long bookId, Model model){
         //책 상세페이지로 이동
-        UsedBook book = usedBookService.getUsedBookById(bookId);
-        if(book == null){
+        UsedBook usedBook = usedBookService.getUsedBookById(bookId);
+        if(usedBook == null){
             return "noBook"; //상품이 없다는 페이지로 이동
         }
-        model.addAttribute("book", book);
+        model.addAttribute("book", usedBook.getBook());
         return "used/bookInfo";
     }
 
@@ -34,6 +34,12 @@ public class ViewUsedController {
     public String showUsedMain(Model model){
         //중고책 메인화면으로 이동
         List<Book> bookList = usedBookService.getAllUsedBookList(2);
+        model.addAttribute(bookList);
+
+        //새로 등록된 중고책 list
+        List<Book> newBookList = usedBookService.getNewBookList(2);
+        //특가 기회 list
+        List<Book> saleBookList = usedBookService.getSaleBookList(2);
         return "used/usedMain";
     }
 }

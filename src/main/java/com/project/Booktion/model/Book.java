@@ -48,6 +48,8 @@ public class Book implements Serializable {
     @JoinColumn(name = "seller_id")
     private User user;
 
+    private String description;
+
     /*getter & setter*/
     public long getBookId() {
         return bookId;
@@ -133,9 +135,17 @@ public class Book implements Serializable {
         this.user = user;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Book() { }
 
-    public Book(long bookId, int bookType, String isbn, String title, String author, int price, String imageUrl, String publisher, Date pubDate, User user) {
+    public Book(long bookId, int bookType, String isbn, String title, String author, int price, String imageUrl, String publisher, Date pubDate, User user, String description) {
         this.bookId = bookId;
         this.bookType = bookType;
         this.isbn = isbn;
@@ -146,7 +156,6 @@ public class Book implements Serializable {
         this.publisher = publisher;
         this.pubDate = pubDate;
         this.user = user;
+        this.description = description;
     }
-
-
 }

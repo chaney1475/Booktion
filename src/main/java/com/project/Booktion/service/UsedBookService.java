@@ -96,4 +96,13 @@ public class UsedBookService {
     public List<Book> getAllUsedBookList(int bookType) {
         return bookRepository.findByBookType(bookType);
     }
+
+    public List<Book> getNewBookList(int bookType) {
+        return null;
+
+    }
+
+    public List<Book> getSaleBookList(int bookType) {
+        return null;
+    }
 }

@@ -3,8 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <title>중고도서</title>
+    <style>
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .book-item {
+            width: 25%;
+        }
+    </style>
 </head>
 <body>
+    <div class="top-list">
+        <div class="book-content">
+
+        </div>
+        <div class="button">
+            <!-- 탭 버튼 -->
+            <button class="button-tab" id="new-books">새로 등록된 책</button>
+            <button class="button-tab" id="special-offers">특가 기회</button>
+        </div>
+    </div>
+    <div class="all-list">
+        <ul class="row">
+            <li th:each="book, status: ${bookList}" class="book-item">
+                <a th:href="@{/used/bookInfo/{bookId}(bookId=${book.bookId})}">
+                <div class="book-image">
+                    <img th:src="${book.imageUrl}" />
+                </div>
+                <div class="book-title" th:text="${book.title}"></div>
+                <div class="book-price" th:text="${book.price}"></div>
+
+                <!-- 4개의 책이 출력되었을 때 줄바꿈 -->
+                <div th:if="${status.count % 4 == 0}"></div>
+                </a>
+            </li>
+        </ul>
+    </div>
 
 </body>
 </html>

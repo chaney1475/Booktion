@@ -14,14 +14,14 @@ public class TempOrder implements Serializable {
     private Long auctionBookId;
 
     @OneToOne
-    @JoinColumn(name = "bidId")
+    @JoinColumn(name = "bid_id")
     private Bid bid;
 
-    @Column(name="bidderId")
+    @Column(name="bidder_id")
     private String userId;
 
     @OneToOne
-    @JoinColumn(name = "bookId")
+    @JoinColumn(name = "book_id")
     private Book bookInfo;
 
     // Constructors, getters and setters, etc.

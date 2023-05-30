@@ -11,7 +11,7 @@ public class CartItem implements Serializable {
     @SequenceGenerator(name = "cart_item_seq_generator", sequenceName = "CART_ITEM_SEQ")
     private long cartItemId;
     private long cartId;
-    @JoinColumn(name="bookId")
+    @JoinColumn(name="book_id")
     private Book book;
     private int quantity;
 

@@ -2,17 +2,17 @@ package com.project.Booktion.controller.usedBook;
 
 public class UsedBookRegist {
     //중고책 등록 command
-    private String sellerId;
+    private Long sellerId;
     private String isbn;
     private String title;
     private int price;
     private String company; //배송사
 
-    public String getSellerId() {
+    public Long getSellerId() {
         return sellerId;
     }
 
-    public void setSellerId(String sellerId) {
+    public void setSellerId(Long sellerId) {
         this.sellerId = sellerId;
     }
 

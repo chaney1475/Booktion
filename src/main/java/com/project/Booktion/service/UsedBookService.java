@@ -35,7 +35,7 @@ public class UsedBookService {
 
     public void submitOrderForm(User user, UsedBookOrder order) {
         // 판매자 정보 가져오기
-        User seller = userRepository.findById(user.getUserId()).orElse(null);
+        User seller = userRepository.findByUserId(user.getUserId());
         if (seller == null) {
             throw new IllegalArgumentException("Seller with ID " + user.getUserId() + " does not exist.");
         }

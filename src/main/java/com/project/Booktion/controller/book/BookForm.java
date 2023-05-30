@@ -5,7 +5,7 @@ import com.project.Booktion.model.Book;
 public class BookForm {
     private Book book;
     private int quantity;
-
+    private int price;
     public Book getBook() {
         return book;
     }
@@ -24,5 +24,13 @@ public class BookForm {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

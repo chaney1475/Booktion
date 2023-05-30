@@ -17,7 +17,7 @@
 </head>
 <body>
 <h1>주문에 성공하였습니다. 주문 정보를 확인해주세요.</h1>
-<div th:if="${orderedBooks}">
+<div th:if="${order}">
   <h2>주문 정보</h2>
   <h3>주문한 책 정보: </h3>
   <table>
@@ -25,22 +25,19 @@
       <th></th>
       <th>제목</th>
       <th>수량</th>
-      <th>가격</th>
+      <th>한 권당 가격</th>
     </tr>
-    <tr th:each="bookForm : ${orderedBooks}">
+    <tr th:each="orderItem : ${order.orderItems}">
       <td>
-        <img th:src="${bookForm.book.imageUrl}" alt="책 이미지" width="100" height="150" />
+        <img th:src="${orderItem.book.imageUrl}" alt="책 이미지" width="100" height="150" />
       </td>
-      <td th:text="${bookForm.book.title}"></td>
-      <td th:text="${bookForm.quantity}"></td>
-      <td th:text="${bookForm.price}"></td>
+      <td th:text="${orderItem.book.title}"></td>
+      <td th:text="${orderItem.quantity}"></td>
+      <td th:text="${orderItem.book.price}"></td>
     </tr>
   </table>
-</div>
-<div th:if="${order}">
   <p>주문번호 : <span th:text="${order.orderId}"></span></p>
   <p>이름 : <span th:text="${order.name}"></span></p>
-  <p>이메일 : <span th:text="${order.user.email}"></span></p>
   <p>주소: <span th:text="${order.address.address1}"></span>
     <span th:text="${order.address.address2}"></span></p>
   <p>배송 메시지: <span th:text="${order.shipMessage}"></span></p>

@@ -24,7 +24,7 @@ public class SoldAuctionController {
     AuctionBookService auctionS;
     @GetMapping
     public String SellingList(HttpServletRequest request, Model model){
-        String userId = (String) request.getAttribute("userId");
+        Long userId =  (Long) request.getAttribute("userId");
 
         List<AuctionBookOrder> orderList = auctionS.findOrderBySeller(userId);
         model.addAttribute("orderList", orderList);

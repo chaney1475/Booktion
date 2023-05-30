@@ -25,20 +25,16 @@ public class LoginFormController {
     }
 
     @PostMapping
-    public String processLoginForm(@RequestParam String username, @RequestParam String password, @RequestParam(value="forwardAction", required=false) String forwardAction,Model model) {
+    public String processLogin(@RequestParam String username, @RequestParam String password, Model model) {
         User user = userService.authenticateUser(username, password);
         if (user != null) {
             // 로그인 성공 시 모델 객체에 사용자 정보 저장
             model.addAttribute("user", user);
-            if (forwardAction != null)
-                return "redirect:" + forwardAction;
-            else
-                return "main";
+            return "redirect:/main"; // 로그인 성공 시 리다이렉트할 URL
         } else {
             model.addAttribute("error", "Invalid username or password");
-            return "redirect:" + forwardAction;
+            return "login"; // 로그인 폼으로 돌아가기
         }
     }
-
 
 }

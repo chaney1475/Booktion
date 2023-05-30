@@ -1,24 +1,49 @@
 package com.project.Booktion.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name="book")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_seq_generator")
     @SequenceGenerator(name = "book_seq_generator", sequenceName = "BOOK_SEQ")
     private long bookId;
     private int bookType;
+    @JsonProperty("isbn")
     private String isbn;
+    @JsonProperty("title")
     private String title;
+
     private String author;
+    @JsonProperty("price")
     private int price;
+    @JsonProperty("thumbnail")
     private String imageUrl;
+    @JsonProperty("publisher")
     private String publisher;
+    @JsonProperty("datetime")
     private Date pubDate;
+    @JsonProperty("contents")
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @ManyToOne //다대일 관계가 맞을까.. 한방향으로 해도 될까..
     @JoinColumn(name = "seller_id")
     private User user;
@@ -64,6 +89,10 @@ public class Book implements Serializable {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+    @JsonSetter("authors")
+    public void setAuthor(List<String> authorsList) {
+        this.author = String.join(",", authorsList);
     }
 
     public int getPrice() {

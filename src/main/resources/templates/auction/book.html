@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${auctionBook.title}">책 제목</title>
+    <title th:text="${auctionBook.book.title}">책 제목</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
     <style>
@@ -121,21 +121,32 @@
             border: 2px solid #b2d8e5;
         }
     </style>
+</head><!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${auctionBook.title}">책 제목</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+    <style>
+        /* CSS styles here */
+
+    </style>
 </head>
 <body>
 <div class="container">
     <h1>책 정보</h1>
     <div style="display: flex;">
-        <img class="book-image" th:src="${auctionBook.imageUrl}" alt="Book Image">
+        <img class="book-image" th:src="${auctionBook.book.imageUrl}" alt="Book Image">
         <div>
-            <h2 class="book-title" th:text="${auctionBook.title}"></h2>
-            <p class="book-info"><strong>저자:</strong> <span th:text="${auctionBook.author}"></span></p>
-            <p class="book-info"><strong>ISBN:</strong> <span th:text="${auctionBook.isbn}"></span></p>
-            <p class="book-info"><strong>줄거리:</strong> <span th:text="${auctionBook.description}"></span></p>
-            <p class="book-info"><strong>출판사:</strong> <span th:text="${auctionBook.publisher}"></span></p>
-            <p class="book-info"><strong>출판일:</strong> <span th:text="${#dates.format(auctionBook.pubDate, 'yyyy-MM-dd')}"></span></p>
+            <h2 class="book-title" th:text="${auctionBook.book.title}"></h2>
+            <p class="book-info"><strong>저자:</strong> <span th:text="${auctionBook.book.author}"></span></p>
+            <p class="book-info"><strong>ISBN:</strong> <span th:text="${auctionBook.book.isbn}"></span></p>
+            <p class="book-info"><strong>줄거리:</strong> <span th:text="${auctionBook.book.description}"></span></p>
+            <p class="book-info"><strong>출판사:</strong> <span th:text="${auctionBook.book.publisher}"></span></p>
+            <p class="book-info"><strong>출판일:</strong> <span th:text="${#dates.format(auctionBook.book.pubDate, 'yyyy-MM-dd')}"></span></p>
             <p class="book-info"><strong>시작가:</strong> <span th:text="${auctionBook.startPrice}"></span></p>
-            <p class="book-info"><strong>정가:</strong> <span th:text="${auctionBook.price}"></span></p>
+            <p class="book-info"><strong>정가:</strong> <span th:text="${auctionBook.book.price}"></span></p>
         </div>
     </div>
     <div class="auction-info">
@@ -147,7 +158,7 @@
     <div class="auction-info">
         <h4>경매 참여하기</h4>
         <form class="auction-form" th:action="@{/auction/placeBid}" method="post">
-            <input type="hidden" name="bookId" th:value="${auctionBook.id}">
+            <input type="hidden" name="bookId" th:value="${auctionBook.book.bookId}">
             <label for="price">경매가:</label>
             <input type="text" id="price" name="bidAmount">
             <input type="submit" value="입찰하기">

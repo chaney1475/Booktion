@@ -10,7 +10,7 @@ import java.util.List;
 public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_seq_generator")
-    @SequenceGenerator(name = "order_seq_generator", sequenceName = "ORDER_SEQ")
+    @SequenceGenerator(name = "order_seq_generator", sequenceName = "ORDER_SEQ", allocationSize = 1)
     private long orderId;
     @ManyToOne
     @JoinColumn(name="clientId")

@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class Bid implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bid_seq_generator")
-    @SequenceGenerator(name = "bid_seq_generator", sequenceName = "BID_SEQ")
+    @SequenceGenerator(name = "bid_seq_generator", sequenceName = "BID_SEQ", allocationSize = 1)
     @Column
     private long bidId;
 

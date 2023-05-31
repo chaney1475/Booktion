@@ -8,7 +8,7 @@ public class TempOrder implements Serializable {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "temp_order_seq_generator")
-    @SequenceGenerator(name = "temp_order_seq_generator", sequenceName = "TEMP_ORDER_SEQ")
+    @SequenceGenerator(name = "temp_order_seq_generator", sequenceName = "TEMP_ORDER_SEQ", allocationSize = 1)
     private Long tempOrderId;
 
     @Column

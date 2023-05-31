@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class CartItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cart_item_seq_generator")
-    @SequenceGenerator(name = "cart_item_seq_generator", sequenceName = "CART_ITEM_SEQ")
+    @SequenceGenerator(name = "cart_item_seq_generator", sequenceName = "CART_ITEM_SEQ", allocationSize = 1)
     private long cartItemId;
     private long cartId;
     @JoinColumn(name="book_id")

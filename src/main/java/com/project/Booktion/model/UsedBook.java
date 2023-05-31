@@ -9,7 +9,7 @@ import java.util.Date;
 public class UsedBook implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "used_book_seq_generator")
-    @SequenceGenerator(name = "used_book_seq_generator", sequenceName = "USED_BOOK_SEQ")
+    @SequenceGenerator(name = "used_book_seq_generator", sequenceName = "USED_BOOK_SEQ", allocationSize = 1)
     @Column
     private long usedBookId;
 

@@ -9,7 +9,7 @@ import java.util.Date;
 public class Review implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "review_seq_generator")
-    @SequenceGenerator(name = "review_seq_generator", sequenceName = "REVIEW_SEQ")
+    @SequenceGenerator(name = "review_seq_generator", sequenceName = "REVIEW_SEQ", allocationSize = 1)
     @Column
     private long reviewId;
 

@@ -18,7 +18,7 @@ import java.util.Optional;
 public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_seq_generator")
-    @SequenceGenerator(name = "book_seq_generator", sequenceName = "BOOK_SEQ")
+    @SequenceGenerator(name = "book_seq_generator", sequenceName = "BOOK_SEQ", allocationSize = 1)
     private long bookId;
     private int bookType;
     @JsonProperty("isbn")

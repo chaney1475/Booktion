@@ -9,7 +9,7 @@ import java.util.List;
 public class Cart implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cart_seq_generator")
-    @SequenceGenerator(name = "cart_seq_generator", sequenceName = "CART_SEQ")
+    @SequenceGenerator(name = "cart_seq_generator", sequenceName = "CART_SEQ", allocationSize = 1)
     private long cartId;
     private String clientId;
     @OneToMany

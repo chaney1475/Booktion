@@ -6,8 +6,9 @@ import java.io.Serializable;
 @Entity
 public class TempOrder implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "temp_order_seq_generator")
+    @SequenceGenerator(name = "temp_order_seq_generator", sequenceName = "TEMP_ORDER_SEQ")
     private Long tempOrderId;
 
     @Column

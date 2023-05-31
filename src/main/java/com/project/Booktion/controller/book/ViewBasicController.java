@@ -59,6 +59,6 @@ public class ViewBasicController {
         reviewService.createReview(review);
 
         // 리뷰 작성 후 다시 해당 책 상세 페이지로 리다이렉트
-        return "redirect:/book/" + bookId;
+        return "redirect:/bookInfo/" + bookId;
     }
 }

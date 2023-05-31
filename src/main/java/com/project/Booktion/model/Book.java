@@ -3,6 +3,8 @@ package com.project.Booktion.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.project.Booktion.service.IsbnDeserializer;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,6 +22,7 @@ public class Book implements Serializable {
     private long bookId;
     private int bookType;
     @JsonProperty("isbn")
+    @JsonDeserialize(using = IsbnDeserializer.class)
     private String isbn;
     @JsonProperty("title")
     private String title;

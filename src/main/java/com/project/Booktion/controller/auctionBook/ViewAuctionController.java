@@ -3,6 +3,7 @@ package com.project.Booktion.controller.auctionBook;
 import com.project.Booktion.model.Bid;
 import com.project.Booktion.model.AuctionBook;
 import com.project.Booktion.model.User;
+import com.project.Booktion.repository.UserRepository;
 import com.project.Booktion.service.AuctionBookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,15 +11,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Slf4j // 로그 찍는 기능
 @Controller
 @RequestMapping("/auction/books")
 @RequiredArgsConstructor
-@SessionAttributes("user")
 public class ViewAuctionController {
     private final AuctionBookService auctionS;
+    private final UserRepository userRepository;
 
     @GetMapping
     public String bookList(Model model){ // 전체 경매 책 불러오기
@@ -28,7 +30,7 @@ public class ViewAuctionController {
     }
 
     @GetMapping("/{bookId}") // 경매책 상세 보기
-    public String viewBook(@PathVariable Long bookId, Model model){
+    public String viewBook(@PathVariable Long bookId, HttpSession session, Model model){
         AuctionBook book = auctionS.findById(bookId);
         model.addAttribute("book", book);
         List<Bid> bids = auctionS.getAuction();

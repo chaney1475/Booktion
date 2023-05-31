@@ -22,23 +22,27 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j // 로그 찍는 기능
-@Controller
-@RequestMapping("/auction")
 @RequiredArgsConstructor
 public class RegistAuctionController {
 
     private final AuctionBookRepository auctionBR;
     private final UsedBookRepository usedBR;
     private final UserRepository userRepository;
-    @PostMapping("/selected")
-    public String processForm(@RequestParam String selectedISBN, @RequestParam String bookType,
+    //@PostMapping("/selected")
+    public String processForm(@ModelAttribute("books") List<Book> books,
+                              @RequestParam String selectedBook, @RequestParam String bookType,
                               @RequestParam String deliveryCompany, @RequestParam int price,
                               HttpSession session, Model model) {
+        System.out.println("selectedISBN = " + selectedBook + ", bookType = " + bookType + ", deliveryCompany = " + deliveryCompany + ", price = " + price + ", session = " + session + ", model = " + model);
+        System.out.println("RegistAuctionController.processForm");
         //user 객체 받아오기
         User user = userRepository.findByUserId((String)session.getAttribute("userId"));
         //books 받아오기
-        List<Book> books = (List<Book>) model.getAttribute("books");
-        Book bookByISBN = getBookByISBN(books, selectedISBN);
+        for (Book book : books) {
+            System.out.println(book.getTitle());
+            System.out.println(book.getIsbn());
+        }
+        Book bookByISBN = getBookByISBN(books, selectedBook);
         System.out.println("bookByISBN");
         System.out.println(bookByISBN.getIsbn() + " , " + bookByISBN.getTitle());
 
@@ -106,4 +110,5 @@ public class RegistAuctionController {
         }
         return null;
     }
+
 }

@@ -15,20 +15,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Slf4j // 로그 찍는 기능
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/signUp")
 @RequiredArgsConstructor
 public class SignFormController { // 회원가입
     private final UserRepository userRepository;
-    @GetMapping("/signup")
-    public String showSignUpForm(Model model) {
-        model.addAttribute("user", new User());
-        return "signupForm";
+    @GetMapping
+    public String showSignUpForm(@ModelAttribute User user) {
+        return "user/signUp";
     }
 
-    @PostMapping("/signup")
+    @PostMapping
     public String processSignupForm(@ModelAttribute("user") User user, Model model) {
         User save = userRepository.save(user);
         model.addAttribute("name", save.getName());
-        return "signupSuccess";
+        return "user/signupSuccess";
     }
 }

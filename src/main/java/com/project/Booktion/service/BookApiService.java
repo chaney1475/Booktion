@@ -45,5 +45,28 @@ public class BookApiService {
             }
         }
         return Collections.emptyList();
+    }public Book getBookByISBN(String isbn) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "KakaoAK " + REST_API_KEY);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        String url = "https://dapi.kakao.com/v3/search/book?target=isbn&query=" + isbn;
+
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+        if (response.getStatusCode() == HttpStatus.OK) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            try {
+                JsonNode rootNode = objectMapper.readTree(response.getBody());
+                JsonNode documentsNode = rootNode.path("documents");
+                if (documentsNode.isArray() && documentsNode.size() > 0) {
+                    JsonNode firstDocumentNode = documentsNode.get(0);
+                    Book book = objectMapper.treeToValue(firstDocumentNode, Book.class);
+                    return book;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 }

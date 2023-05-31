@@ -69,7 +69,7 @@ public class SearchBookWithAPI {
 
     private Long registUsed(String deliveryCompany, int price, Book bookByISBN) {
         bookByISBN.setPrice(price);
-        bookByISBN.setBookType(3);
+        bookByISBN.setBookType(2);
         UsedBook usedBook = new UsedBook();
         usedBook.setBook(bookByISBN);
 
@@ -81,7 +81,7 @@ public class SearchBookWithAPI {
     }
 
     private Long registAuction(String deliveryCompany, int price, Book bookByISBN) {
-        bookByISBN.setBookType(2);
+        bookByISBN.setBookType(3);
         AuctionBook auctionBook = new AuctionBook();
         auctionBook.setBook(bookByISBN);
 

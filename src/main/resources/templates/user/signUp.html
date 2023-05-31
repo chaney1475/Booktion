@@ -36,8 +36,9 @@
 </head>
 <body>
 <div class="container">
+
     <h2 style="color: #2892c6;">회원 가입</h2>
-    <form th:action="@{/signup}" th:object="${user}" method="post">
+    <form th:action="@{/signUp}" th:object="${user}" method="post">
         <div class="form-group">
             <label for="userId" style="color: #2892c6;">사용자 ID:</label>
             <input type="text" class="form-control" id="userId" th:field="*{userId}" required>
@@ -60,11 +61,11 @@
         </div>
         <div class="form-group">
             <label for="address" style="color: #2892c6;">주소:</label>
-            <input type="text" class="form-control" id="address" th:field="*{address.address}" required>
+            <input type="text" class="form-control" id="address" th:field="*{address.address1}" required>
         </div>
         <div class="form-group">
             <label for="city" style="color: #2892c6;">도시:</label>
-            <input type="text" class="form-control" id="city" th:field="*{address.city}" required>
+            <input type="text" class="form-control" id="city" th:field="*{address.address2}" required>
         </div>
         <div class="form-group">
             <label for="zipcode" style="color: #2892c6;">우편번호:</label>

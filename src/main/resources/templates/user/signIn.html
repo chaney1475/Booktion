@@ -36,11 +36,20 @@
       border-color: #b2d8e5;
     }
   </style>
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    var error = /*[[${error}]]*/ null;
+    if (error !== null && error !== '') {
+      alert(error);
+    }
+    /*]]>*/
+  </script>
 </head>
+
 <body>
 <div class="container">
   <h2 style="color: #2892c6;">로그인</h2>
-  <form th:action="@{/login}" method="post">
+  <form th:action="@{/signIn}" method="post">
     <div class="form-group">
       <label for="userId" style="color: #2892c6;">사용자 ID:</label>
       <input type="text" class="form-control" id="userId" name="userId" required>

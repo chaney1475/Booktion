@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 @Slf4j
 @Controller
@@ -18,9 +19,9 @@ import java.util.List;
 public class MainController {
     private final BookService bookService;
     @GetMapping
-    public String bookList(Model model){
-//        List<Book> books = bookService.findAll();
-//        model.addAttribute("books", books);
+    public String bookList(Model model, HttpSession session){
+        String userId = (String)session.getAttribute("userId");
+        model.addAttribute("userId",userId);
         log.debug("mainController","worked");
         return "main";
     }

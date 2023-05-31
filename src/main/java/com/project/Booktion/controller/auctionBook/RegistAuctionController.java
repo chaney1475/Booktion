@@ -3,8 +3,10 @@ package com.project.Booktion.controller.auctionBook;
 
 import com.project.Booktion.model.AuctionBook;
 import com.project.Booktion.model.Book;
+import com.project.Booktion.model.UsedBook;
 import com.project.Booktion.model.User;
 import com.project.Booktion.repository.AuctionBookRepository;
+import com.project.Booktion.repository.UsedBookRepository;
 import com.project.Booktion.repository.UserRepository;
 import com.project.Booktion.service.AuctionBookService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.net.http.HttpRequest;
 import java.util.List;
 import java.util.Optional;
@@ -25,40 +28,67 @@ import java.util.Optional;
 public class RegistAuctionController {
 
     private final AuctionBookRepository auctionBR;
+    private final UsedBookRepository usedBR;
     private final UserRepository userRepository;
-
     @PostMapping("/selected")
-    public String processForm(@ModelAttribute String selectedISBN, @RequestParam int bookType,
+    public String processForm(@RequestParam String selectedISBN, @RequestParam String bookType,
                               @RequestParam String deliveryCompany, @RequestParam int price,
-                              HttpServletRequest request
-                              ,Model model) {
-
+                              HttpSession session, Model model) {
+        //user 객체 받아오기
+        User user = userRepository.findByUserId((String)session.getAttribute("userId"));
+        //books 받아오기
         List<Book> books = (List<Book>) model.getAttribute("books");
         Book bookByISBN = getBookByISBN(books, selectedISBN);
+        System.out.println("bookByISBN");
+        System.out.println(bookByISBN.getIsbn() + " , " + bookByISBN.getTitle());
 
-        bookByISBN.setBookType(bookType);
-        User user = userRepository.findByUserId((String) request.getAttribute("userId"));
-        if(user != null){
-            bookByISBN.setUser(user);
-        }else{
-            System.out.println("user error: no user");
+        bookByISBN.setUser(user);
+
+        if(bookType == "used"){
+            Long savedId = registAuction(deliveryCompany, price, bookByISBN);
+            model.addAttribute("savedId", savedId);
+
+            return "redirect:/auction/books/" + savedId;
+
+        } else if (bookType == "auction") {
+            Long savedId = registUsed(deliveryCompany, price, bookByISBN);
+            model.addAttribute("savedId", savedId);
+
+            return "redirect:/used/books/" + savedId;
+
+        }else {
+            System.out.println("bookType 오류");
+            return "noBook";
         }
 
+    }
+
+    private Long registUsed(String deliveryCompany, int price, Book bookByISBN) {
+        bookByISBN.setPrice(price);
+        bookByISBN.setBookType(3);
+        UsedBook usedBook = new UsedBook();
+        usedBook.setBook(bookByISBN);
+
+        usedBook.setStatus(0);
+        usedBook.setShippingCompany(deliveryCompany);
+
+        UsedBook saved = usedBR.save(usedBook);
+        return saved.getUsedBookId();
+    }
+
+    private Long registAuction(String deliveryCompany, int price, Book bookByISBN) {
+        bookByISBN.setBookType(2);
         AuctionBook auctionBook = new AuctionBook();
         auctionBook.setBook(bookByISBN);
 
         auctionBook.setShippingCompany(deliveryCompany);
         auctionBook.setStatus(0);
         auctionBook.setStartPrice(price);
-
         AuctionBook saved = auctionBR.save(auctionBook);
 
-        model.addAttribute("saved", saved);
-
-        long bookId = auctionBook.getAuctionBookId();
-        return "redirect:/auction/books/" + bookId;
-
+        return saved.getAuctionBookId();
     }
+
     Book getBookByISBN(List<Book> books, String isbn){
         isbn = "1234567890"; // 찾고자 하는 ISBN 값
         String finalIsbn = isbn;

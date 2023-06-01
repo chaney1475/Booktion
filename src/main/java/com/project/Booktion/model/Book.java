@@ -19,29 +19,45 @@ public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_seq_generator")
     @SequenceGenerator(name = "book_seq_generator", sequenceName = "BOOK_SEQ", allocationSize = 1)
+    @Column(name = "book_id")
     private long bookId;
-    private int bookType;
+    @Column(name = "isbn")
     @JsonProperty("isbn")
-    @JsonDeserialize(using = IsbnDeserializer.class)
     private String isbn;
+
+    @Column(name = "title")
     @JsonProperty("title")
     private String title;
 
+    @Column(name = "author")
     private String author;
+
+    @Column(name = "book_type")
+    private int bookType;
+
+    @Column(name = "price")
     @JsonProperty("price")
     private int price;
+
+    @Column(name = "image_url")
     @JsonProperty("thumbnail")
     private String imageUrl;
-    @JsonProperty("publisher")
-    private String publisher;
-    @JsonProperty("datetime")
-    private Date pubDate;
+
+    @Column(name = "description")
     @JsonProperty("contents")
     private String description;
 
-    @ManyToOne //다대일 관계가 맞을까.. 한방향으로 해도 될까..
+    @Column(name = "publisher")
+    private String publisher;
+
+    @Column(name = "pub_date")
+    @JsonProperty("datetime")
+    private Date pubDate;
+
+    @ManyToOne
     @JoinColumn(name = "seller_id")
     private User user;
+
 
     /*getter & setter*/
     public long getBookId() {
@@ -138,17 +154,17 @@ public class Book implements Serializable {
 
     public Book() { }
 
-    public Book(long bookId, int bookType, String isbn, String title, String author, int price, String imageUrl, String publisher, Date pubDate, User user, String description) {
+    public Book(long bookId, String isbn, String title, String author, int bookType, int price, String imageUrl, String description, String publisher, Date pubDate, User user) {
         this.bookId = bookId;
-        this.bookType = bookType;
         this.isbn = isbn;
         this.title = title;
         this.author = author;
+        this.bookType = bookType;
         this.price = price;
         this.imageUrl = imageUrl;
+        this.description = description;
         this.publisher = publisher;
         this.pubDate = pubDate;
         this.user = user;
-        this.description = description;
     }
 }

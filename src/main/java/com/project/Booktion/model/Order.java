@@ -11,25 +11,31 @@ public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_seq_generator")
     @SequenceGenerator(name = "order_seq_generator", sequenceName = "ORDER_SEQ", allocationSize = 1)
+    @Column(name="order_id")
     private long orderId;
     @ManyToOne
-    @JoinColumn(name="clientId")
+    @JoinColumn(name="client_id")
     private User user;
     @Temporal(TemporalType.DATE)
+    @Column(name = "order_date")
     private Date orderDate;
     private String name;
+    @Column(name = "phone_number")
+    private String phoneNum;
     @Embedded
     private Address address;
+    @Column(name = "ship_message")
     private String shipMessage;
     private int price;
     private String payment;
     private String card;
+    @Column(name = "book_type")
     private int orderType;
-
-    private String status;
-
+    @Column(name = "status")
+    private int status;
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems;
+
 
     /*getter & setter*/
     public long getOrderId() {
@@ -120,12 +126,20 @@ public class Order implements Serializable {
         orderItems.add(orderItem);
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
     }
 
     public Order() {

@@ -56,25 +56,9 @@ public class AuctionBookService {
     }
 
     public List<AuctionBook> allBook() {
-        List<AuctionBook> auctionBooks = new ArrayList<>();
+        List<AuctionBook> auctionBooks = auctionBookR.findAll();
         return auctionBooks;
     }
-
-    public List<AuctionBook> findSellingAuctionById(String id) {
-        List<AuctionBook> sellingBooks = new ArrayList<>();
-        return sellingBooks;
-    }
-
-    public List<AuctionBook> findSoldAuctionById(String id) {
-        List<AuctionBook> soldBooks = new ArrayList<>();
-        return soldBooks;
-    }
-
-    public List<Bid> getAuction() {
-        List<Bid> bids = new ArrayList<>();
-        return bids;
-    }
-
     public List<AuctionBookOrder> findOrderBySeller(Long id) {
         List<AuctionBookOrder> orderList = new ArrayList<>();
         return orderList;

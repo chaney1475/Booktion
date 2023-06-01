@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
 <head>
     <meta charset="UTF-8">
     <title>중고도서</title>
@@ -15,6 +17,8 @@
     </style>
 </head>
 <body>
+<div layout:fragment="content">
+    <a th:href="@{/used/registForm}">중고책 등록하기</a>
     <div class="top-list">
         <div class="book-content">
 
@@ -41,6 +45,6 @@
             </li>
         </ul>
     </div>
-
+</div>
 </body>
 </html>

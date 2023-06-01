@@ -6,11 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface BidRepository extends JpaRepository<Bid,Long> {
 
-    @Query(value = "SELECT b FROM Bid b WHERE b.auctionBookId = :auctionBookId", nativeQuery = true)
-    Bid findByABId(Long auctionBookId);
+    List<Bid> findByAuctionBookAuctionBookId(long auctionBookId);
     @Query(value = "SELECT b FROM Bid b WHERE b.auctionBook.id = :auctionBookId ORDER BY b.price DESC", nativeQuery = true)
     Bid gethighestBid(@Param("auctionBookId") Long auctionBookId);
 

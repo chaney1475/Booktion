@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>도서 검색</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 900px;
+        }
+
+        .card {
+            border: 2px solid #b2d8e5;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            height: 300px;
+        }
+
+        .card-body {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .book-image {
+            flex-shrink: 0;
+            width: 150px;
+            margin-right: 20px;
+        }
+
+        .book-title {
+            font-family: 'Nanum Gothic', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .book-info {
+            font-family: 'Nanum Gothic', sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .card-columns {
+            column-count: 4;
+        }
+
+        .card-link {
+            color: black;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .card-link:hover {
+            color: #007bff;
+        }
+    </style>
+</head>
+<div layout:fragment="content">
+    <body>
+    <div class="container">
+        <br><br><br>
+        <h3>중고책</h3>
+        <div th:if="${auctionBooks != null and auctionBooks.size() > 0}">
+            <div class="card-columns">
+                <div th:each="auctionBook : ${auctionBooks}" class="card">
+                    <div class="card-body">
+                        <a th:href="@{/auction/books/{auctionBookId}(auctionBookId=${auctionBook.auctionBookId})}"
+                           class="card-link">
+                            <img class="book-image" th:src="${auctionBook.book.imageUrl}" alt="Book Image">
+                            <div>
+                                <h5 class="book-title" th:text="${auctionBook.book.title}">제목 없음</h5>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+</div>
+</html>

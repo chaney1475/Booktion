@@ -22,7 +22,6 @@ public class MainController {
     public String bookList(Model model, HttpSession session){
         String userId = (String)session.getAttribute("userId");
         model.addAttribute("userId",userId);
-        log.debug("mainController","worked");
         return "main";
     }
 }

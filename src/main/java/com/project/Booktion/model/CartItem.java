@@ -4,12 +4,14 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table
+@Table(name = "cart_item")
 public class CartItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cart_item_seq_generator")
     @SequenceGenerator(name = "cart_item_seq_generator", sequenceName = "CART_ITEM_SEQ", allocationSize = 1)
+    @Column(name="cart_item_id")
     private long cartItemId;
+    @Column(name="cart_id")
     private long cartId;
     @JoinColumn(name="book_id")
     private Book book;

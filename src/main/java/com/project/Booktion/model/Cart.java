@@ -10,7 +10,9 @@ public class Cart implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cart_seq_generator")
     @SequenceGenerator(name = "cart_seq_generator", sequenceName = "CART_SEQ", allocationSize = 1)
+    @Column(name="cart_id")
     private long cartId;
+    @Column(name="client_id")
     private String clientId;
     @OneToMany
     private List<CartItem> cartItemList;

@@ -11,10 +11,10 @@ import java.util.Optional;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
-    //List<Review> findByBook(Book book);
+    List<Review> findByBook(Book book);
 
     //Review findByReviewIdAndClientId(Long reviewId, Long clientId);
-    //Review save(Review review);
+    Review save(Review review);
 
     //void deleteByUserIdAndReviewId(String userId, Long reviewId);
 
@@ -24,5 +24,5 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     //void deleteById(long reviewId);
 
-    //Optional<Object> findById(long reviewId);
+    Optional<Object> findById(long reviewId);
 }

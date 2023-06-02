@@ -25,11 +25,12 @@ public class Order implements Serializable {
     private String payment;
     private String card;
     private int orderType;
-
-    private String status;
+    private int status;
 
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems;
+
+    private String phoneNumber;
 
     /*getter & setter*/
     public long getOrderId() {
@@ -120,14 +121,41 @@ public class Order implements Serializable {
         orderItems.add(orderItem);
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     public Order() {
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", user=" + user +
+                ", orderDate=" + orderDate +
+                ", name='" + name + '\'' +
+                ", address=" + address +
+                ", shipMessage='" + shipMessage + '\'' +
+                ", price=" + price +
+                ", payment='" + payment + '\'' +
+                ", card='" + card + '\'' +
+                ", orderType=" + orderType +
+                ", status='" + status + '\'' +
+                ", orderItems=" + orderItems +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
     }
 }

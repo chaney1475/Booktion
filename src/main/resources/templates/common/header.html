@@ -148,7 +148,9 @@
 
 <div class="search-form">
     <div class="search-box-wrapper">
-        <h1>Booktion</h1>
+        <h1>
+            <a th:href="@{/main}" style="text-decoration: none; color: black;">Booktion</a>
+        </h1>
         <form action="/search" method="post" class="search-box">
             <select id="type" name="type">
                 <option value="book">일반도서</option>

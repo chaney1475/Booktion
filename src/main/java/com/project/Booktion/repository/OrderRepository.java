@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    Order save(Order order); //주문 생성
+    //Order save(Order order); //주문 생성
 
     Order findByOrderId(long orderId);
 

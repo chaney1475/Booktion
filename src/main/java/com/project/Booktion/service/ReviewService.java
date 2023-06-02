@@ -37,8 +37,7 @@ public class ReviewService {
     }
 
     public Review getReviewById(long reviewId) {
-        //return (Review) reviewRepository.findById(reviewId).orElse(null);
-        return null;
+        return (Review) reviewRepository.findById(reviewId).orElse(null);
     }
 
     public void updateReview(Review review) {

@@ -46,7 +46,6 @@ public class SearchBookWithAPI {
             return "user/signIn";
         }
         log.info("Book Regist SearchBookWithAPI User ID : " + user.getUserId());
-
         String[] parts = selectedBook.split(" ");
         String isbn = parts[0];
         Book book = bookApiService.getBookByISBN(isbn);

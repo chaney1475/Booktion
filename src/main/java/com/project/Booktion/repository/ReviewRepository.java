@@ -18,11 +18,11 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     //void deleteByUserIdAndReviewId(String userId, Long reviewId);
 
-    long count();
+    //long count();
 
-    List<com.project.Booktion.model.Review> findByUser(User currentUser);
+    //List<com.project.Booktion.model.Review> findByUser(User currentUser);
 
-    void deleteById(long reviewId);
+    //void deleteById(long reviewId);
 
     Optional<Object> findById(long reviewId);
 }

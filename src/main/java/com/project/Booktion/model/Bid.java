@@ -17,8 +17,10 @@ public class Bid implements Serializable {
     private AuctionBook auctionBook;
 
     @Column
-    @JoinColumn(name = "client_id")
     private String bidderId;
+    @Column
+    private int price;
+
 
     public int getPrice() {
         return price;
@@ -28,18 +30,16 @@ public class Bid implements Serializable {
         this.price = price;
     }
 
-    private int price;
-
     // Constructors, getters and setters, etc.
 
     public Bid() {
     }
 
-    public Bid(AuctionBook auctionBook, String bidderId) {
+    public Bid(AuctionBook auctionBook, String bidderId, int price) {
         this.auctionBook = auctionBook;
         this.bidderId = bidderId;
+        this.price = price;
     }
-
     // Getters and setters
 
     public long getBidId() {

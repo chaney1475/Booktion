@@ -138,10 +138,11 @@
         alert([[${success}]]);
 </script>
 <div class="navbar">
-    <a th:href="@{/signIn}" th:if="${userId == null}">로그인</a>
-    <a th:href="@{/signUp}" th:if="${userId == null}">회원가입</a>
-    <a th:href="@{/signOut}" th:if="${userId != null}">로그아웃</a>
-    <a href="#">마이페이지</a>
+    <span th:text="${session.userId != null ? session.userId + ' 님' : ''}" th:if="${session.userId != null}"></span>
+    <a th:href="@{/signIn}" th:if="${session.userId == null}">로그인</a>
+    <a th:href="@{/signUp}" th:if="${session.userId == null}">회원가입</a>
+    <a th:href="@{/signOut}" th:if="${session.userId != null}">로그아웃</a>
+    <a href="@{/myPage}">마이페이지</a>
     <a href="#">장바구니</a>
 </div>
 

@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
 <head>
   <meta charset="UTF-8">
   <title>도서 검색</title>
@@ -66,8 +68,10 @@
         }
     </style>
 </head>
+<div layout:fragment="content">
 <body>
 <div class="container">
+  <br><br><br>
   <h2>등록할 도서 검색</h2>
   <form action="#" th:action="@{${#httpServletRequest.requestURI}}" method="post">
     <input type="text" name="keyword" placeholder="검색어를 입력하세요"/>
@@ -123,4 +127,5 @@
   </div>
 </div>
 </body>
+</div>
 </html>

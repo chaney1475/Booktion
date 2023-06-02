@@ -7,9 +7,12 @@ import java.util.List;
 
 import com.project.Booktion.model.Cart;
 import com.project.Booktion.model.CartItem;
+import com.project.Booktion.model.User;
 import com.project.Booktion.repository.BookRepository;
 import com.project.Booktion.repository.CartItemRepository;
 import com.project.Booktion.repository.CartRepository;
+import com.project.Booktion.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -17,19 +20,14 @@ import org.springframework.ui.Model;
 import javax.servlet.http.HttpSession;
 
 @Service
+@RequiredArgsConstructor
 public class CartService {
     private final BookRepository bookRepository;
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
+    private final UserRepository userRepository;
     private final HttpSession session;
 
-    @Autowired
-    public CartService(BookRepository bookRepository, CartRepository cartRepository, CartItemRepository cartItemRepository, HttpSession session) {
-        this.bookRepository = bookRepository;
-        this.cartItemRepository = cartItemRepository;
-        this.cartRepository = cartRepository;
-        this.session = session;
-    }
     public List<Book> getCartItems() {
         return bookRepository.findAll();
     }
@@ -100,5 +98,9 @@ public class CartService {
             cartItemIds.add(cartItem.getBookId());
         }
         return cartItemIds;
+    }
+
+    public User getUser(String userId) {
+        return userRepository.findByUserId(userId);
     }
 }

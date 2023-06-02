@@ -33,6 +33,10 @@
     </table>
     <input type="hidden" name="bookId" th:value="${book.bookId}">
     <button type="submit" >주문하기</button>
+    <form th:action="@{/cart/add}" method="POST">
+      <input type="hidden" name="bookId" th:value="${book.bookId}">
+      <button type="submit">장바구니에 담기</button>
+    </form>
   </form>
 </div>
 <hr>
@@ -45,8 +49,8 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
     function checkLogin() {
-        var loggedIn = /*[[${loggedIn}]]*/ false;
-        if (!loggedIn) {
+        var userId = /*[[${#httpServletRequest.getSession().getAttribute('userId')}]]*/ null;
+        if (!userId) {
             alert('로그인이 필요합니다.');
             window.location.href = '/signIn'; // 로그인 페이지로 이동합니다.
             return false; // 주문 폼 제출을 막기 위해 false를 반환합니다.

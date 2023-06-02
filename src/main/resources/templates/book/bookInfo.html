@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Book Information</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
 </head>
 <body>
 <h1>책 정보</h1>
@@ -13,61 +15,45 @@
   <p th:text="${book.pubDate}"></p>
   <p th:text="${book.isbn}"></p>
   <hr>
-  <p th:text="${book.imageUrl}"></p>
-  <table>
-    <tr>
-      <th>가격</th>
-      <th>수량</th>
-      <th>배송비</th>
-    </tr>
-    <tr>
-      <td th:text="${book.price}"></td>
-      <td>
-        <input type="number" min="0" th:value="${book.quantity}">
-      </td>
-      <td th:text="${book.deliveryFee}"></td>
-    </tr>
-  </table>
-  <form th:action="@{/book/order/form}" method="get">
+  <p>
+    <img th:src="${book.imageUrl}" alt="Book Image" />
+  </p>
+  <form th:action="@{/book/order/form}" method="GET" onsubmit="return checkLogin()">
+    <table>
+      <tr>
+        <th>한 권당 가격</th>
+        <th>수량</th>
+      </tr>
+      <tr>
+        <td th:text="${book.price}"></td>
+        <td>
+          <input type="number" min="1" name="quantity" value="1">
+        </td>
+      </tr>
+    </table>
     <input type="hidden" name="bookId" th:value="${book.bookId}">
-    <button type="submit">바로구매</button>
-  </form>
-  <form th:action="@{/cart/add}" method="post">
-    <input type="hidden" name="bookId" th:value="${book.bookId}">
-    <button type="submit">장바구니</button>
+    <button type="submit" >주문하기</button>
   </form>
 </div>
 <hr>
 <h3>책 소개</h3>
 <p th:text="${book.description}"></p>
 <hr>
-<h3>리뷰</h3>
-<form th:action="@{/book/review}" method="post">
-  <input type="hidden" name="bookId" th:value="${book.bookId}">
-  <label for="reviewerName">이름 :</label>
-  <input type="text" id="reviewerName" name="reviewerName">
-  <label for="reviewContent">리뷰 내용 :</label>
-  <textarea id="reviewContent" name="reviewContent"></textarea>
-  <button type="submit">등록</button>
-</form>
-<hr>
-<div th:if="${book.reviews}">
-  <ul>
-    <li th:each="review : ${book.reviews}">
-      <p th:text="${review.user.username}"></p>
-      <p th:text="${review.contents}"></p>
-      <form th:action="@{/book/review/delete}" method="post">
-        <input type="hidden" name="reviewId" th:value="${review.reviewId}">
-        <button type="submit">삭제</button>
-      </form>
-    </li>
-  </ul>
-</div>
-<div th:if="${not book.reviews}">
-  <p>리뷰가 아직 없습니다.</p>
-</div>
-<div th:if="${not book}">
+<div th:if="${book == null}">
   <h2>존재하지 않는 책입니다.</h2>
 </div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function checkLogin() {
+        var loggedIn = /*[[${loggedIn}]]*/ false;
+        if (!loggedIn) {
+            alert('로그인이 필요합니다.');
+            window.location.href = '/signIn'; // 로그인 페이지로 이동합니다.
+            return false; // 주문 폼 제출을 막기 위해 false를 반환합니다.
+        }
+        return true; // 로그인이 되어있는 경우 주문 폼 제출을 진행합니다.
+    }
+    /*]]>*/
+</script>
 </body>
 </html>

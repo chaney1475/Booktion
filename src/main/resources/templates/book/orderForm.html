@@ -3,78 +3,97 @@
 <head>
   <meta charset="UTF-8">
   <title>Order Form</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
   <style>
-       table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        .book-image {
-            max-width: 100px;
-        }
-        .center-text {
-            text-align: center;
-        }
-        .right-text {
-            text-align: right;
-        }
+      body {
+        background-color: #f0faff;
+      }
+
+      .container {
+        max-width: 1100px;
+        background-color: #fff;
+        padding: 20px;
+        margin-top: 50px;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .form-group label {
+        font-weight: bold;
+      }
+
+      .form-control {
+        border: 1px solid #b2d8e5;
+        border-radius: 5px;
+        padding: 10px;
+      }
+
+      .btn-primary {
+        background-color: #b2d8e5;
+        border-color: #b2d8e5;
+      }
     </style>
 </head>
 <body>
+
+<div class="container">
+
   <h1>주문하기</h1>
+  <br>
+  <br>
   <div th:if="${error}">
     <p th:text="${error}" style="color: red;"></p>
   </div>
-  <form action="/book/order/{bookId}" method="post" th:object="${orderForm}">
-    <table>
-      <thead>
-        <tr>
-          <th>책 제목</th>
-          <th>작가</th>
-          <th>출판사</th>
-          <th>출판일</th>
-          <th>수량</th>
-          <th>가격</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr th:each="bookForm, stat : ${orderForm.books}">
-          <td><img th:src="${bookForm.book.imageUrl}" alt="Book Image" class="book-image"></td>
-          <td th:text="${bookForm.book.title}" class="center-text"></td>
-          <td th:text="${bookForm.book.author}" class="center-text"></td>
-          <td th:text="${bookForm.book.publisher}" class="center-text"></td>
-          <td th:text="${bookForm.book.pubDate}" class="center-text"></td>
-          <td class="right-text">
-            <select name="orderForm.books[__${stat.index}__].quantity" onchange="calculatePrice(__${stat.index}__);"
-                    required>
-              <option th:each="quantity : ${#numbers.sequence(1, 10)}" th:value="${quantity}"
-                      th:text="${quantity}"></option>
-            </select>
-            <input type="hidden" name="orderForm.books[__${stat.index}__].book.bookId"
-                   th:value="${bookForm.book.bookId}">
-          </td>
-          <td>
-            <span th:text="${bookForm.book.price}" id="price__${stat.index}__" class="right-text"></span>
-          </td>
-        </tr>
-      </tbody>
-      <tfoot>
-        <tr>
-          <td colspan="5"></td>
-          <td class="right-text">총 가격:</td>
-          <td class="right-text"><span id="orderPrice"></span></td>
-        </tr>
-      </tfoot>
-    </table>
-
-    <h2>주문자 정보</h2>
+  <form action="/book/order/submit" method="post" th:object="${orderForm}">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">책 제목</th>
+            <th scope="col">작가</th>
+            <th scope="col">출판사</th>
+            <th scope="col">출판일</th>
+            <th scope="col">수량</th>
+            <th scope="col">한 권당 가격</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="bookForm, stat : ${orderForm.books}" scope="row">
+            <td>
+              <input type="checkbox" name="selectedBooks" th:value="${bookForm.book.bookId}" />
+            </td> <!-- 선택 체크박스 -->
+            <td><img th:src="${bookForm.book.imageUrl}" class="rounded float-start" alt="Book Image"></td>
+            <td th:text="${bookForm.book.title}" ></td>
+            <td th:text="${bookForm.book.author}" ></td>
+            <td th:text="${bookForm.book.publisher}" ></td>
+            <td th:text="${bookForm.book.pubDate}" ></td>
+            <td>
+              <input type="number" min="1" name="quantity" th:value="${bookForm.quantity}" />
+            </td>
+            <td>
+              <span th:text="${bookForm.book.price}"></span>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr scope="row" >
+            <td colspan="5"></td>
+            <td>총 결제 예상 금액:</td>
+            <td><span id="orderPrice"></span></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <br>
+    <h3>주문자 정보</h3>
     <div>
       <label for="name">이름</label>
       <input type="text" id="name" th:field="*{order.name}" required>
+    </div>
+    <div>
+      <label for="phoneNum">전화번호</label>
+      <input type="text" id="phoneNum" th:field="*{order.phoneNum}" required>
     </div>
     <div>
       <label for="zipcode">우편번호</label>
@@ -104,31 +123,11 @@
       <label for="orderType">주문 유형</label>
       <input type="text" id="orderType" th:field="*{order.orderType}">
     </div>
-
     <button type="submit">주문하기</button>
   </form>
+</div>
 
-  <script>
-    function calculatePrice(index) {
-      const quantity = document.querySelector(`select[name='orderForm.books[${index}].quantity']`).value;
-      const price = document.querySelector(`#price__${index}__`).textContent;
-      const totalPrice = quantity * price;
-      document.querySelector(`#price__${index}__`).textContent = totalPrice;
-      calculateTotalPrice();
-    }
 
-    function calculateTotalPrice() {
-      const bookPrices = document.querySelectorAll('[id^="price__"]');
-      let totalPrice = 0;
-      bookPrices.forEach((priceElement) => {
-        const quantityElement = priceElement.closest('tr').querySelector('select');
-        const quantity = quantityElement.value;
-        const price = parseInt(priceElement.textContent);
-        totalPrice += quantity * price;
-      });
-      document.getElementById('orderPrice').textContent = totalPrice;
-    }
-  </script>
 
 </body>
 </html>

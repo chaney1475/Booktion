@@ -26,4 +26,8 @@ public class BookService {
     public Book findByBookIdAndBookType(long bookId, int i) {
         return bookRepository.findByBookIdAndBookType(bookId, i);
     }
+
+    public List<Book> getBooksByBookType(int bookType) {
+        return bookRepository.findByBookType(bookType);
+    }
 }

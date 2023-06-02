@@ -37,7 +37,9 @@
     </tr>
   </table>
   <p>주문번호 : <span th:text="${order.orderId}"></span></p>
+  <p>주문 날짜: <span th:text="${order.orderDate}"></span></p>
   <p>이름 : <span th:text="${order.name}"></span></p>
+  <p>전화번호 : <span th:text="${order.phoneNum}"></span></p>
   <p>주소: <span th:text="${order.address.address1}"></span>
     <span th:text="${order.address.address2}"></span></p>
   <p>배송 메시지: <span th:text="${order.shipMessage}"></span></p>
@@ -45,6 +47,7 @@
   <p>결제 방법: <span th:text="${order.payment}"></span></p>
   <p>카드 정보: <span th:text="${order.card}"></span></p>
   <p>주문 유형: <span th:text="${order.orderType}"></span></p>
+  <a href="/main" class="btn btn-primary">메인으로 돌아가기</a>
 </div>
 <div th:if="${not order}">
   <h2>주문 정보가 없습니다.</h2>

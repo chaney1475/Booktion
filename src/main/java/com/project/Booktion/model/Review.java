@@ -10,10 +10,10 @@ public class Review implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "review_seq_generator")
     @SequenceGenerator(name = "review_seq_generator", sequenceName = "REVIEW_SEQ", allocationSize = 1)
-    @Column
+    @Column(name="review_id")
     private long reviewId;
 
-    @Column
+    @ManyToOne
     @JoinColumn(name = "client_id")
     private User user;
 
@@ -27,7 +27,7 @@ public class Review implements Serializable {
     @Column
     private String contents;
 
-    @Column
+    @Column(name="create_date")
     private Date createDate;
 
     // Constructors, getters and setters, etc.

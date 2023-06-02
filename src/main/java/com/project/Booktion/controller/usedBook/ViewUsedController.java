@@ -2,6 +2,7 @@ package com.project.Booktion.controller.usedBook;
 
 import com.project.Booktion.model.Book;
 import com.project.Booktion.model.UsedBook;
+import com.project.Booktion.service.BookService;
 import com.project.Booktion.service.UsedBookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,15 +19,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ViewUsedController {
     private final UsedBookService usedBookService;
+    private final BookService bookService;
 
-    @RequestMapping("/bookInfo/{bookId}")
+    @RequestMapping("/books/{bookId}")
     public String showBookInfo(@PathVariable long bookId, Model model){
         //책 상세페이지로 이동
-        UsedBook usedBook = usedBookService.getUsedBookById(bookId);
-        if(usedBook == null){
+        log.info("ViewUsedController#showBookInfo run! bookId : " + bookId);
+        Book book = bookService.findById(bookId);
+        if(book == null){
             return "noBook"; //상품이 없다는 페이지로 이동
         }
-        model.addAttribute("book", usedBook.getBook());
+        UsedBook usedBook = usedBookService.getUsedBookByBookId(bookId);
+        model.addAttribute("book", book);
+        model.addAttribute("usedBook", usedBook);
         return "used/bookInfo";
     }
 

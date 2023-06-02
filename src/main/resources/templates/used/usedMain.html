@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
 <head>
     <meta charset="UTF-8">
     <title>중고도서</title>
@@ -15,6 +17,8 @@
     </style>
 </head>
 <body>
+<div layout:fragment="content">
+    <a th:href="@{/search/used}">중고책 등록하기</a>
     <div class="top-list">
         <div class="book-content">
 
@@ -28,10 +32,11 @@
     <div class="all-list">
         <ul class="row">
             <li th:each="book, status: ${bookList}" class="book-item">
-                <a th:href="@{/used/bookInfo/{bookId}(bookId=${book.bookId})}">
+                <a th:href="@{/used/books/{bookId}(bookId=${book.bookId})}">
                 <div class="book-image">
                     <img th:src="${book.imageUrl}" />
                 </div>
+                    <div class="book-title" th:text="${book.bookId}"></div>
                 <div class="book-title" th:text="${book.title}"></div>
                 <div class="book-price" th:text="${book.price}"></div>
 
@@ -41,6 +46,6 @@
             </li>
         </ul>
     </div>
-
+</div>
 </body>
 </html>

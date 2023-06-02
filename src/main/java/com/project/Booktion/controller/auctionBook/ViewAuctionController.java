@@ -2,53 +2,64 @@ package com.project.Booktion.controller.auctionBook;
 
 import com.project.Booktion.model.Bid;
 import com.project.Booktion.model.AuctionBook;
+import com.project.Booktion.model.Book;
 import com.project.Booktion.model.User;
+import com.project.Booktion.repository.AuctionBookRepository;
+import com.project.Booktion.repository.BidRepository;
 import com.project.Booktion.repository.UserRepository;
 import com.project.Booktion.service.AuctionBookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-@Slf4j // 로그 찍는 기능
 @Controller
 @RequestMapping("/auction/books")
 @RequiredArgsConstructor
 public class ViewAuctionController {
-    private final AuctionBookService auctionS;
-    private final UserRepository userRepository;
+    private final AuctionBookRepository auctionBookR;
+    private final BidRepository bidRepository;
 
-    @GetMapping
-    public String bookList(Model model){ // 전체 경매 책 불러오기
-        List<AuctionBook> auctionBooks = auctionS.allBook();
-        model.addAttribute("auctionBooks", auctionBooks);
-        return "/auction/books";
+    @ModelAttribute("auctionBook")
+    public AuctionBook getAuctionBook(@PathVariable Long bookId) {
+        return auctionBookR.findById(bookId).orElse(null);
     }
-
     @GetMapping("/{bookId}") // 경매책 상세 보기
-    public String viewBook(@PathVariable Long bookId, HttpSession session, Model model){
-        AuctionBook book = auctionS.findById(bookId);
-        model.addAttribute("book", book);
-        List<Bid> bids = auctionS.getAuction();
-        model.addAttribute("auctions", bids);
+    public String viewBook(@ModelAttribute AuctionBook auctionBook, @PathVariable Long bookId, HttpSession session, Model model){
+        List<Bid> bids = bidRepository.findByAuctionBookAuctionBookId(bookId);
+        if (bids == null) {
+            System.out.println("bids null");
+        }
+        if(auctionBook.getBook().getUser().getUserId() == session.getAttribute("userId")){
+            model.addAttribute("seller","yes");
+        }
+        model.addAttribute("bids", bids);
         return "auction/book";
     }
+    @Transactional
+    @PostMapping("/{bookId}") // 경매책 상세 보기
+    public String bidding(@ModelAttribute AuctionBook auctionBook, @PathVariable Long bookId,
+                          @RequestParam int price, HttpSession session, RedirectAttributes redirectAttributes) {
+        String userId = (String) session.getAttribute("userId");
+        if(userId == null){
+            return "redirect:/signIn";
+        }
+        System.out.println(auctionBook.getAuctionBookId() + ", " + auctionBook.getBook().getTitle());
+        Bid bid = new Bid(auctionBook, userId, price);
+        Bid saved = bidRepository.save(bid);
+        int savedPrice = saved.getPrice();
+        // 알림 메시지 추가
+        redirectAttributes.addFlashAttribute("message", savedPrice + "원으로 입찰하였습니다");
 
-    @GetMapping("/selling") // userId 읽고 user가 경매중인 책
-    public String SellingList(@ModelAttribute User user, Model model){
-        List<AuctionBook> sellingBooks = auctionS.findSellingAuctionById(user.getUserId());
-        model.addAttribute("sellingBooks", sellingBooks);
-        return "/myPage/selling";
+        return "redirect:/auction/books/" + bookId;
     }
-    @GetMapping("/sold") //  userId 읽고 user가 경매 완료 책
-    public String SoldList(@ModelAttribute User user, Model model){
-        List<AuctionBook> soldBooks = auctionS.findSoldAuctionById(user.getUserId());
-        model.addAttribute("sellingBooks", soldBooks);
-        return "/myPage/sold";
-    }
+
 
 }

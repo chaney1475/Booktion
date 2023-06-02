@@ -8,10 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import com.project.Booktion.repository.BookRepository;
-import com.project.Booktion.repository.OrderRepository;
-import com.project.Booktion.repository.UsedBookRepository;
-import com.project.Booktion.repository.UserRepository;
+import com.project.Booktion.repository.*;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
@@ -40,8 +37,6 @@ public class UsedBookService {
         OrderItem orderItem = new OrderItem();
         orderItem.setBook(book.get());
         orderItem.setQuantity(1);
-        List<OrderItem> orderItems = new ArrayList<>();
-        orderItems.add(orderItem);
 
         // UsedBookOrder 정보로 Order 엔티티 생성
         Order newOrder = new Order();
@@ -55,13 +50,12 @@ public class UsedBookService {
         newOrder.setCard(order.getCard());
         newOrder.setOrderType(2);
         newOrder.setStatus(0);
-        newOrder.setOrderItems(orderItems);
         newOrder.setPhoneNumber(order.getPhoneNumber());
 
-        log.info(newOrder.toString());
+        newOrder.addOrderItem(orderItem);
 
-        // Order 엔티티 저장
-        Order nowOrder = orderRepository.save(newOrder);
+        // Order 엔티티 저장 & orderItem 저장
+        orderRepository.save(newOrder);
 
         // UsedBook의 상태 변경
         Optional<UsedBook> targetUsedBook = usedBookRepository.findById(order.getUsedBookId());

@@ -2,6 +2,7 @@ package com.project.Booktion.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class Order implements Serializable {
     private int orderType;
     private int status;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
 
     @Column(name = "phone_number")
@@ -123,6 +124,10 @@ public class Order implements Serializable {
     }
 
     public void addOrderItem(OrderItem orderItem) {
+        orderItem.setOrder(this);  // OrderItem과의 양방향 관계 설정
+        if (orderItems == null) {
+            orderItems = new ArrayList<>();
+        }
         orderItems.add(orderItem);
     }
 

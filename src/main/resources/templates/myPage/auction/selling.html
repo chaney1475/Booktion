@@ -9,19 +9,24 @@
 <table>
     <thead>
     <tr>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Price</th>
-        <th>Details</th>
+        <th>제목</th>
+        <th>가격</th>
+        <th>경매시작가</th>
+        <th>자세히보기</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="auctionBook : ${auctionBooks}">
-        <td th:text="${auctionBook.title}"></td>
+        <td th:text="${auctionBook.book.title}"></td>
         <td th:text="${auctionBook.author}"></td>
         <td th:text="${auctionBook.price}"></td>
         <td>
-            <a th:href="@{/auction/books/{bookId}(bookId=${auctionBook.bookId})}">Details</a>
+            <a th:href="@{/auction/books/{bookId}(bookId=${auctionBook.bookId})}">클릭</a>
+        </td>
+        <td>
+            <form th:action="@{/auction/books/{bookId}/endAuction(bookId=${auctionBook.bookId})}" method="post">
+                <button type="submit">경매 종료</button>
+            </form>
         </td>
     </tr>
     </tbody>

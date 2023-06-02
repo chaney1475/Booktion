@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
+
 @Slf4j // 로그 찍는 기능
 @Controller
 @RequestMapping("/signUp")
@@ -25,8 +27,9 @@ public class SignFormController { // 회원가입
     }
 
     @PostMapping
-    public String processSignupForm(@ModelAttribute("user") User user, Model model) {
+    public String processSignupForm(@ModelAttribute("user") User user, HttpSession session,Model model) {
         User save = userRepository.save(user);
+        session.setAttribute("userId",save.getUserId());
         model.addAttribute("name", save.getName());
         return "user/signupSuccess";
     }

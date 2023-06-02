@@ -20,8 +20,6 @@ public class Order implements Serializable {
     @Column(name = "order_date")
     private Date orderDate;
     private String name;
-    @Column(name = "phone_number")
-    private String phoneNum;
     @Embedded
     private Address address;
     @Column(name = "ship_message")
@@ -31,12 +29,12 @@ public class Order implements Serializable {
     private String card;
     @Column(name = "order_type")
     private int orderType;
-
     private int status;
 
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems;
 
+    @Column(name = "phone_number")
     private String phoneNumber;
 
     /*getter & setter*/

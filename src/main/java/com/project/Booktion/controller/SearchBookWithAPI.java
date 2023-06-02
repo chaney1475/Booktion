@@ -41,7 +41,6 @@ public class SearchBookWithAPI {
                               @RequestParam String deliveryCompany, @RequestParam int price,
                               HttpSession session, Model model) {
         User user = userRepository.findByUserId((String)session.getAttribute("userId"));
-
         String[] parts = selectedBook.split(" ");
         String isbn = parts[0];
         Book book = bookApiService.getBookByISBN(isbn);

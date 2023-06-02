@@ -150,14 +150,23 @@
             <li th:each="auction : ${bids}" class="auction-price" th:text="${auction.price}"></li>
         </ul>
     </div>
-    <div class="auction-info">
-        <h4>경매 참여하기</h4>
-        <form class="auction-form" th:action="${#httpServletRequest.requestURI}" method="post">
-        <input type="hidden" name="bookId" th:value="${auctionBook.book.bookId}">
-            <label for="price">경매가:</label>
-            <input type="text" id="price" name="bidAmount">
-            <input type="submit" value="입찰하기">
-        </form>
+    <div th:if="${seller}">
+        <div class="auction-info">
+            <form class="auction-form" th:action="@{/auction/books/{bookId}/temp(bookId=${auctionBook.book.bookId})}" method="post">
+                <button type="submit" class="end-auction-button">경매 종료</button>
+            </form>
+        </div>
+    </div>
+    <div th:unless="${seller}">
+        <div class="auction-info">
+            <h4>경매 참여하기</h4>
+            <form class="auction-form" th:action="${#httpServletRequest.requestURI}" method="post">
+                <input type="hidden" name="bookId" th:value="${auctionBook.book.bookId}">
+                <label for="price">경매가:</label>
+                <input type="text" id="price" name="price">
+                <input type="submit" value="입찰하기">
+            </form>
+        </div>
     </div>
     <script th:inline="javascript">
     /* alert 메시지 표시 */

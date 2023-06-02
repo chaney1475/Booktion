@@ -21,7 +21,9 @@ public class MainController {
     @GetMapping
     public String bookList(Model model, HttpSession session){
         String userId = (String)session.getAttribute("userId");
-        model.addAttribute("userId",userId);
+        if(userId != null){
+            session.setAttribute("userId",userId);
+        }
         return "main";
     }
 }

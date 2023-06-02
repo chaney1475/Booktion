@@ -135,14 +135,6 @@ public class Order implements Serializable {
     public void setStatus(int status) {
         this.status = status;
     }
-
-
-    public String getPhoneNum() {
-        return phoneNum;
-    }
-
-    public void setPhoneNum(String phoneNum) {
-        this.phoneNum = phoneNum;
       
     public String getPhoneNumber() {
         return phoneNumber;

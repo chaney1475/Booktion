@@ -13,7 +13,7 @@ public class Review implements Serializable {
     @Column(name="review_id")
     private long reviewId;
 
-    @Column
+    @ManyToOne
     @JoinColumn(name = "client_id")
     private User user;
 

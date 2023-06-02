@@ -10,12 +10,14 @@ import com.project.Booktion.model.CartItem;
 import com.project.Booktion.repository.BookRepository;
 import com.project.Booktion.repository.CartItemRepository;
 import com.project.Booktion.repository.CartRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpSession;
 
+@RequiredArgsConstructor
 @Service
 public class CartService {
     private final BookRepository bookRepository;
@@ -23,13 +25,6 @@ public class CartService {
     private final CartItemRepository cartItemRepository;
     private final HttpSession session;
 
-    @Autowired
-    public CartService(BookRepository bookRepository, CartRepository cartRepository, CartItemRepository cartItemRepository, HttpSession session) {
-        this.bookRepository = bookRepository;
-        this.cartItemRepository = cartItemRepository;
-        this.cartRepository = cartRepository;
-        this.session = session;
-    }
     public List<Book> getCartItems() {
         return bookRepository.findAll();
     }

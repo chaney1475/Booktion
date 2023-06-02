@@ -29,7 +29,7 @@ public class Order implements Serializable {
     private int price;
     private String payment;
     private String card;
-    @Column(name = "book_type")
+    @Column(name = "order_type")
     private int orderType;
     @Column(name = "status")
     private int status;

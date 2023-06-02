@@ -6,6 +6,11 @@ public class BookForm {
     private Book book;
     private int quantity;
     private int price;
+
+    public BookForm() {
+
+    }
+
     public Book getBook() {
         return book;
     }

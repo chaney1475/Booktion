@@ -1,5 +1,4 @@
-package com.project.Booktion.controller;
-
+package com.project.Booktion.controller.book;
 
 import com.project.Booktion.model.Book;
 import com.project.Booktion.service.BookService;
@@ -10,20 +9,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
-@Slf4j
+
+@Slf4j // 로그 찍는 기능
 @Controller
+@RequestMapping("/book")
 @RequiredArgsConstructor
-@RequestMapping("/main")
-public class MainController {
+public class BookListController {
+
     private final BookService bookService;
-    @GetMapping
-    public String bookList(Model model, HttpSession session){
-        String userId = (String)session.getAttribute("userId");
-        if(userId != null){
-            session.setAttribute("userId",userId);
-        }
-        return "main";
+
+    @GetMapping("/list")
+    public String viewBookList(Model model) {
+        List<Book> bookList = bookService.getBooksByBookType(1);
+        model.addAttribute("bookList", bookList);
+        return "book/bookList";
     }
+
 }

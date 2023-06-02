@@ -6,12 +6,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class BookService {
     private final BookRepository bookRepository;
 
-    public Book findById(String bookId) {
+    public Book findById(long bookId) {
+        Optional<Book> result = bookRepository.findById(bookId);
+        if(result != null) return result.get();
         return null;
     }
 
@@ -21,5 +25,9 @@ public class BookService {
 
     public Book findByBookIdAndBookType(long bookId, int i) {
         return bookRepository.findByBookIdAndBookType(bookId, i);
+    }
+
+    public List<Book> getBooksByBookType(int bookType) {
+        return bookRepository.findByBookType(bookType);
     }
 }

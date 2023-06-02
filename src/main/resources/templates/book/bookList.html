@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book List</title>
+</head>
+<body>
+<h1>Book List</h1>
+<table>
+    <tr>
+        <th></th>
+        <th>책 제목</th>
+        <th>ISBN</th>
+        <th>저자</th>
+        <th>출판사</th>
+        <th>가격</th>
+    </tr>
+    <!-- bookList를 반복하여 출력 -->
+    <tr th:each="book : ${bookList}">
+        <td>
+            <img th:src="${book.imageUrl}" alt="Book Image" />
+        </td>
+        <td th:text="${book.isbn}"></td>
+        <td><a th:href="@{/book/{id}(id=${book.bookId})}" th:text="${book.title}"></a></td>
+        <td th:text="${book.author}"></td>
+        <td th:text="${book.publisher}"></td>
+        <td th:text="${book.price}"></td>
+    </tr>
+</table>
+</body>
+</html>

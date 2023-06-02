@@ -13,16 +13,16 @@ import java.util.Optional;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findByBook(Book book);
 
-    Review findByReviewIdAndUser_UserId(Long reviewId, Long userId);
+    //Review findByReviewIdAndClientId(Long reviewId, Long clientId);
     Review save(Review review);
 
-    void deleteByUser_UserIdAndReviewId(String userId, Long reviewId);
+    //void deleteByUserIdAndReviewId(String userId, Long reviewId);
 
-    long count();
+    //long count();
 
-    List<com.project.Booktion.model.Review> findByUser(User currentUser);
+    //List<com.project.Booktion.model.Review> findByUser(User currentUser);
 
-    void deleteById(long reviewId);
+    //void deleteById(long reviewId);
 
-    Optional<Review> findById(long reviewId);
+    Optional<Object> findById(long reviewId);
 }

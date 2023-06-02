@@ -11,6 +11,7 @@ import com.project.Booktion.model.User;
 import com.project.Booktion.repository.BookRepository;
 import com.project.Booktion.repository.CartItemRepository;
 import com.project.Booktion.repository.CartRepository;
+import lombok.RequiredArgsConstructor;
 import com.project.Booktion.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

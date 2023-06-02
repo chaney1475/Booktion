@@ -20,8 +20,6 @@ public class Order implements Serializable {
     @Column(name = "order_date")
     private Date orderDate;
     private String name;
-    @Column(name = "phone_number")
-    private String phoneNum;
     @Embedded
     private Address address;
     @Column(name = "ship_message")
@@ -29,13 +27,15 @@ public class Order implements Serializable {
     private int price;
     private String payment;
     private String card;
-    @Column(name = "book_type")
+    @Column(name = "order_type")
     private int orderType;
-    @Column(name = "status")
     private int status;
+
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems;
 
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
     /*getter & setter*/
     public long getOrderId() {
@@ -133,15 +133,35 @@ public class Order implements Serializable {
     public void setStatus(int status) {
         this.status = status;
     }
-
-    public String getPhoneNum() {
-        return phoneNum;
+      
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhoneNum(String phoneNum) {
-        this.phoneNum = phoneNum;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+
     }
 
     public Order() {
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", user=" + user +
+                ", orderDate=" + orderDate +
+                ", name='" + name + '\'' +
+                ", address=" + address +
+                ", shipMessage='" + shipMessage + '\'' +
+                ", price=" + price +
+                ", payment='" + payment + '\'' +
+                ", card='" + card + '\'' +
+                ", orderType=" + orderType +
+                ", status='" + status + '\'' +
+                ", orderItems=" + orderItems +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
     }
 }

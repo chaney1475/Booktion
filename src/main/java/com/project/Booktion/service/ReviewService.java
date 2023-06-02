@@ -27,14 +27,17 @@ public class ReviewService {
     }
 
     public List<Review> getReviewByUser(User currentUser) {
-        return reviewRepository.findByUser(currentUser);
+       // return reviewRepository.findByUser(currentUser);
+        return null;
     }
     public void deleteReview(long reviewId) {
-        reviewRepository.deleteById(reviewId);
+
+        //reviewRepository.deleteById(reviewId);
+
     }
 
     public Review getReviewById(long reviewId) {
-        return reviewRepository.findById(reviewId).orElse(null);
+        return (Review) reviewRepository.findById(reviewId).orElse(null);
     }
 
     public void updateReview(Review review) {

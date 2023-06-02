@@ -5,8 +5,8 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Address {
     private String zipcode;
-    private String address1;
-    private String address2;
+    private String address1; //도로명 주소
+    private String address2; //그외 자세한 주소
 
     public Address() {
     }
@@ -39,5 +39,14 @@ public class Address {
 
     public void setAddress2(String address2) {
         this.address2 = address2;
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "zipcode='" + zipcode + '\'' +
+                ", address1='" + address1 + '\'' +
+                ", address2='" + address2 + '\'' +
+                '}';
     }
 }

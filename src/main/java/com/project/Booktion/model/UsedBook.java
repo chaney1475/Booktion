@@ -16,7 +16,7 @@ public class UsedBook implements Serializable {
     @Column
     private int status;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "book_id")
     private Book book;
 

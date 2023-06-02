@@ -36,12 +36,16 @@ public class SearchBookWithAPI {
         return "searchApi";
     }
 
-    @PostMapping("auction/selected")
+    @PostMapping("search/selected")
     public String processForm(@RequestParam String selectedBook, @RequestParam String bookType,
                               @RequestParam String deliveryCompany, @RequestParam int price,
                               HttpSession session, Model model) {
         User user = userRepository.findByUserId((String)session.getAttribute("userId"));
-
+        if(user == null){
+            log.info("Book Regist SearchBookWithAPI user is null!!!!!!!!!!!!!");
+            return "user/signIn";
+        }
+        log.info("Book Regist SearchBookWithAPI User ID : " + user.getUserId());
         String[] parts = selectedBook.split(" ");
         String isbn = parts[0];
         Book book = bookApiService.getBookByISBN(isbn);
@@ -69,7 +73,7 @@ public class SearchBookWithAPI {
 
     private Long registUsed(String deliveryCompany, int price, Book bookByISBN) {
         bookByISBN.setPrice(price);
-        bookByISBN.setBookType(3);
+        bookByISBN.setBookType(2);
         UsedBook usedBook = new UsedBook();
         usedBook.setBook(bookByISBN);
 
@@ -77,11 +81,11 @@ public class SearchBookWithAPI {
         usedBook.setShippingCompany(deliveryCompany);
 
         UsedBook saved = usedBR.save(usedBook);
-        return saved.getUsedBookId();
+        return saved.getBook().getBookId();
     }
 
     private Long registAuction(String deliveryCompany, int price, Book bookByISBN) {
-        bookByISBN.setBookType(2);
+        bookByISBN.setBookType(3);
         AuctionBook auctionBook = new AuctionBook();
         auctionBook.setBook(bookByISBN);
 

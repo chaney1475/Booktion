@@ -33,9 +33,13 @@ public class Order implements Serializable {
     private int orderType;
     @Column(name = "status")
     private int status;
+    private int status;
+
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems;
 
+
+    private String phoneNumber;
 
     /*getter & setter*/
     public long getOrderId() {
@@ -142,6 +146,33 @@ public class Order implements Serializable {
         this.phoneNum = phoneNum;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     public Order() {
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", user=" + user +
+                ", orderDate=" + orderDate +
+                ", name='" + name + '\'' +
+                ", address=" + address +
+                ", shipMessage='" + shipMessage + '\'' +
+                ", price=" + price +
+                ", payment='" + payment + '\'' +
+                ", card='" + card + '\'' +
+                ", orderType=" + orderType +
+                ", status='" + status + '\'' +
+                ", orderItems=" + orderItems +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
     }
 }

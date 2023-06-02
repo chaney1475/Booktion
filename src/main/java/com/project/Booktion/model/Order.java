@@ -31,13 +31,11 @@ public class Order implements Serializable {
     private String card;
     @Column(name = "order_type")
     private int orderType;
-    @Column(name = "status")
-    private int status;
+
     private int status;
 
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems;
-
 
     private String phoneNumber;
 
@@ -137,21 +135,14 @@ public class Order implements Serializable {
     public void setStatus(int status) {
         this.status = status;
     }
-
-    public String getPhoneNum() {
-        return phoneNum;
-    }
-
-    public void setPhoneNum(String phoneNum) {
-        this.phoneNum = phoneNum;
-    }
-
+      
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+
     }
 
     public Order() {

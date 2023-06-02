@@ -3,19 +3,20 @@ package com.project.Booktion.repository;
 import com.project.Booktion.model.Book;
 import com.project.Booktion.model.Review;
 import com.project.Booktion.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ReviewRepository<Review, Long> {
+public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findByBook(Book book);
 
-    Review findByReviewIdAndClientId(Long reviewId, Long clientId);
+    //Review findByReviewIdAndClientId(Long reviewId, Long clientId);
     Review save(Review review);
 
-    void deleteByUserIdAndReviewId(String userId, Long reviewId);
+    //void deleteByUserIdAndReviewId(String userId, Long reviewId);
 
     long count();
 
@@ -23,5 +24,5 @@ public interface ReviewRepository<Review, Long> {
 
     void deleteById(long reviewId);
 
-    Optional<Object> finById(long reviewId);
+    Optional<Object> findById(long reviewId);
 }

@@ -18,7 +18,7 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <a th:href="@{/used/registForm}">중고책 등록하기</a>
+    <a th:href="@{/search/used}">중고책 등록하기</a>
     <div class="top-list">
         <div class="book-content">
 
@@ -32,10 +32,11 @@
     <div class="all-list">
         <ul class="row">
             <li th:each="book, status: ${bookList}" class="book-item">
-                <a th:href="@{/used/bookInfo/{bookId}(bookId=${book.bookId})}">
+                <a th:href="@{/used/books/{bookId}(bookId=${book.bookId})}">
                 <div class="book-image">
                     <img th:src="${book.imageUrl}" />
                 </div>
+                    <div class="book-title" th:text="${book.bookId}"></div>
                 <div class="book-title" th:text="${book.title}"></div>
                 <div class="book-price" th:text="${book.price}"></div>
 

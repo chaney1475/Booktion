@@ -75,7 +75,7 @@
   </form>
   <div th:if="${books != null and books.size() > 0}">
     <h2>검색 결과</h2>
-    <form method="post" action="/auction/selected">
+    <form method="post" action="/search/selected">
       <div th:each="book : ${books}" class="card">
         <div class="card-body">
           <img class="book-image" th:src="${book.imageUrl}" alt="Book Image">
@@ -101,9 +101,11 @@
         <label for="deliveryCompany" class="col-sm-2 col-form-label">배송사:</label>
         <div class="col-sm-10">
           <select id="deliveryCompany" name="deliveryCompany" class="form-control">
-            <option value="company1">대한통운</option>
-            <option value="company2">로젠택배</option>
-            <option value="company3">우체국택배</option>
+            <option value="CJ">CJ대한통운</option>
+            <option value="EPOST">우체국택배</option>
+            <option value="CVS">편의점택배</option>
+            <option value="KGB">로젠택배</option>
+            <option value="ETC">기타</option>
           </select>
         </div>
       </div>

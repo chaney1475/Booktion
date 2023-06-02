@@ -2,8 +2,7 @@ package com.project.Booktion.controller.usedBook;
 
 import com.project.Booktion.model.Book;
 import com.project.Booktion.model.UsedBook;
-import com.project.Booktion.repository.UsedBookRepository;
-import com.project.Booktion.repository.UserRepository;
+import com.project.Booktion.service.BookService;
 import com.project.Booktion.service.UsedBookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j // 로그 찍는 기능
 @Controller
@@ -21,16 +19,19 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ViewUsedController {
     private final UsedBookService usedBookService;
-    private final UsedBookRepository userRepository;
+    private final BookService bookService;
 
     @RequestMapping("/books/{bookId}")
     public String showBookInfo(@PathVariable long bookId, Model model){
         //책 상세페이지로 이동
-        UsedBook usedBook = userRepository.findById(bookId).orElse(null);
-        if(usedBook == null){
+        log.info("ViewUsedController#showBookInfo run! bookId : " + bookId);
+        Book book = bookService.findById(bookId);
+        if(book == null){
             return "noBook"; //상품이 없다는 페이지로 이동
         }
-        model.addAttribute("book", usedBook.getBook());
+        UsedBook usedBook = usedBookService.getUsedBookByBookId(bookId);
+        model.addAttribute("book", book);
+        model.addAttribute("usedBook", usedBook);
         return "used/bookInfo";
     }
 

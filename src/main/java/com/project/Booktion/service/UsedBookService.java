@@ -1,25 +1,23 @@
 package com.project.Booktion.service;
 
 import com.project.Booktion.controller.usedBook.UsedBookOrder;
-import com.project.Booktion.controller.usedBook.UsedBookRegist;
-import com.project.Booktion.model.Book;
-import com.project.Booktion.model.Order;
-import com.project.Booktion.model.UsedBook;
+import com.project.Booktion.model.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import com.project.Booktion.model.User;
 import com.project.Booktion.repository.BookRepository;
 import com.project.Booktion.repository.OrderRepository;
 import com.project.Booktion.repository.UsedBookRepository;
 import com.project.Booktion.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
+@Slf4j // 로그 찍는 기능
 @Service
 public class UsedBookService {
     private final UsedBookRepository usedBookRepository;
@@ -27,60 +25,49 @@ public class UsedBookService {
     private final UserRepository userRepository;
     private final BookRepository bookRepository;
 
-    public UsedBook getUsedBookById(long bookId) {
-        Optional<UsedBook> result = usedBookRepository.findById(bookId);
-        if(result.isPresent()) return result.get();
+    public UsedBook getUsedBookByBookId(long bookId) {
+        UsedBook usedBook = usedBookRepository.findByBookBookId(bookId);
+        if(usedBook != null) return usedBook;
         return null;
     }
 
-    public void submitOrderForm(User user, UsedBookOrder order) {
+    public void submitOrderForm(long bookId, UsedBookOrder order) {
         // 판매자 정보 가져오기
-        User seller = userRepository.findByUserId(user.getUserId());
-        if (seller == null) {
-            throw new IllegalArgumentException("Seller with ID " + user.getUserId() + " does not exist.");
-        }
+        Optional<User> buyer = userRepository.findById(order.getBuyerId());
+        //저장을 위한 book정보 생성
+        Optional<Book> book = bookRepository.findById(bookId);
+        //order item생성
+        OrderItem orderItem = new OrderItem();
+        orderItem.setBook(book.get());
+        orderItem.setQuantity(1);
+        List<OrderItem> orderItems = new ArrayList<>();
+        orderItems.add(orderItem);
 
         // UsedBookOrder 정보로 Order 엔티티 생성
         Order newOrder = new Order();
-        newOrder.setUser(seller);
+        newOrder.setUser(buyer.get());
         newOrder.setOrderDate(new Date());
         newOrder.setName(order.getOrderName());
         newOrder.setAddress(order.getAddress());
         newOrder.setShipMessage(order.getShipMessage());
-        //newOrder.setPrice(); //order시의 정보를 어떻게 가져오는?
+        newOrder.setPrice(book.get().getPrice());
         newOrder.setPayment(order.getPayment());
         newOrder.setCard(order.getCard());
         newOrder.setOrderType(2);
+        newOrder.setStatus(0);
+        newOrder.setOrderItems(orderItems);
+        newOrder.setPhoneNumber(order.getPhoneNumber());
+
+        log.info(newOrder.toString());
 
         // Order 엔티티 저장
-        orderRepository.save(newOrder);
+        Order nowOrder = orderRepository.save(newOrder);
 
         // UsedBook의 상태 변경
-        UsedBook usedBook = usedBookRepository.findById(order.getUsedBookId()).orElse(null);
-        if (usedBook == null) {
-            throw new IllegalArgumentException("Used Book with ID " + order.getUsedBookId() + " does not exist.");
-        }
-        usedBook.setStatus(1);
-        usedBookRepository.save(usedBook);
-    }
-
-    public UsedBook submitRegistForm(UsedBookRegist usedBookRegist) {
-        //book 등록
-        Book book = new Book();
-        book.setBookType(2); //bookType 중고책
-        book.setIsbn(usedBookRegist.getIsbn());
-        book.setTitle(usedBookRegist.getTitle());
-        book.setPrice(usedBookRegist.getPrice());
-        //book.setSellerId(usedBookRegist.getSellerId()); //book model 수정해야함
-        //book = bookRepository.saveAndFlush(Book); //DB에 저장
-
-        //usedBook 등록
-        UsedBook usedBook = new UsedBook();
-        usedBook.setBook(book);
-        usedBook.setStatus(0); //등록 중이기 때문에 안 팔린 상태
-        usedBook.setShippingCompany(usedBookRegist.getCompany());
-        //usedBook = usedBookRepository.saveAllAndFlush(usedBook);
-        return null;
+        Optional<UsedBook> targetUsedBook = usedBookRepository.findById(order.getUsedBookId());
+        UsedBook temp = targetUsedBook.get();
+        temp.setStatus(1);
+        usedBookRepository.save(temp);
     }
 
     public List<UsedBook> getSellingUsedBooks(String memberId) {
@@ -99,10 +86,14 @@ public class UsedBookService {
 
     public List<Book> getNewBookList(int bookType) {
         return null;
-
+    }
+    public List<Book> getSaleBookList(int bookType) {
+        return null;
     }
 
-    public List<Book> getSaleBookList(int bookType) {
+    public UsedBook getUsedBookById(long usedBookId) {
+        Optional<UsedBook> result = usedBookRepository.findById(usedBookId);
+        if(result.isPresent()) return result.get();
         return null;
     }
 }

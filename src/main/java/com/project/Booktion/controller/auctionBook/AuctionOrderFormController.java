@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-@Slf4j // 로그 찍는 기능
 @Controller
 @RequestMapping("/auction/order")
-@SessionAttributes("user")
 @RequiredArgsConstructor
 public class AuctionOrderFormController {
     // 경매 책 주문 폼 컨트롤러
@@ -47,9 +45,9 @@ public class AuctionOrderFormController {
     }
 
     // 사용자가 판매하고 있는 책의 경매를 종료하면 임시 주문(tempOrder)만들기
-    @PostMapping("/temp")
-    public String tempOrder(@RequestParam("auctionBookId") long auctionBookId, Model model) {
-        TempOrder tempOrder = biddingS.createTempOrder(auctionBookId);
+    @PostMapping("/{bookId}/temp")
+    public String tempOrder(@PathVariable long bookId, Model model) {
+        TempOrder tempOrder = biddingS.createTempOrder(bookId);
         model.addAttribute("price",tempOrder.getBid().getPrice());
         return "auction/biddingComplete";
     }

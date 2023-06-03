@@ -68,6 +68,10 @@ public class UsedBookService {
         return usedBookRepository.findByStatusAndBook_User_UserId(0, memberId);
     }
 
+    public List<UsedBook> getSoldUsedBooks(String memberId) {
+        return usedBookRepository.findByStatusAndBook_User_UserId(0, memberId);
+    }
+
 
     public List<Order> findOrderBySeller(String memberId) {
         //return orderRepository.findByUserUserIdAndOrderTypeAndBookBookTypeAndBookStatus(memberId, 2, 2, 1);

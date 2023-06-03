@@ -1,6 +1,7 @@
 package com.project.Booktion.controller.book;
 
 import com.project.Booktion.model.Book;
+import com.project.Booktion.model.Order;
 import com.project.Booktion.model.Review;
 import com.project.Booktion.model.User;
 import com.project.Booktion.service.BookService;
@@ -14,6 +15,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j // 로그 찍는 기능
@@ -34,26 +37,22 @@ public class ViewBasicController {
         if(book == null) {
             return "noBook";
         }
+        //model.addAttribute("bookForm", new BookForm()); // 새로운 BookForm 객체 생성
+
         model.addAttribute("book", book);
-        model.addAttribute("bookForm", new BookForm()); // 새로운 BookForm 객체 생성
-
-
-        // 추가: 해당 책의 후기 리스트를 가져와서 모델에 추가
-        //List<Review> reviews = reviewService.getReviewsByBook(book);
-//        if (reviews.isEmpty()) {
-//            model.addAttribute("noReviews", true); // 후기가 없음을 표시하기 위한 속성 추가
-//        } else {
-//            model.addAttribute("reviews", reviews);
-//        }
+        // 해당 책의 리뷰 리스트 가져오기
+        List<Review> reviews = reviewService.getReviewsByBookId(book.getBookId());
+        model.addAttribute("book", book);
+        model.addAttribute("reviews", reviews);
 
         // 리뷰 등록을 위한 빈 Review 객체도 모델에 추가
-       // model.addAttribute("review", new Review());
+        model.addAttribute("review", new Review());
 
         return "book/bookInfo";
     }
 
     @PostMapping("/{id}/review") // 추가: 리뷰 작성 처리를 위한 POST 요청 핸들러
-    public String addReview(@RequestParam("bookId") long bookId, @ModelAttribute("review") Review review, BindingResult result, Model model, HttpSession session) {
+    public String addReview(@PathVariable("id") long bookId, @ModelAttribute("review") Review review, BindingResult result, Model model, HttpSession session) {
         Book book = bookService.findByBookIdAndBookType(bookId, 1); // 일반책만 나오게
         if (book == null) {
             return "noBook";
@@ -68,11 +67,11 @@ public class ViewBasicController {
 
         // 리뷰 작성 처리 로직 추가
         review.setBook(book);
-        User user = userService.getUserById(userId);
+        User user = userService.getUser(userId);
         review.setUser(user);
         reviewService.createReview(review);
 
-        // 리뷰 작성 후 다시 해당 책 상세 페이지로 리다이렉트
+        // 책 상세 페이지로 리다이렉션
         return "redirect:/book/" + bookId;
     }
 }

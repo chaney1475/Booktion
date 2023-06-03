@@ -35,7 +35,7 @@ public class UserController { // 내 정보 보기
     }
 
     @DeleteMapping("/{userId}")
-    public String deleteUser(@PathVariable("userId") Long userId) {
+    public String deleteUser(@PathVariable("userId") String userId) {
         // 사용자 정보 삭제 로직
         repository.deleteById(userId);
         return "redirect:/main";

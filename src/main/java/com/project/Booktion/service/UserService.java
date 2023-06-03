@@ -26,10 +26,6 @@ public class UserService {
         return null;
     }
 
-    public User getUserById(String userId) {
-        return null;
-    }
-
     public void updateUser(String userId, User user) {
     }
 

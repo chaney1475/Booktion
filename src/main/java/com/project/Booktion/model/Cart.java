@@ -53,4 +53,8 @@ public class Cart implements Serializable {
 
     public List<CartItem> getCartItemList() {return cartItemList;
     }
+
+    public void setCartItemList(List<CartItem> cartItemList) {
+        this.cartItemList = cartItemList;
+    }
 }

@@ -19,8 +19,9 @@ public class ReviewService {
     public void write(Review review) {
     }
 
-    public List<Review> getReviewsByBook(Book book) {
+    public List<Review> getReviewsByBookId(long bookId) {
         return null;
+        //return reviewRepository.findByBookId(bookId);
     }
 
     public void createReview(Review review) {

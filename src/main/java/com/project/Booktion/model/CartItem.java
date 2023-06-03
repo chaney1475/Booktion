@@ -2,6 +2,7 @@ package com.project.Booktion.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "cart_item")
@@ -11,8 +12,10 @@ public class CartItem implements Serializable {
     @SequenceGenerator(name = "cart_item_seq_generator", sequenceName = "CART_ITEM_SEQ", allocationSize = 1)
     @Column(name="cart_item_id")
     private long cartItemId;
-    @Column(name="cart_id")
-    private long cartId;
+    @ManyToOne
+    @JoinColumn(name="cart_id")
+    private Cart cart;
+    @ManyToOne
     @JoinColumn(name="book_id")
     private Book book;
     private int quantity;
@@ -25,12 +28,13 @@ public class CartItem implements Serializable {
         this.cartItemId = cartItemId;
     }
 
-    public long getCartId() {
-        return cartId;
+
+    public Cart getCart() {
+        return cart;
     }
 
-    public void setCartId(long cartId) {
-        this.cartId = cartId;
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     public Book getBook() {
@@ -48,4 +52,5 @@ public class CartItem implements Serializable {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
 }

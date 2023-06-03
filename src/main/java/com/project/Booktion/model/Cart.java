@@ -10,11 +10,12 @@ public class Cart implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cart_seq_generator")
     @SequenceGenerator(name = "cart_seq_generator", sequenceName = "CART_SEQ", allocationSize = 1)
+
     @Column(name="cart_id")
     private long cartId;
     @Column(name="client_id")
-    private String clientId;
-    @OneToMany
+    private String userId;
+    @OneToMany(mappedBy = "cart")
     private List<CartItem> cartItemList;
 
     // Constructors, getters and setters, etc.
@@ -23,7 +24,7 @@ public class Cart implements Serializable {
     }
 
     public Cart(String clientId) {
-        this.clientId = clientId;
+        this.userId = clientId;
     }
 
     // Getters and setters
@@ -36,17 +37,20 @@ public class Cart implements Serializable {
         this.cartId = cartId;
     }
 
-    public String getClientId() {
-        return clientId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public Cart(long cartId, String clientId, List<CartItem> cartItemList) {
+    public Cart(long cartId, String userId, List<CartItem> cartItemList) {
         this.cartId = cartId;
-        this.clientId = clientId;
+        this.userId = userId;
         this.cartItemList = cartItemList;
+    }
+
+    public List<CartItem> getCartItemList() {return cartItemList;
     }
 }

@@ -96,4 +96,12 @@ public class CartService {
         }
         return cartItemIds;
     }
+
+    public Cart getCart(String clientId) {
+        // 클라이언트 ID를 사용하여 해당 클라이언트의 카트를 조회하는 로직을 구현합니다.
+        // 실제로는 데이터베이스에서 해당 클라이언트의 카트 정보를 조회하는 작업을 수행해야 합니다.
+        // 임시로 빈 카트를 반환하도록 구현해보겠습니다.
+        Cart cart = cartRepository.findByClientId(clientId);
+        return cart;
+    }
 }

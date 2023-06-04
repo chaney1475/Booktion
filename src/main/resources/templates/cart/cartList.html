@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
 <head>
     <meta charset="UTF-8">
     <title>Book Information</title>
@@ -7,9 +9,10 @@
     <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
     <style>
         table {
-            border-collapse: collapse;
-            width: 100%;
-        }
+              width: 100%;
+              border-collapse: collapse;
+              margin-bottom: 20px;
+            }
         th, td {
             border: 1px solid black;
             padding: 8px;
@@ -20,23 +23,38 @@
     </style>
 </head>
 <body>
-<h1>주문내역</h1>
+<div layout:fragment="content">
+    <div th:if="${successMessage}" class="alert alert-success">
+        <p th:text="${successMessage}"></p>
+    </div>
+    <h1>주문내역</h1>
     <table>
         <tr>
-            <th>Cart Item ID</th>
-            <th>Cart ID</th>
             <th>책 이름</th>
             <th>수량</th>
             <th>가격</th>
+            <th>총 가격</th>
+            <th> </th>
         </tr>
-
         <tr th:each="cartItem : ${cartItems}">
-            <td th:text="${cartItem.cartItemId}"></td>
-            <td th:text="${cartItem.cart.cartId}"></td>
             <td th:text="${cartItem.book.title}"></td>
-            <td th:text="${cartItem.quantity}"></td>
+            <td>
+                <form class="quantity-form" th:action="@{/cart/update}" method="post">
+                    <input type="hidden" name="itemId" th:value="${cartItem.cartItemId}" />
+                    <input type="number" name="cartQuantity" min="1" th:text="${cartItem.quantity}" />
+                    <button type="submit" class="btn btn-primary">수정</button>
+                </form>
+            </td>
             <td th:text="${cartItem.book.price}"></td>
+            <td th:text="${cartItem.book.price}*${cartItem.quantity}"></td>
+            <td>
+                <form th:action="@{/cart/delete}" method="post">
+                    <input type="hidden" name="itemId" th:value="${cartItem.cartItemId}" />
+                    <button type="submit" class="btn btn-danger">삭제</button>
+                </form>
+            </td>
         </tr>
     </table>
+</div>
 </body>
 </html>

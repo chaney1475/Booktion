@@ -2,6 +2,7 @@ package com.project.Booktion.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -10,13 +11,14 @@ public class Cart implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cart_seq_generator")
     @SequenceGenerator(name = "cart_seq_generator", sequenceName = "CART_SEQ", allocationSize = 1)
-
-    @Column(name="cart_id")
+    @Column(name = "cart_id")
     private long cartId;
-    @Column(name="client_id")
+
+    @Column(name = "client_id")
     private String userId;
+
     @OneToMany(mappedBy = "cart")
-    private List<CartItem> cartItemList;
+    private List<CartItem> cartItemList = new ArrayList<>();
 
     // Constructors, getters and setters, etc.
 
@@ -45,13 +47,8 @@ public class Cart implements Serializable {
         this.userId = userId;
     }
 
-    public Cart(long cartId, String userId, List<CartItem> cartItemList) {
-        this.cartId = cartId;
-        this.userId = userId;
-        this.cartItemList = cartItemList;
-    }
-
-    public List<CartItem> getCartItemList() {return cartItemList;
+    public List<CartItem> getCartItemList() {
+        return cartItemList;
     }
 
     public void setCartItemList(List<CartItem> cartItemList) {

@@ -35,6 +35,19 @@ public class CartService {
         return new ArrayList<>();
     }
 
+    public boolean isBookInCart(String userId, long bookId) {
+        Cart cart = cartRepository.findByUserId(userId);
+        if (cart != null) {
+            List<CartItem> cartItems = cart.getCartItemList();
+            for (CartItem cartItem : cartItems) {
+                if (cartItem.getBook().getBookId() == bookId) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 //    public User getUser(String userId) {
 //        return userRepository.findByUserId(userId);
 //    }

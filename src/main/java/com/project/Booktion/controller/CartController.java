@@ -30,6 +30,7 @@ public class CartController {
     private final UserService userService;
     private final CartRepository cartRepository;
     private final BookRepository bookRepository;
+    private final CartItemRepository cartItemRepository;
 
     @GetMapping
     public String viewCartList(Model model, HttpServletRequest request) {
@@ -60,8 +61,8 @@ public class CartController {
     }
 
     @PostMapping("/add")
-    public String addCart(@RequestParam("bookId") long bookId, @RequestParam("quantity") int quantity,
-                          HttpServletRequest request, RedirectAttributes redirectAttributes) {
+    public String addCart(@RequestParam("bookId") long bookId, @RequestParam("cartQuantity") int cartQuantity,
+                          HttpServletRequest request, RedirectAttributes redirectAttributes, Model model) {
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("userId") == null) {
             return "user/signIn";
@@ -73,23 +74,54 @@ public class CartController {
             return "user/signIn";
         }
 
-        Book book = bookRepository.findByBookId(bookId);
         Cart cart = cartRepository.findByUserId(userId);
         if(cart == null) {
             cart = new Cart(userId);
             cartRepository.save(cart);
         }
+        Book book = bookRepository.findByBookId(bookId);
+
+        if (cartService.isBookInCart(userId, bookId)) {
+            model.addAttribute("errorMessage", "이미 카트에 존재하는 책입니다.");
+            return "redirect:/book/" + bookId; // Redirect back to the book details page
+        }
 
         CartItem cartItem = new CartItem();
         cartItem.setCart(cart);
         cartItem.setBook(book);
-        cartItem.setQuantity(quantity);
+        cartItem.setQuantity(cartQuantity);
+
+        cartItemRepository.save(cartItem);
 
         cart.getCartItemList().add(cartItem);
         cartRepository.save(cart);
 
-        redirectAttributes.addFlashAttribute("successMessage", "도서가 장바구니에 추가되었습니다.");
+        model.addAttribute("successMessage", "도서가 장바구니에 추가되었습니다.");
 
+        return "redirect:/cart";
+    }
+    @PostMapping("/delete")
+    public String deleteCartItem(@RequestParam("itemId") Long itemId, Model model) {
+        CartItem cartItem = cartItemRepository.findById(itemId).orElse(null);
+        if (cartItem != null) {
+            cartItemRepository.delete(cartItem);
+            model.addAttribute("successMessage", "도서가 장바구니에서 삭제되었습니다.");
+        }
+        return "redirect:/cart";
+    }
+
+    @PostMapping("/update")
+    public String updateCartItem(@RequestParam("itemId") Long itemId, @RequestParam("cartQuantity") int cartQuantity, RedirectAttributes redirectAttributes) {
+        CartItem cartItem = cartItemRepository.findById(itemId).orElse(null);
+        if (cartItem != null) {
+            if (cartQuantity <= 0) {
+                redirectAttributes.addFlashAttribute("errorMessage", "수량은 1 이상이어야 합니다.");
+            } else {
+                cartItem.setQuantity(cartQuantity);
+                cartItemRepository.save(cartItem);
+                redirectAttributes.addFlashAttribute("successMessage", "수량이 업데이트되었습니다.");
+            }
+        }
         return "redirect:/cart";
     }
 

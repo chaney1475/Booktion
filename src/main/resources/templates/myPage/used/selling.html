@@ -1,29 +1,81 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/baseLayout}">
+      layout:decorate="~{layout/layout}">
 <head>
     <meta charset="UTF-8">
-    <title>판매목록</title>
+    <title>판매 중인 중고책</title>
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            width: 900px;
+            margin: 0 auto;
+        }
+        body {
+            font-family: 'Nanum Gothic', sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .myPageContent {
+            width: 700px;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #b2d8e5;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #b2d8e5;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+
+    </style>
 </head>
 <body>
-<h1>판매 중인 중고 도서</h1>
-<div align="center">
-    <p>
-        <b>판매 중인 중고 도서 목록</b>
-    </p>
-    <table>
-        <tr>
-            <td><b>책 제목</b></td>
-            <td><b>책정가격</b></td>
-            <td><b>배송사</b></td>
-        </tr>
-        <tr th:each="selling : ${sellingUsedBooks}">
-            <td th:text="${selling.title}"></td>
-            <td th:text="${selling.price}"></td>
-            <td th:text="${selling.company}"></td>
-        </tr>
-    </table>
+<br><br><br>
+<div layout:fragment="content">
+    <br>
+    <div class="container">
+        <div class="sidebar-wrap">
+            <th:block th:replace="common/sidebar :: SidebarFragment"></th:block>
+        </div>
+        <div class="myPageContent">
+            <table>
+                <tr>
+                    <th>책 제목</th>
+                    <th>책정가격</th>
+                    <th>배송사</th>
+                </tr>
+                <tr th:each="usedBook : ${usedBookList}" th:onclick="|location.href='@{/used/books/{bookId}(bookId=${usedBook.book.bookId})}'|">
+                    <td th:text="${usedBook.book.title}"></td>
+                    <td th:text="${usedBook.book.price}"></td>
+                    <td th:text="${usedBook.shippingCompany}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>
 </body>
 </html>

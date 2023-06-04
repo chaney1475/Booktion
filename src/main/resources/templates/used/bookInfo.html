@@ -22,12 +22,16 @@
             padding: 0 20px;
         }
 
-        .book-info {
+        .book-main-info {
+            background-color: #b2d8e5;
             color: #333333;
+            padding: 20px 0 20px 0;
+            margin: 10px;
         }
 
         .book-content {
-            padding: 0 20px;
+            background-color: #ffffff;
+            padding: 20px;
         }
 
         .book-img {
@@ -75,14 +79,18 @@
             text-align: center;
         }
 
+        .book-detail{
+            background-color: #ffffff;
+            padding: 20px;
+        }
+
     </style>
 </head>
 <body>
 <div layout:fragment="content" id="content">
-    <h1>중고 도서 정보</h1>
     <div th:if="${book != null}" class="book-info">
-        <div class="book-title"><h2>책 제목: <span th:text="${book.title}"></span></h2></div>
-        <div class="book-info">
+        <div class="book-main-info">
+            <div class="book-title"><h2>책 제목: <span th:text="${book.title}"></span></h2></div>
             작가: <span th:text="${book.author}"></span>
             출판사: <span th:text="${book.publisher}"></span>
             출판일: <span th:text="${#dates.format(book.pubDate, 'yyyy년 MM월 dd일')}"></span>
@@ -98,10 +106,10 @@
                 <a href="#">새 상품으로 주문하기</a>
             </div>
         </div>
-        <div>
-            <h2>책 소개</h2>
+        <div class="book-detail">
+            <h2 style="background-color: #b2d8e5; padding: 10px;">책 소개</h2>
             <span th:text="${book.description}"></span><br/>
-            <h2>isbn</h2>
+            <h2 style="background-color: #b2d8e5; padding: 10px;">isbn</h2>
             <span th:text="${book.isbn}"></span>
         </div>
     </div>

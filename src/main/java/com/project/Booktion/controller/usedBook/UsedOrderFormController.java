@@ -34,14 +34,20 @@ public class UsedOrderFormController {
         UsedBook usedBook = usedBookService.getUsedBookById(usedBookId);
         if(usedBook.getStatus() == 1){
             //구매 불가 상태
-            log.info("UserOrderFormController#newFrom is fail : already sold!!!!!!!!!");
+            log.error("UserOrderFormController#newFrom is fail : already sold!!!!!!!!!");
             return "redirect:/used/main";
         }
         //로그인 상태 확인
         String userId = (String) session.getAttribute("userId");
         if(userId == null) {
-            log.info("UserOrderFormController#newFrom is fail : user is null!!!!!!!!!!!!!");
+            log.error("UserOrderFormController#newFrom is fail : user is null!!!!!!!!!!!!!");
             return "/user/signIn";
+        }
+        //판매자 본인 확인
+        Book book = bookService.getBook(bookId);
+        if(userId.equals(book.getUser().getUserId())){
+            log.error("buyer == seller!!!!!!!!!!!!!!!!!!!!!");
+            return "redirect:/used/main";
         }
         User user = userService.getUser(userId);
         usedBookOrder.setBuyerId(userId);

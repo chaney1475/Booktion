@@ -1,7 +1,9 @@
 package com.project.Booktion.controller.user;
 
 import com.project.Booktion.model.TempOrder;
+import com.project.Booktion.model.User;
 import com.project.Booktion.repository.TempOrderRepository;
+import com.project.Booktion.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -18,11 +20,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MyPageController {
     private final TempOrderRepository tempOrderRepository;
+    private final UserService userService;
     @GetMapping
     public String showMyPage(HttpSession session, Model model){
         String userId = (String) session.getAttribute("userId");
+        if(userId == null) {
+            log.info("MyPageController#showMyPage is fail : user is null!!!!!!!!!!!!!");
+            return "/user/signIn";
+        }
         List<TempOrder> TempOrderList = tempOrderRepository.findByUserId(userId);
+        User user = userService.getUser(userId);
         model.addAttribute("TempOrderList", TempOrderList);
+        model.addAttribute("userInfo", user);
         return "myPage/main";
     }
 }

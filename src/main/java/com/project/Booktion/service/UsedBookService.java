@@ -21,6 +21,7 @@ public class UsedBookService {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final BookRepository bookRepository;
+    private final OrderItemRepository orderItemRepository;
 
     public UsedBook getUsedBookByBookId(long bookId) {
         UsedBook usedBook = usedBookRepository.findByBookBookId(bookId);
@@ -65,11 +66,19 @@ public class UsedBookService {
     }
 
     public List<UsedBook> getSellingUsedBooks(String memberId) {
-        return usedBookRepository.findByStatusAndBook_User_UserId(0, memberId);
+        return usedBookRepository.findByStatusAndBookUserUserId(0, memberId);
     }
 
-    public List<UsedBook> getSoldUsedBooks(String memberId) {
-        return usedBookRepository.findByStatusAndBook_User_UserId(0, memberId);
+    public List<OrderItem> getSoldUsedBooks(String memberId) {
+        //팔린 상태의 usedBook조회
+        List<UsedBook> usedBookList = usedBookRepository.findByStatusAndBookUserUserId(1, memberId);
+        //팔린 usedBook의 bookId와 일치하는 orderItem의 리스트를 반환
+        List<OrderItem> orderItemList = new ArrayList<>();
+        for(UsedBook usedbook : usedBookList){
+            orderItemList.add(orderItemRepository.findByBookBookId(usedbook.getBook().getBookId()));
+        }
+        //List<Order> orderList = orderRepository.findOrdersBySellerAndBookTypeAndUsedBookStatus(memberId, 2, 1);
+        return orderItemList;
     }
 
 

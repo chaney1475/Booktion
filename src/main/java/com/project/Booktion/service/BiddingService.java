@@ -6,6 +6,7 @@ import com.project.Booktion.repository.BidRepository;
 import com.project.Booktion.repository.TempOrderRepository;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -17,14 +18,14 @@ public class BiddingService {
 
     public TempOrder createTempOrder(Long auctionBookId) {
         //AuctionBookId로 Bid 테이블을 검색하여 가장 높은 price를 가진 Bid를 가져옴
-        Bid highestBid = bidRepository.gethighestBid(auctionBookId);
+        Bid highestBid = bidRepository.gethighestBid(auctionBookId).get(0);
 
         if (highestBid != null) {
             // TempOrder 생성
             TempOrder tempOrder = new TempOrder();
             tempOrder.setAuctionBookId(auctionBookId);
             tempOrder.setBid(highestBid);
-            tempOrder.setUserId(highestBid.getBidderId());
+            tempOrder.setUserId(highestBid.getBidderId()); //
             tempOrder.setBookInfo(highestBid.getAuctionBook().getBook());
 
             // TempOrder 저장
@@ -33,12 +34,11 @@ public class BiddingService {
         else return null;
     }
 
-    public TempOrder findTempOrder(Long tempOrderId) throws NotFoundException {
+    public TempOrder findTempOrder(Long tempOrderId) {
         TempOrder tempOrder = (TempOrder) tempOrderRepository.findById(tempOrderId).orElse(null);
         if(tempOrder != null){
             return tempOrder;
-        }else {
-            throw new NotFoundException("TempOrder not found");
         }
+        return null;
     }
 }

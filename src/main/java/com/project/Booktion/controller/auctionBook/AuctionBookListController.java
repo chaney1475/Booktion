@@ -34,7 +34,7 @@ public class AuctionBookListController {
         return "myPage/selling";
     }
     @GetMapping("/sold") //  userId 읽고 user가 경매 완료 책
-    public String soldList(HttpSession session, Model model){
+    public String SoldList(HttpSession session, Model model){
         String userId = (String) session.getAttribute("userId");
         List<AuctionBook> soldBooks = auctionBookR.findBySellerId(userId);
         model.addAttribute("sellingBooks", soldBooks);

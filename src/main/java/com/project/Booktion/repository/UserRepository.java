@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
     User findByUserId(String userId);
+    User deleteByUserId(String userId);
     User findByUserIdAndPassword(String userId, String password);
 
     //@Query(value = "SELECT u FROM User u WHERE u.userId = :userId AND u.password = :password", nativeQuery = true)

@@ -30,6 +30,11 @@ logging:
 
 server:
   port: 8080
+  tomcat:
+    additional-tld-skip-patterns:
+      - oraclepki.jar
+      - osdt_core.jar
+      - osdt_cert.jar
 
   # yaml/yml 파일 - Thymeleaf 설정
   thymeleaf:

@@ -2,6 +2,7 @@ package com.project.Booktion.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -10,10 +11,14 @@ public class Cart implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cart_seq_generator")
     @SequenceGenerator(name = "cart_seq_generator", sequenceName = "CART_SEQ", allocationSize = 1)
+    @Column(name = "cart_id")
     private long cartId;
-    private String clientId;
-    @OneToMany
-    private List<CartItem> cartItemList;
+
+    @Column(name = "client_id")
+    private String userId;
+
+    @OneToMany(mappedBy = "cart")
+    private List<CartItem> cartItemList = new ArrayList<>();
 
     // Constructors, getters and setters, etc.
 
@@ -21,7 +26,7 @@ public class Cart implements Serializable {
     }
 
     public Cart(String clientId) {
-        this.clientId = clientId;
+        this.userId = clientId;
     }
 
     // Getters and setters
@@ -34,18 +39,12 @@ public class Cart implements Serializable {
         this.cartId = cartId;
     }
 
-    public String getClientId() {
-        return clientId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
-    }
-
-    public Cart(long cartId, String clientId, List<CartItem> cartItemList) {
-        this.cartId = cartId;
-        this.clientId = clientId;
-        this.cartItemList = cartItemList;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public List<CartItem> getCartItemList() {

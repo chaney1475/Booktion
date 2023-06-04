@@ -21,46 +21,48 @@ public class reviewController {
     private final ReviewService reviewService;
 
     // 내 리뷰 목록을 조회하는 기능
-    @GetMapping("/")
+    @GetMapping // 리뷰 불러오기
     public String getReviews(Model model, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
-        List<Review> reviews = reviewService.getReviewByUser(currentUser);
-        model.addAttribute("reviews", reviews);
-        return "review";
+        List<Review> reviewList = reviewService.getReviewByUser(currentUser);
+        model.addAttribute("reviews", reviewList);
+        return "myPage/review/reviewList";
     }
-    @GetMapping("/create") // 리뷰 폼을 보여주는 기능
-    public String reviewForm(Model model){
+
+    @GetMapping("/create")
+    public String reviewForm(Model model) {
         model.addAttribute("review", new Review());
         return "reviewForm";
     }
 
-    @PostMapping("/create") // 리뷰 생성 기능
+    @PostMapping("/create")
     public String createReview(@ModelAttribute("review") Review review, HttpSession session) {
-
-        User currentUser = (User)session.getAttribute("currentUser");
+        User currentUser = (User) session.getAttribute("currentUser");
         review.setUser(currentUser);
         reviewService.createReview(review);
-        return "reviewSubmitted";
-    }
-    @PostMapping("/{reviewId}/delete") // 리뷰 삭제 기능
-    public String deleteReview(@PathVariable("reviewId") long reviewId) {
-        reviewService.deleteReview(reviewId);
-        return "redirect:/review/";
+        return "redirect:/myPage/";
     }
 
-    @GetMapping("/{reviewId}/edit") // 리뷰 수정 폼을 보여주는 기능
+    @PostMapping("/{reviewId}/delete")
+    public String deleteReview(@PathVariable("reviewId") long reviewId) {
+        reviewService.deleteReview(reviewId);
+        return "redirect:/myPage/";
+    }
+
+    @GetMapping("/{reviewId}/edit")
     public String editReviewForm(@PathVariable("reviewId") long reviewId, Model model) {
         Review review = reviewService.getReviewById(reviewId);
         model.addAttribute("review", review);
-        return "edit_review";
+        return "editReview";
     }
 
-    @PostMapping("/{reviewId}/edit") // 리뷰 수정하는 기능
+    @PostMapping("/{reviewId}/edit")
     public String editReview(@PathVariable("reviewId") long reviewId, @ModelAttribute("review") Review review) {
         review.setReviewId(reviewId);
         reviewService.updateReview(review);
-        return "redirect:/review/";
+        return "redirect:/myPage/";
     }
+
 
 //    @PostMapping("/login")
 //    public String login(@RequestParam("clientId") String clientId, @RequestParam("password") String password, HttpSession session){
@@ -74,10 +76,10 @@ public class reviewController {
 //        }
 //    }
 
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.removeAttribute("currentUser");
-        return "redirect:/";
-    }
+//    @GetMapping("/logout")
+//    public String logout(HttpSession session) {
+//        session.removeAttribute("currentUser");
+//        return "redirect:/";
+//    }
 
 }

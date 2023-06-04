@@ -27,17 +27,25 @@
       <tr>
         <td th:text="${book.price}"></td>
         <td>
-          <input type="number" min="1" name="quantity" value="1">
+          <input id="quantity" type="number" min="1" name="quantity" value="1">
         </td>
       </tr>
     </table>
     <input type="hidden" name="bookId" th:value="${book.bookId}">
     <button type="submit" >주문하기</button>
-    <form th:action="@{/cart/add}" method="POST">
-      <input type="hidden" name="bookId" th:value="${book.bookId}">
-      <button type="submit">장바구니에 담기</button>
-    </form>
   </form>
+  <form th:action="@{/cart/add}" method="POST" onsubmit="setCartQuantity()">
+    <input id="cartQuantity" type="hidden" name="cartQuantity" value="1">
+    <input type="hidden" name="bookId" th:value="${book.bookId}">
+    <button type="submit">장바구니에 담기</button>
+  </form>
+  <script>
+   function setCartQuantity() {
+    const quantityValue = document.getElementById('quantity').value;
+    document.getElementById('cartQuantity').value = quantityValue;
+  }
+</script>
+
 </div>
 <hr>
 <h3>책 소개</h3>

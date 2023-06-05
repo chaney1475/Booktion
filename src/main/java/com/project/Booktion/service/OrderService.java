@@ -60,7 +60,7 @@ public class OrderService {
         order.setStatus(1); //주문 접수 설정
         order.setOrderItems(orderItems);
         orderRepository.save(order);
-        orderItemRepository.save(orderItems);
+        //orderItemRepository.save(orderItems);
 
         // 주문 처리 후 장바구니에서 선택된 책들을 삭제
         List<Book> cartItems = cartService.getCartItems();

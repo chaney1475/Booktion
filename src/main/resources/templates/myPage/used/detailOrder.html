@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>자세히보기</title>
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            width: 900px;
+            margin: 0 auto;
+        }
+        body {
+            font-family: 'Nanum Gothic', sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .myPageContent {
+            width: 700px;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #b2d8e5;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #b2d8e5;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+<br><br><br>
+<div layout:fragment="content">
+    <br>
+    <div class="container">
+        <div class="sidebar-wrap">
+            <th:block th:replace="common/sidebar :: SidebarFragment"></th:block>
+        </div>
+        <div class="myPageContent">
+            <table>
+                <tr>
+                    <th colspan="4">책 정보</th>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <img th:src="${orderItem.book.imageUrl}" alt="Book Image">
+                    </td>
+                    <td th:text="${orderItem.book.title}"></td>
+                    <td th:text="${orderItem.book.price}"></td>
+                </tr>
+                <tr>
+                    <th colspan="4">구매자 정보</th>
+                </tr>
+                <tr>
+                    <td style="background-color: #d3ecf5;">이름</td>
+                    <td th:text="${orderItem.order.name}"></td>
+                    <td style="background-color: #d3ecf5;">번호</td>
+                    <td th:text="${orderItem.order.phoneNumber}"></td>
+                </tr>
+                <tr>
+                    <td rowspan="2" style="background-color: #d3ecf5;">주소</td>
+                    <td>우편번호</td>
+                    <td colspan="2" th:text="${orderItem.order.address.zipcode}"></td>
+                </tr>
+                <tr>
+                    <td>주소</td>
+                    <td th:text="${orderItem.order.address.address1}"></td>
+                    <td th:text="${orderItem.order.address.address2}"></td>
+                </tr>
+                <tr>
+                    <td style="background-color: #d3ecf5;">배송 메세지</td>
+                    <td colspan="3" th:text="${orderItem.order.shipMessage}"></td>
+                </tr>
+                <tr>
+                    <td style="background-color: #d3ecf5;">결제 방식</td>
+                    <td colspan="3" th:text="${orderItem.order.payment}">content</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

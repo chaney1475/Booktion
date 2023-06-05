@@ -8,10 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import com.project.Booktion.repository.BookRepository;
-import com.project.Booktion.repository.OrderRepository;
-import com.project.Booktion.repository.UsedBookRepository;
-import com.project.Booktion.repository.UserRepository;
+import com.project.Booktion.repository.*;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +21,7 @@ public class UsedBookService {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final BookRepository bookRepository;
+    private final OrderItemRepository orderItemRepository;
 
     public UsedBook getUsedBookByBookId(long bookId) {
         UsedBook usedBook = usedBookRepository.findByBookBookId(bookId);
@@ -40,8 +38,6 @@ public class UsedBookService {
         OrderItem orderItem = new OrderItem();
         orderItem.setBook(book.get());
         orderItem.setQuantity(1);
-        List<OrderItem> orderItems = new ArrayList<>();
-        orderItems.add(orderItem);
 
         // UsedBookOrder 정보로 Order 엔티티 생성
         Order newOrder = new Order();
@@ -55,13 +51,12 @@ public class UsedBookService {
         newOrder.setCard(order.getCard());
         newOrder.setOrderType(2);
         newOrder.setStatus(0);
-        newOrder.setOrderItems(orderItems);
         newOrder.setPhoneNumber(order.getPhoneNumber());
 
-        log.info(newOrder.toString());
+        newOrder.addOrderItem(orderItem);
 
-        // Order 엔티티 저장
-        Order nowOrder = orderRepository.save(newOrder);
+        // Order 엔티티 저장 & orderItem 저장
+        orderRepository.save(newOrder);
 
         // UsedBook의 상태 변경
         Optional<UsedBook> targetUsedBook = usedBookRepository.findById(order.getUsedBookId());
@@ -71,7 +66,19 @@ public class UsedBookService {
     }
 
     public List<UsedBook> getSellingUsedBooks(String memberId) {
-        return usedBookRepository.findByStatusAndBook_User_UserId(0, memberId);
+        return usedBookRepository.findByStatusAndBookUserUserId(0, memberId);
+    }
+
+    public List<OrderItem> getSoldUsedBooks(String memberId) {
+        //팔린 상태의 usedBook조회
+        List<UsedBook> usedBookList = usedBookRepository.findByStatusAndBookUserUserId(1, memberId);
+        //팔린 usedBook의 bookId와 일치하는 orderItem의 리스트를 반환
+        List<OrderItem> orderItemList = new ArrayList<>();
+        for(UsedBook usedbook : usedBookList){
+            orderItemList.add(orderItemRepository.findByBookBookId(usedbook.getBook().getBookId()));
+        }
+        //List<Order> orderList = orderRepository.findOrdersBySellerAndBookTypeAndUsedBookStatus(memberId, 2, 1);
+        return orderItemList;
     }
 
 

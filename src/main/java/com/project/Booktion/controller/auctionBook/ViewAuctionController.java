@@ -37,8 +37,8 @@ public class ViewAuctionController {
         if (bids == null) {
             System.out.println("bids null");
         }
-        if(auctionBook.getBook().getUser().getUserId() == session.getAttribute("userId")){
-            model.addAttribute("seller","yes");
+        if(auctionBook.getBook().getUser().getUserId().equals(session.getAttribute("userId"))){
+            model.addAttribute("seller","seller");
         }
         model.addAttribute("bids", bids);
         return "auction/book";

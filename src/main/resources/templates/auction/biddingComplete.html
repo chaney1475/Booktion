@@ -1,13 +1,61 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
   <title>Auction Completed</title>
+  <style>
+        body {
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            color: #b2d8e5;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #000000;
+            font-size: 18px;
+            margin: 0;
+        }
+
+        .button {
+            margin-top: 20px;
+        }
+
+        .button a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #b2d8e5;
+            color: #000000;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .button a:hover {
+            background-color: #70a9bd;
+            color: #ffffff;
+        }
+    </style>
 </head>
+
 <body>
 <h2>경매가 종료되었습니다!</h2>
-<p th:text="'경매가 ' + ${price} + '원에 낙찰되었습니다!'"></p>
-<p>주문자가 주문서를 완성하면 배송이 시작됩니다.</p>
-<a href="/order-form" class="btn btn-primary">주문서 작성</a>
+<p th:text="'도서가 ' + ${price} + '원에 낙찰되었습니다!'"></p>
+<p>주문자가 주문서를 완성하면 배송이 시작됩니다</p>
+<div class="button">
+  <a href="/main">Main으로 이동하기</a>
+</div>
 </body>
+
 </html>

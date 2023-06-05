@@ -82,9 +82,10 @@ public class UsedBookService {
     }
 
 
-    public List<Order> findOrderBySeller(String memberId) {
-        //return orderRepository.findByUserUserIdAndOrderTypeAndBookBookTypeAndBookStatus(memberId, 2, 2, 1);
-        return null;
+    public List<Order> findMyUsedOrder(String memberId) {
+        List<Order> usedOrderList = orderRepository.findByOrderTypeAndUserUserId(2, memberId);
+        log.info("usedBookService # findMyUsedOrder : " + usedOrderList.toString());
+        return usedOrderList;
     }
 
     public List<Book> getAllUsedBookList(int bookType) {

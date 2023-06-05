@@ -30,7 +30,9 @@ public class UserService {
         return null;
     }
 
-    public void updateUser(String userId, User user) {
+    public User updateUser(User user) {
+        User modifiedUser = userRepository.save(user);
+        return modifiedUser;
     }
 
     public void deleteUser(String userId) {

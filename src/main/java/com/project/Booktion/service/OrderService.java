@@ -3,6 +3,7 @@ package com.project.Booktion.service;
 import com.project.Booktion.controller.book.BookForm;
 import com.project.Booktion.controller.book.OrderForm;
 import com.project.Booktion.model.*;
+import com.project.Booktion.repository.CartRepository;
 import com.project.Booktion.repository.OrderItemRepository;
 import com.project.Booktion.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import java.util.List;
 public class OrderService {
     private final OrderRepository orderRepository;
     private final CartService cartService;
+    private final CartRepository cartRepository;
     private final OrderItemRepository orderItemRepository;
 
 //    public List<Order> findAll() {
@@ -73,20 +75,15 @@ public class OrderService {
             orderItemRepository.save(orderItem);
         }
 
-        // 주문 처리 후 장바구니에서 선택된 책들을 삭제
-//        Cart cart = cartService.getCart(order.getUser().getUserId());
-//        if (cart != null) {
-//            List<CartItem> cartItems = cart.getCartItemList();
-//            if (!cartItems.isEmpty()) {
-//                // 카트 아이템 리스트가 존재하는 경우에 대한 처리 로직
-//                List<Long> selectedCartItemIds = orderForm.getSelectedCartItemIds();
-//                if (selectedCartItemIds != null && !selectedCartItemIds.isEmpty()) {
-//                    // 선택된 카트 아이템들을 삭제하는 로직
-//                    cartService.removeCartItems(selectedCartItemIds);
-//                }
-//            } else {
-//                // 카트 아이템 리스트가 비어있는 경우에 대한 처리 로직
-//                // 예를 들어, 오류 메시지를 전달하거나 다른 동작을 수행할 수 있습니다.
+        // 주문 처리 후 장바구니에서 모든 아이템을 삭제
+        if (orderForm.isFromCart()) {
+            cartService.clearCartByUserId(user.getUserId());
+        }
+        // 선택된 아이템만 장바구니에서 삭제
+//        if (orderForm.isFromCart()) {
+//            List<BookForm> selectedBooks = orderForm.getBooks();
+//            for (BookForm selectedBook : selectedBooks) {
+//                cartService.removeItemFromCart(user.getUserId(), selectedBook.getBook().getBookId());
 //            }
 //        }
 

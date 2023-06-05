@@ -1,9 +1,6 @@
 package com.project.Booktion.controller.book;
 
-import com.project.Booktion.model.Book;
-import com.project.Booktion.model.Order;
-import com.project.Booktion.model.OrderItem;
-import com.project.Booktion.model.User;
+import com.project.Booktion.model.*;
 import com.project.Booktion.service.BookService;
 import com.project.Booktion.service.CartService;
 import com.project.Booktion.service.OrderService;
@@ -17,8 +14,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j //로그 찍는 기능
 @Controller
@@ -33,21 +32,18 @@ public class BasicOrderFormController {
     private final UserService userService;
 
     @GetMapping("/form") //폼 생성
-    public String newForm(@RequestParam(required = false, name = "quantity") Integer quantity, @RequestParam(required = false, name = "bookId") long bookId, HttpSession session, Model model) { //form
+    public String newForm(@RequestParam(required = false, name = "quantity") Integer quantity,
+                          @RequestParam("bookId") Long bookId,
+                          HttpSession session, Model model) {
         String userId = (String) session.getAttribute("userId");
-        System.out.println("userId: " + userId);
         User user = userService.getUser(userId);
+        System.out.println("userId" + userId);
 
         // 이전에 선택한 책 초기화
-        OrderForm orderForm = (OrderForm) session.getAttribute("orderForm");
-        if (orderForm != null) {
-            orderForm.getBooks().clear();
-        } else {
-            orderForm = new OrderForm();
-            session.setAttribute("orderForm", orderForm);
-        }
+        session.removeAttribute("orderForm");
+        OrderForm orderForm = new OrderForm();
 
-        if (bookId > 0) { // 개별 책 선택
+        if (bookId != null && bookId > 0) { // 개별 책 선택
             Book book = bookService.findByBookIdAndBookType(bookId, 1); //일반책만 검색하게 수정
             if (book == null) { // 존재하지 않는 책을 선택한 경우
                 model.addAttribute("error", "존재하지 않는 책입니다.");
@@ -64,24 +60,35 @@ public class BasicOrderFormController {
             orderForm.getOrder().setUser(user);
             orderForm.getOrder().setOrderType(1);
             orderForm.getOrder().setPrice(bookForm.getPrice());
+            orderForm.setFromCart(false);
 
-        } else {
-            List<Book> cartItems = cartService.getCartItems();
-            if (cartItems == null || cartItems.isEmpty()) {
+        } else if(bookId == 0){
+            Cart cart = cartService.getCartByUserId(userId);
+            System.out.println("Cart" + cart.getCartId());
+            if (cart == null || cart.getCartItemList().isEmpty()) {
                 model.addAttribute("error", "장바구니가 비어있습니다.");
                 return "book/orderForm";
             }
 
-            List<Long> cartItemIds = cartService.getCartItemIds();
             List<BookForm> bookForms = new ArrayList<>();
-            for (Book cartItem : cartItems) {
-                BookForm bookForm = new BookForm(cartItem);
-                bookForms.add(bookForm);
-            }
-            //OrderForm orderForm = new OrderForm(bookForms);
-            orderForm.setSelectedCartItemIds(cartItemIds);
-            orderForm.getOrder().setUser(user);
+            int totalPrice = 0;
+            for (CartItem cartItem : cart.getCartItemList()) {
+                Book book = cartItem.getBook();
+                System.out.println("책 정보: " + book.getTitle());
+                BookForm bookForm = new BookForm(book);
+                int cartItemQuantity = cartItem.getQuantity();
+                bookForm.setQuantity(cartItemQuantity);
+                bookForm.setPrice(book.getPrice() * cartItemQuantity);
 
+                bookForms.add(bookForm);
+                totalPrice += bookForm.getPrice();
+            }
+
+            orderForm.getBooks().addAll(bookForms);
+            orderForm.getOrder().setUser(user);
+            orderForm.getOrder().setOrderType(1);
+            orderForm.getOrder().setPrice(totalPrice);
+            orderForm.setFromCart(true);
         }
 
         model.addAttribute("orderForm", orderForm);
@@ -106,6 +113,7 @@ public class BasicOrderFormController {
             // 이전 orderForm의 내용을 새로 제출된 orderForm에 복사
             orderForm.setOrder(savedOrderForm.getOrder());
             orderForm.setBooks(savedOrderForm.getBooks());
+            orderForm.setFromCart(savedOrderForm.isFromCart());
         }
 
         orderForm.getOrder().setUser(user);
@@ -127,21 +135,6 @@ public class BasicOrderFormController {
         }
         orderForm.setBooks(bookForms);
 
-//        List<BookForm> bookForms = new ArrayList<>();
-//        for (Long bookId : selectedBooks) {
-//            Book book = bookService.findByBookIdAndBookType(bookId, 1);
-//            if (book == null) {
-//                model.addAttribute("error", "존재하지 않는 책입니다.");
-//                return "book/orderForm";
-//            }
-//            BookForm bookForm = new BookForm();
-//            bookForm.setBook(book);
-//            // 다른 필요한 정보도 설정할 수 있습니다.
-//            bookForms.add(bookForm);
-//        }
-//
-//        orderForm.setBooks(bookForms);
-
         Order order = orderService.createOrderFromForm(orderForm, user);
 
         if (order == null) {
@@ -152,23 +145,26 @@ public class BasicOrderFormController {
         // 세션에 새로운 orderForm 저장
         session.setAttribute("orderForm", orderForm);
 
-        //cartService.updateCartSession(session); // 주문 처리 후 카트 세션 정보 업데이트
-
         return "redirect:/book/order/success?orderId=" + order.getOrderId();
     }
 
     @GetMapping("/success")
-    public String showOrderSuccess(@RequestParam("orderId") long orderId, Model model) {
+    public String showOrderSuccess(@RequestParam("orderId") long orderId, Model model, HttpSession session) {
+        // 세션에서 이전에 저장된 orderForm 삭제
+        session.removeAttribute("orderForm");
+
         Order order = orderService.findByOrderId(orderId);
         List<OrderItem> orderItems = order.getOrderItems();
 
         System.out.println(orderItems.get(0).getBook().getTitle());
-        model.addAttribute("orderItems", orderItems);
         if (order == null) {
             model.addAttribute("error", "주문 정보를 찾을 수 없습니다.");
             return "book/orderForm";
         }
+        model.addAttribute("orderItems", orderItems);
         model.addAttribute("order", order);
+
+
         return "book/orderSuccess";
     }
 

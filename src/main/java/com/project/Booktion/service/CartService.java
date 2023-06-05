@@ -14,6 +14,7 @@ import com.project.Booktion.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
 import com.project.Booktion.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpSession;
@@ -48,11 +49,26 @@ public class CartService {
         return false;
     }
 
-//    public User getUser(String userId) {
-//        return userRepository.findByUserId(userId);
-//    }
-//
-//    public Cart getCartByUserId(String userId) {
-//        return cartRepository.findByUserId(userId);
+    public Cart getCartByUserId(String userId) {
+        return cartRepository.findByUserId(userId);
+    }
+
+    @Transactional
+    public void clearCartByUserId(String userId) {
+        Cart cart = cartRepository.findByUserId(userId);
+        if (cart != null) {
+            List<CartItem> cartItems = cart.getCartItemList();
+            cartItems.clear();
+            cartRepository.save(cart);
+            cartItemRepository.deleteByCart(cart);
+        }
+    }
+
+//    @Transactional
+//    public void removeItemFromCart(String userId, Long bookId) {
+//        Cart cart = cartRepository.findByUserId(userId);
+//        if (cart != null) {
+//            cart.removeItem(bookId);
+//        }
 //    }
 }

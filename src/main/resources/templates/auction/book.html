@@ -125,9 +125,6 @@
     </style>
 </head>
 <div layout:fragment="content">
-    <div th:if="${message}" class="alert alert-success" role="alert">
-        <p th:text="${message}"></p>
-    </div>
 <body>
 <div class="container">
     <h1>책 정보</h1>
@@ -147,12 +144,14 @@
     <div class="auction-info">
         <h4>경매 현황</h4>
         <ul>
-            <li th:each="auction : ${bids}" class="auction-price" th:text="${auction.price}"></li>
+            <li th:each="auction : ${bids}" class="auction-price">
+                <span th:text="${auction.bidderId}"></span>님    :    <span th:text="${auction.price} + '원'"></span>
+            </li>
         </ul>
     </div>
     <div th:if="${seller}">
         <div class="auction-info">
-            <form class="auction-form" th:action="@{/auction/books/{bookId}/temp(bookId=${auctionBook.book.bookId})}" method="post">
+            <form class="auction-form" th:action="@{/auction/order/{bookId}/temp(bookId=${auctionBook.auctionBookId})}" method="post">
                 <button type="submit" class="end-auction-button">경매 종료</button>
             </form>
         </div>

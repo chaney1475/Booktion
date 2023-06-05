@@ -4,8 +4,10 @@ import com.project.Booktion.model.*;
 import com.project.Booktion.controller.auctionBook.AuctionOrderForm;
 import com.project.Booktion.repository.AuctionBookOrderRepository;
 import com.project.Booktion.repository.AuctionBookRepository;
+import com.project.Booktion.repository.TempOrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,6 +20,7 @@ public class AuctionBookService {
     private final UserService userService;
     private final AuctionBookRepository auctionBookR;
     private final AuctionBookOrderRepository auctionBookOrderR;
+    private final TempOrderRepository tempOrderRepository;
     public void submitOrder() {
     }
 
@@ -25,18 +28,27 @@ public class AuctionBookService {
     public AuctionBook findById(Long bookId) {
         return auctionBookR.findById(bookId).orElse(null);
     }
+    @Transactional
     public AuctionBookOrder newOrder(TempOrder tempOrder, AuctionOrderForm form) {
 
         Order order = new Order();
         AuctionBook auctionBook = findById(tempOrder.getAuctionBookId());
         User user = userService.getUser(tempOrder.getUserId());
+        int price = tempOrder.getBid().getPrice();
 
+        order.setUser(user);
         order.setName(user.getName());
         order.setOrderDate(new Date());
         order.setOrderType(3);
-        order.setAddress(new Address(form.getShippingAddress1(), form.getShippingAddress2(), form.getZipcode()));
-        order.setPrice(form.getPrice());
+        order.setAddress(form.getAddress());
+        order.setShipMessage(form.getShippingMessage());
+        order.setPayment(form.getPayment());
+        order.setPrice(price);
         order.setCard(form.getCard());
+        order.setPhoneNumber(form.getPhoneNumber());
+        order.setStatus(1);
+        order.setOrderItems(null);
+
 
         // Order 엔티티 생성
         AuctionBookOrder ABOrder = new AuctionBookOrder();
@@ -47,6 +59,7 @@ public class AuctionBookService {
         ABOrder.setBid(tempOrder.getBid());
 
         AuctionBookOrder savedOrder = auctionBookOrderR.save(ABOrder);
+        tempOrderRepository.delete(tempOrder);
         return savedOrder;
     }
 
@@ -54,18 +67,4 @@ public class AuctionBookService {
         AuctionBook saved = auctionBookR.save(book);
         return saved;
     }
-
-    public List<AuctionBook> allBook() {
-        List<AuctionBook> auctionBooks = auctionBookR.findAll();
-        return auctionBooks;
-    }
-    public List<AuctionBookOrder> findOrderBySeller(Long id) {
-        List<AuctionBookOrder> orderList = new ArrayList<>();
-        return orderList;
-    }
-
-    public void getTempOrder(String userId) {
-
-    }
-
 }

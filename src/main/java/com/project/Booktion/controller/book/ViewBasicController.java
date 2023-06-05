@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j // 로그 찍는 기능
@@ -65,10 +66,19 @@ public class ViewBasicController {
             return "redirect:/book/" + bookId;
         }
 
+        // 리뷰 작성 유효성 검사
+        if (result.hasErrors()) {
+            // 오류 메시지를 모델에 추가하고 책 상세 페이지로 리다이렉트
+            model.addAttribute("alert", "리뷰 작성에 오류가 있습니다.");
+            return "redirect:/book/" + bookId;
+        }
+
         // 리뷰 작성 처리 로직 추가
         review.setBook(book);
         User user = userService.getUser(userId);
         review.setUser(user);
+        review.setTitle(review.getContents()); // 컨텐츠 내용만 작성할 것이여서 켄텐츠 내용이 제목이 되게 변경
+        review.setCreateDate(new Date());
         reviewService.createReview(review);
 
         // 책 상세 페이지로 리다이렉션

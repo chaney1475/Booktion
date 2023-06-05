@@ -48,10 +48,26 @@
     <p>전화번호: <span th:text="${order.phoneNumber}"></span></p>
     <p>주소: <span th:text="${order.address.address1}"></span>
       <span th:text="${order.address.address2}"></span></p>
-    <p>배송 메시지: <span th:text="${order.shipMessage}"></span></p>
+    <p>배송 메세지: <span th:text="${order.shipMessage}"></span></p>
     <p>결제 금액: <span th:text="${order.price}"></span></p>
-    <p>결제 방법: <span th:text="${order.payment}"></span></p>
-    <p>카드 정보: <span th:text="${order.card}"></span></p>
+    <p>결제 방식:
+      <span th:switch="${order.payment}">
+        <span th:case="creditCard">신용 카드</span>
+        <span th:case="bankTransfer">무통장 입금</span>
+        <span th:case="mobile">휴대폰 결제</span>
+        <span th:case="*" th:text="${order.payment}"></span>
+      </span></p>
+    <p>카드 정보:
+      <span th:switch="${order.card}">
+        <span th:case="shinhanCard">신한카드</span>
+        <span th:case="KBCard">KB국민카드</span>
+        <span th:case="samsungCard">삼성카드</span>
+        <span th:case="hyundaiCard">현대카드</span>
+        <span th:case="hanaCard">하나카드</span>
+        <span th:case="NHCard">NH농협카드</span>
+        <span th:case="*" th:text="${order.card}"></span>
+      </span>
+    </p>
     <div>
       <p>주문 유형</p>
       <span th:if="${order.orderType == 1}">일반책 구매</span>

@@ -10,6 +10,9 @@ public class OrderForm {
     private List<Long> selectedCartItemIds;
     private Order order;
 
+    private boolean fromCart;
+    // 필드와 메서드들
+
     public OrderForm(List<BookForm> books) {
         this.order = new Order();
         this.books = books;
@@ -44,5 +47,12 @@ public class OrderForm {
         this.order = order;
     }
 
+    public boolean isFromCart() {
+        return fromCart;
+    }
+
+    public void setFromCart(boolean fromCart) {
+        this.fromCart = fromCart;
+    }
 }
 

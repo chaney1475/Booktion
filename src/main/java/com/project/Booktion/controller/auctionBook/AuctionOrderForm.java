@@ -1,5 +1,7 @@
 package com.project.Booktion.controller.auctionBook;
 
+import com.project.Booktion.model.Address;
+
 public class AuctionOrderForm {
     public int getPrice() {
         return price;
@@ -11,13 +13,28 @@ public class AuctionOrderForm {
 
     private int price;
     private String shippingOption;
-    private String shippingAddress1;
-    private String shippingAddress2;
-    private String zipcode;
+    private Address address;
     private String payment;
     private String card;
+    private String orderName; //배송받는 사람 이름
     private String shippingMessage;
+    private String phoneNumber;
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getOrderName() {
+        return orderName;
+    }
+
+    public void setOrderName(String orderName) {
+        this.orderName = orderName;
+    }
     public String getShippingOption() {
         return shippingOption;
     }
@@ -26,28 +43,12 @@ public class AuctionOrderForm {
         this.shippingOption = shippingOption;
     }
 
-    public String getShippingAddress1() {
-        return shippingAddress1;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setShippingAddress1(String shippingAddress1) {
-        this.shippingAddress1 = shippingAddress1;
-    }
-
-    public String getShippingAddress2() {
-        return shippingAddress2;
-    }
-
-    public void setShippingAddress2(String shippingAddress2) {
-        this.shippingAddress2 = shippingAddress2;
-    }
-
-    public String getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public String getPayment() {

@@ -21,8 +21,8 @@ public class ReviewService {
         reviewRepository.save(review);
     }
 
-
     public List<Review> getReviewsByBookId(long bookId) {
+
         return reviewRepository.findByBookBookId(bookId);
     }
 

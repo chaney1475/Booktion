@@ -33,5 +33,7 @@ public class BookService {
 
     public Book getBookById(long bookId) {
         return bookRepository.findById(bookId).orElse(null);
+    public Book getBook(long bookId) {
+        return bookRepository.findById(bookId).get();
     }
 }

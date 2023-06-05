@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
@@ -32,6 +34,13 @@ public class MyPageController {
         User user = userService.getUser(userId);
         model.addAttribute("TempOrderList", TempOrderList);
         model.addAttribute("userInfo", user);
+        return "myPage/main";
+    }
+
+    @PostMapping
+    public String modifyUserInfo(HttpSession session, @ModelAttribute("userInfo")User user){
+        log.info("user Info is change");
+        user = userService.updateUser(user);
         return "myPage/main";
     }
 }

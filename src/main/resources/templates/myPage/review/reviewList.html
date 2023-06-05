@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>리뷰</title>
+    <style>
+        table {
+              width: 100%;
+              border-collapse: collapse;
+              margin-bottom: 20px;
+            }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>리뷰리스트</h1>
+    <table>
+        <thead>
+        <tr>
+            <th> </th>
+            <th>글 번호</th>
+            <th>책 이름</th>
+            <th>제목</th>
+            <th>내용</th>
+            <th>날짜</th>
+            <th> </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="review : ${reviews}">
+            <td>
+                <p>
+                    <img th:src="${review.book.imageUrl}" alt="Book Image" />
+                </p>
+            </td>
+            <td th:text="${review.reviewId}"></td>
+            <td th:text="${review.book.title}"></td>
+            <td th:text="${review.title}"></td>
+            <td th:text="${review.contents}"></td>
+            <td th:text="${review.createDate}"></td>
+            <td>
+                <a th:href="@{/review/editReview/{reviewId}(reviewId=${review.reviewId})}">수정</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/review/createReview}">리뷰 작성하기</a>
+</div>
+</body>
+</html>

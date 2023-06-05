@@ -1,6 +1,7 @@
 package com.project.Booktion.repository;
 
 import com.project.Booktion.model.Order;
+import com.project.Booktion.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +14,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Order findByOrderId(long orderId);
 
     void deleteByOrderId(long orderId);
+
+    List<Order> findByUser(User user);
 
     // 주문 ID를 기반으로 주문에 속한 OrderItem들을 조회
 //    List<OrderItem> findOrderItemsByOrderId(Long orderId);

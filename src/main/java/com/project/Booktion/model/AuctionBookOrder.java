@@ -10,7 +10,7 @@ public class AuctionBookOrder implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "auction_book_order_seq_generator")
     @SequenceGenerator(name = "auction_book_order_seq_generator", sequenceName = "AUCTION_BOOK_ORDER_SEQ", allocationSize = 1)
     private int auctionOrderId;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="order_id")
     private Order order;
     @OneToOne

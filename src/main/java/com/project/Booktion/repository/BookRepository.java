@@ -13,6 +13,10 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     Book findByBookIdAndBookType(long bookId, int bookType); // 북아이디로만 하면 중복이 있을 수 있어서. 북타입 조건 추가
 
     List<Book> findByBookType(int bookType);
+
+    List<Book> findTop4ByBookTypeOrderByBookIdDesc(int bookType);
+
+    List<Book> findTop4ByBookTypeAndPriceLessThanEqualOrderByBookIdDesc(int bookType, int price);
 //    List<Book> findByIsbn(String isbn); // isbn으로 검색 list로 할지 book으로 할지..
 //
 //    List<Book> findByBookType(int bookType); // 북타입으로 검색

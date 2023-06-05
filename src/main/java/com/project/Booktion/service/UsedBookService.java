@@ -93,10 +93,10 @@ public class UsedBookService {
     }
 
     public List<Book> getNewBookList(int bookType) {
-        return null;
+        return bookRepository.findTop4ByBookTypeOrderByBookIdDesc(bookType);
     }
     public List<Book> getSaleBookList(int bookType) {
-        return null;
+        return bookRepository.findTop4ByBookTypeAndPriceLessThanEqualOrderByBookIdDesc(bookType, 2000);
     }
 
     public UsedBook getUsedBookById(long usedBookId) {

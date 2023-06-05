@@ -9,9 +9,12 @@ public class OrderForm {
     private List<BookForm> books;
     private List<Long> selectedCartItemIds;
     private Order order;
-    private List<Long> selectedBooks; // 선택된 책들의 ID를 저장하는 리스트
+
+    private boolean fromCart;
+    // 필드와 메서드들
 
     public OrderForm(List<BookForm> books) {
+        this.order = new Order();
         this.books = books;
     }
 
@@ -44,20 +47,12 @@ public class OrderForm {
         this.order = order;
     }
 
-    public void calculateTotalOrderPrice() {
-        int totalOrderPrice = 0;
-        for (BookForm bookForm : books) {
-            totalOrderPrice += bookForm.getBook().getPrice() * bookForm.getQuantity();
-        }
-        order.setPrice(totalOrderPrice);
+    public boolean isFromCart() {
+        return fromCart;
     }
 
-    public List<Long> getSelectedBooks() {
-        return selectedBooks;
-    }
-
-    public void setSelectedBooks(List<Long> selectedBooks) {
-        this.selectedBooks = selectedBooks;
+    public void setFromCart(boolean fromCart) {
+        this.fromCart = fromCart;
     }
 }
 

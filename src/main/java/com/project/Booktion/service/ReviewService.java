@@ -19,11 +19,12 @@ public class ReviewService {
     public void write(Review review) {
     }
 
-    public List<Review> getReviewsByBook(Book book) {
-        return null;
+    public List<Review> getReviewsByBookId(Long bookId) {
+        return reviewRepository.findByBookBookId(bookId);
     }
 
     public void createReview(Review review) {
+        reviewRepository.save(review);
     }
 
     public List<Review> getReviewByUser(User currentUser) {

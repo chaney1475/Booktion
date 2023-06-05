@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>리뷰 수정하기</title>
+</head>
+<body>
+<h1>리뷰 수정</h1>
+  <form th:action="@{/myPage/{reviewId}/edit(reviewId=${review.reviewId})}" method="post">
+    <div>
+      <label for="title">제목:</label>
+      <input type="text" id="title" name="title" th:value="${review.title}" required>
+    </div>
+    <div>
+      <label for="content">내용:</label>
+      <textarea id="content" name="content" required th:text="${review.contents}"></textarea>
+    </div>
+    <button type="submit">수정 완료</button>
+  </form>
+</body>
+</html>

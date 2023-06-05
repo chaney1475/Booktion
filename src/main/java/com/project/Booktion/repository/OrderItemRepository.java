@@ -8,6 +8,7 @@ import java.util.List;
 
 @Repository
 public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
+
     //void save(List<OrderItem> orderItems);
 
     OrderItem findByBookBookId(long bookId);

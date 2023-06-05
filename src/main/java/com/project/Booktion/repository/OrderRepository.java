@@ -17,6 +17,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findByUser(User user);
 
+    List<Order> findByOrderTypeAndUserUserId(int orderType, String userId);
+
     // 주문 ID를 기반으로 주문에 속한 OrderItem들을 조회
 //    List<OrderItem> findOrderItemsByOrderId(Long orderId);
 

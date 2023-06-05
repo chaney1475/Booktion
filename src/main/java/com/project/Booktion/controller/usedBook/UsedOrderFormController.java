@@ -44,7 +44,7 @@ public class UsedOrderFormController {
             return "/user/signIn";
         }
         //판매자 본인 확인
-        Book book = bookService.getBook(bookId);
+        Book book = bookService.getBookById(bookId);
         if(userId.equals(book.getUser().getUserId())){
             log.error("buyer == seller!!!!!!!!!!!!!!!!!!!!!");
             return "redirect:/used/main";
@@ -67,6 +67,6 @@ public class UsedOrderFormController {
         log.info("UsedOrderFormController#addForm is run!!!!!! BookId : " + bookId);
         log.info("usedBookOrder info : " + usedBookOrder.toString());
         usedBookService.submitOrderForm(bookId, usedBookOrder);
-        return "main";//주문완료 후 마이페이지로 수정해야됨
+        return "redirect:/myPage/order/used";//주문완료 후 마이페이지로 수정해야됨
     }
 }

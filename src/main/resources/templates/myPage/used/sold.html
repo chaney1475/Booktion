@@ -1,31 +1,94 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/baseLayout}">
+      layout:decorate="~{layout/layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>팔린 중고책</title>
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            width: 900px;
+            margin: 0 auto;
+        }
+        body {
+            font-family: 'Nanum Gothic', sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .myPageContent {
+            width: 700px;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #b2d8e5;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #b2d8e5;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+       .detail {
+            margin-right: 10px;
+            color: #f2f2f2;
+            text-decoration: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            background-color: #b2d8e5;
+    }
+
+
+    </style>
 </head>
 <body>
-    <h1>판매 완료된 중고 도서</h1>
-    <div align="center">
-        <p>
-            <b>판매 완료 중고 도서 목록</b>
-        </p>
-        <table>
-            <tr>
-                <td><b>책 제목</b></td>
-                <td><b>날짜</b></td>
-                <td><b>가격</b></td>
-                <td><b>배송사</b></td>
-            </tr>
-            <tr th:each="sold : ${soldUsedBooks}">
-                <td th:text="${sold.title}"></td>
-                <td th:text="${#dates.format(sold.orderDate, 'yyyy/MM/dd hh:mm:ss')}"></td>
-                <td th:text="${sold.price}"></td>
-                <td th:text="${sold.company}"></td>
-            </tr>
-        </table>
+<br><br><br>
+<div layout:fragment="content">
+    <br>
+    <div class="container">
+        <div class="sidebar-wrap">
+            <th:block th:replace="common/sidebar :: SidebarFragment"></th:block>
+        </div>
+        <div class="myPageContent">
+            <table>
+                <tr>
+                    <th>날짜</th>
+                    <th>가격</th>
+                    <th>구매자</th>
+                    <th></th>
+                </tr>
+                <tr th:each="soldOrder : ${orderList}">
+                    <td th:text="${#dates.format(soldOrder.order.orderDate, 'yyyy/MM/dd hh:mm:ss')}"></td>
+                    <td th:text="${soldOrder.order.price}"></td>
+                    <td th:text="${soldOrder.order.user.userId}"></td>
+                    <td>
+                        <a class="detail" th:href="@{/myPage/used/sold/{orderId}(orderId=${soldOrder.order.orderId})}">자세히보기</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
+</div>
 </body>
 </html>

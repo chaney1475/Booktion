@@ -6,6 +6,7 @@ import com.project.Booktion.repository.AuctionBookOrderRepository;
 import com.project.Booktion.repository.AuctionBookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,18 +26,25 @@ public class AuctionBookService {
     public AuctionBook findById(Long bookId) {
         return auctionBookR.findById(bookId).orElse(null);
     }
+    @Transactional
     public AuctionBookOrder newOrder(TempOrder tempOrder, AuctionOrderForm form) {
 
         Order order = new Order();
         AuctionBook auctionBook = findById(tempOrder.getAuctionBookId());
         User user = userService.getUser(tempOrder.getUserId());
 
+        order.setUser(user);
         order.setName(user.getName());
         order.setOrderDate(new Date());
         order.setOrderType(3);
-        order.setAddress(new Address(form.getShippingAddress1(), form.getShippingAddress2(), form.getZipcode()));
+        order.setAddress(form.getAddress());
+        order.setShipMessage(form.getShippingMessage());
+        order.setPayment(form.getPayment());
         order.setPrice(form.getPrice());
         order.setCard(form.getCard());
+        order.setPhoneNumber(form.getPhoneNumber());
+        order.setStatus(1);
+
 
         // Order 엔티티 생성
         AuctionBookOrder ABOrder = new AuctionBookOrder();

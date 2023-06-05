@@ -39,12 +39,16 @@ public class ViewUsedController {
     public String showUsedMain(Model model){
         //중고책 메인화면으로 이동
         List<Book> bookList = usedBookService.getAllUsedBookList(2);
-        model.addAttribute(bookList);
+        model.addAttribute("bookList", bookList);
 
         //새로 등록된 중고책 list
         List<Book> newBookList = usedBookService.getNewBookList(2);
+        log.info("newBook data check : " + newBookList.toString());
+        model.addAttribute("newBookList", newBookList);
         //특가 기회 list
         List<Book> saleBookList = usedBookService.getSaleBookList(2);
+        log.info("saleBook data check : " + saleBookList.toString());
+        model.addAttribute("saleBookList", saleBookList);
         return "used/usedMain";
     }
 }

@@ -1,21 +1,55 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
 <head>
   <meta charset="UTF-8">
-  <title>Review Form</title>
+  <title>리뷰 작성하기</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+    <script>
+    // 리뷰가 작성되었을 때 alert 창을 띄우고 reviewList 페이지로 이동하는 함수
+    function showReviewCreatedAlert() {
+        alert("리뷰가 작성되었습니다.");
+        location.href = "/review";
+    }
+</script>
+  </style>
 </head>
 <body>
-<h1>리뷰 작성</h1>
-  <form action="@{/myPage/create}" method="post">
+<div layout:fragment="content">
+  <h1>리뷰 작성</h1>
+  <form th:action="@{/review/saveReview}" method="post">
     <div>
-      <label for="title">제목:</label>
-      <input type="text" id="title" name="title" required>
+      <label for="bookId">책 선택:</label>
+      <select id="bookId" name="book.bookId" required>
+        <option th:each="orderItem : ${orderItems}" th:value="${orderItem.book.bookId}" th:text="${orderItem.book.title}"></option>
+      </select>
+
     </div>
     <div>
-      <label for="content">내용:</label>
-      <textarea id="content" name="content" required></textarea>
+      <label for="title">제목:</label>
+      <input type="text" id="title" name="title" th:value="${review.title}" required>
+    </div>
+    <div>
+      <label for="contents">내용:</label>
+      <textarea id="contents" name="contents" required th:text="${review.contents}"></textarea>
     </div>
     <button type="submit">작성 완료</button>
   </form>
+</div>
 </body>
 </html>

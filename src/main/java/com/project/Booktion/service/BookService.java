@@ -30,4 +30,8 @@ public class BookService {
     public List<Book> getBooksByBookType(int bookType) {
         return bookRepository.findByBookType(bookType);
     }
+
+    public Book getBookById(long bookId) {
+        return bookRepository.findById(bookId).orElse(null);
+    }
 }

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @RequiredArgsConstructor
 @Service
@@ -17,19 +18,21 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
 
     public void write(Review review) {
+        reviewRepository.save(review);
     }
 
+
     public List<Review> getReviewsByBookId(long bookId) {
-        return null;
-        //return reviewRepository.findByBookId(bookId);
+        return reviewRepository.findByBookBookId(bookId);
     }
 
     public void createReview(Review review) {
+        reviewRepository.save(review);
     }
 
-    public List<Review> getReviewByUser(User currentUser) {
-       // return reviewRepository.findByUser(currentUser);
-        return null;
+
+    public List<Review> getReviewByUser(User user) {
+        return reviewRepository.findByUserId(user);
     }
     public void deleteReview(long reviewId) {
 

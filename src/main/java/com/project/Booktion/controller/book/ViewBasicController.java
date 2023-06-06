@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -76,9 +77,9 @@ public class ViewBasicController {
         // 리뷰 작성 처리 로직 추가
         review.setBook(book);
         User user = userService.getUser(userId);
-        review.setUser(user);
+        review.setUserId(user);
         review.setTitle(review.getContents()); // 컨텐츠 내용만 작성할 것이여서 켄텐츠 내용이 제목이 되게 변경
-        review.setCreateDate(new Date());
+        review.setCreateDate(LocalDateTime.now());
         reviewService.createReview(review);
 
         // 책 상세 페이지로 리다이렉션

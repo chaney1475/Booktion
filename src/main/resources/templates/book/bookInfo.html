@@ -84,7 +84,7 @@
   </thead>
   <tbody>
   <tr th:each="review : ${reviews}">
-    <td th:text="${review.user.userId}"></td>
+    <td th:text="${review.userId.userId}"></td>
     <td th:text="${review.title}"></td>
     <td th:text="${review.createDate}"></td>
   </tr>

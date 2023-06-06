@@ -2,7 +2,7 @@ package com.project.Booktion.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="review")
@@ -15,7 +15,7 @@ public class Review implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "client_id")
-    private User user;
+    private User userId;
 
     @ManyToOne
     @JoinColumn(name = "book_id")
@@ -28,16 +28,16 @@ public class Review implements Serializable {
     private String contents;
 
     @Column(name="create_date")
-    private Date createDate;
+    private LocalDateTime createDate;
 
     // Constructors, getters and setters, etc.
 
     public Review() {
     }
 
-    public Review(long reviewId, User user, Book book, String title, String contents, Date createDate) {
+    public Review(long reviewId, User user, Book book, String title, String contents, LocalDateTime createDate) {
         this.reviewId = reviewId;
-        this.user = user;
+        this.userId = user;
         this.book = book;
         this.title = title;
         this.contents = contents;
@@ -54,12 +54,12 @@ public class Review implements Serializable {
         this.reviewId = reviewId;
     }
 
-    public User getUser() {
-        return user;
+    public User getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
     public Book getBook() {
@@ -86,11 +86,11 @@ public class Review implements Serializable {
         this.contents = contents;
     }
 
-    public Date getCreateDate() {
+    public LocalDateTime getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(LocalDateTime createDate) {
         this.createDate = createDate;
     }
 }

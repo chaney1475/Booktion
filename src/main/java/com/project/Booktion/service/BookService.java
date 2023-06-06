@@ -31,7 +31,7 @@ public class BookService {
         return bookRepository.findByBookType(bookType);
     }
 
-    public Book getBook(long bookId) {
-        return bookRepository.findById(bookId).get();
+    public Book getBookById(long bookId) {
+        return bookRepository.findById(bookId).orElse(null);
     }
 }

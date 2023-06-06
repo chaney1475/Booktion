@@ -82,9 +82,10 @@ public class UsedBookService {
     }
 
 
-    public List<Order> findOrderBySeller(String memberId) {
-        //return orderRepository.findByUserUserIdAndOrderTypeAndBookBookTypeAndBookStatus(memberId, 2, 2, 1);
-        return null;
+    public List<Order> findMyUsedOrder(String memberId) {
+        List<Order> usedOrderList = orderRepository.findByOrderTypeAndUserUserId(2, memberId);
+        log.info("usedBookService # findMyUsedOrder : " + usedOrderList.toString());
+        return usedOrderList;
     }
 
     public List<Book> getAllUsedBookList(int bookType) {
@@ -92,10 +93,10 @@ public class UsedBookService {
     }
 
     public List<Book> getNewBookList(int bookType) {
-        return null;
+        return bookRepository.findTop4ByBookTypeOrderByBookIdDesc(bookType);
     }
     public List<Book> getSaleBookList(int bookType) {
-        return null;
+        return bookRepository.findTop4ByBookTypeAndPriceLessThanEqualOrderByBookIdDesc(bookType, 2000);
     }
 
     public UsedBook getUsedBookById(long usedBookId) {

@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping("/myPage/order")
 @RequiredArgsConstructor
 public class OrderListController {
-    private final OrderSearchService orderService;
+    private final OrderService orderService;
     private final UsedBookService usedBookService;
 
     @GetMapping("/used")
@@ -30,6 +30,21 @@ public class OrderListController {
         log.info("data check :" + usedOrderList.toString());
         model.addAttribute("usedOrderList", usedOrderList);
         return "/myPage/used/orderList";
+    }
+
+    @GetMapping("/basicBook")
+    public String getBasicBookOrderList(HttpSession session, Model model) {
+        log.info("OrderListController - getBasicBookOrderList is called! User ID: " + (String) session.getAttribute("userId"));
+        List<Order> basicBookOrderList = orderService.findMyBasicBookOrder((String) session.getAttribute("userId"));
+        log.info("Data check: " + basicBookOrderList.toString());
+
+        if (basicBookOrderList.isEmpty()) {
+            model.addAttribute("noOrdersMessage", "주문목록이 없습니다.");
+        } else {
+            model.addAttribute("basicBookOrderList", basicBookOrderList);
+        }
+
+        return "/myPage/basicBook/orderList";
     }
 
     @GetMapping("{userId}")

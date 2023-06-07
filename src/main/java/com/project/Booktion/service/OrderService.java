@@ -62,7 +62,7 @@ public class OrderService {
         order.setUser(user);
         order.setOrderItems(orderItems);
         order.setOrderDate(new Date());
-        order.setStatus(1); //주문 접수 설정
+        order.setStatus(0); //주문 접수 설정
         order.setOrderType(1);
         order.setPrice(price);
 
@@ -118,5 +118,9 @@ public class OrderService {
 
     public List<Order> getOrdersByUser(User user) {
         return orderRepository.findByUser(user);
+    }
+
+    public List<Order> findMyBasicBookOrder(String userId) {
+        return orderRepository.findByOrderTypeAndUserUserId(1, userId);
     }
 }

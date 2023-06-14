@@ -58,11 +58,4 @@ public class OrderItem implements Serializable {
 
     public OrderItem() {
     }
-
-    public OrderItem(Long orderItemId, Order order, int quantity, Book book) {
-        this.orderItemId = orderItemId;
-        this.order = order;
-        this.quantity = quantity;
-        this.book = book;
-    }
 }

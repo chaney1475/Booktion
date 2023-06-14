@@ -26,7 +26,6 @@ public class AuctionOrderFormController {
     private final UserService userService;
     // 경매 책 주문 폼 컨트롤러
     private final AuctionBookService auctionS;
-    private final AuctionBookOrderRepository auctionBOR;
     private final BiddingService biddingS;
 
 
@@ -69,16 +68,7 @@ public class AuctionOrderFormController {
         model.addAttribute("price",tempOrder.getBid().getPrice());
         return "auction/biddingComplete";
     }
-    @GetMapping("/list")
-    public String getBoughtList(HttpSession session, Model model){
-        String userId = (String) session.getAttribute("userId");
-        if(userId == null) {return "/user/signIn";}
-        List<AuctionBookOrder> auctionOrders = auctionBOR.findByOrderUserUserId(userId);
-        model.addAttribute("auctionBookOrders", auctionOrders);
-        String name = auctionOrders.get(0).getOrder().getAddress().getZipcode();
-        System.out.println(name + "name?????");
-        return "myPage/auction/auctionOrderList";
-    }
+
     @GetMapping("/detail")
     public String getOrderDetail(HttpSession session, Model model){
         String userId = (String) session.getAttribute("userId");

@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
 <head>
   <meta charset="UTF-8">
-  <title>일반도서 주문목록</title>
+  <title>판매중인 경매 도서</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
   <style>
         .container {
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            width: 900px;
+            width: 1000px;
             margin: 0 auto;
+            padding: 30px;
         }
         body {
             font-family: 'Nanum Gothic', sans-serif;
@@ -20,65 +22,89 @@
             margin: 0;
             padding: 0;
         }
+        .h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
         .myPageContent {
-            width: 700px;
+            width: 860px;
             padding: 20px;
         }
-
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-top: 10px;
         }
-
         th, td {
             border: 1px solid #b2d8e5;
             padding: 8px;
             text-align: left;
+            font-size: 14px;
+            color: #333333;
         }
-
         th {
             background-color: #b2d8e5;
             font-weight: bold;
         }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
+        a {
+            color: #2892c6;
+            text-decoration: none;
+        }
+        form {
+            margin: 0;
+        }
+        button {
+            background-color: transparent;
+            border: none;
+            color: #2892c6;
+            cursor: pointer;
+        }
+        .no-orders-message {
+            text-align: center;
+            color: #999999;
+            font-size: 16px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
+<br><br><br>
 <div layout:fragment="content">
-  <table>
-    <thead>
-    <tr>
-      <th>주문일자</th>
-      <th>이름</th>
-      <th>상품 정보</th>
-      <th>수량</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- 기본 도서 주문 목록이 있는 경우 -->
-    <tr th:each="order : ${basicBookOrderList}">
-      <td th:text="${#dates.format(order.orderDate, 'yy-MM-dd')}"></td>
-      <td th:text="${order.name}"></td>
-      <td>
-        <span th:each="orderItem : ${order.orderItems}">
-          <img th:src="${orderItem.book.imageUrl}" alt="Book Image" />
-          <span th:text="${orderItem.book.title}"></span>
-        </span>
-      </td>
-      <td th:text="${orderItem.quantity}"></td>
-    </tr>
+  <br>
+  <div class="container">
+    <div class="sidebar-wrap">
+      <th:block th:replace="common/sidebar :: SidebarFragment"></th:block>
+    </div>
+    <div class="myPageContent">
+      <table>
+        <thead>
+        <tr>
+          <th>주문일자</th>
+          <th>이름</th>
+          <th>상품 정보</th>
+          <th>수량</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${basicBookOrderList}">
+          <td th:text="${#dates.format(order.orderDate, 'yy-MM-dd')}"></td>
+          <td th:text="${order.name}"></td>
+          <td>
+                        <span th:each="orderItem : ${order.orderItems}">
+                            <img th:src="${orderItem.book.imageUrl}" alt="Book Image" />
+                            <span th:text="${orderItem.book.title}"></span>
+                        </span>
+          </td>
+          <td th:text="${orderItem.quantity}"></td>
+        </tr>
 
-    <!-- 주문목록이 없는 경우 -->
-    <tr th:if="${noOrdersMessage != null}">
-      <td colspan="4" th:text="${noOrdersMessage}" class="no-orders-message"></td>
-    </tr>
-    </tbody>
-  </table>
-
+        <tr th:if="${noOrdersMessage != null}">
+          <td colspan="4" th:text="${noOrdersMessage}" class="no-orders-message"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 </body>
 </html>

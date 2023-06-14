@@ -1,6 +1,8 @@
 package com.project.Booktion.controller;
 
+import com.project.Booktion.model.AuctionBookOrder;
 import com.project.Booktion.model.Order;
+import com.project.Booktion.repository.AuctionBookOrderRepository;
 import com.project.Booktion.service.OrderSearchService;
 import com.project.Booktion.service.OrderService;
 import com.project.Booktion.service.UsedBookService;
@@ -22,6 +24,7 @@ import java.util.List;
 public class OrderListController {
     private final OrderService orderService;
     private final UsedBookService usedBookService;
+    private final AuctionBookOrderRepository auctionBOR;
 
     @GetMapping("/used")
     public String getUsedOrderList(HttpSession session, Model model){
@@ -46,9 +49,15 @@ public class OrderListController {
 
         return "/myPage/basicBook/orderList";
     }
-
-    @GetMapping("{userId}")
-    public String orderList(@PathVariable String userId, Model model) {  // 주문내역
-        return "myPage/user";
+    @GetMapping("/auction")
+    public String getBoughtList(HttpSession session, Model model){
+        String userId = (String) session.getAttribute("userId");
+        if(userId == null) {return "/user/signIn";}
+        List<AuctionBookOrder> auctionOrders = auctionBOR.findByOrderUserUserId(userId);
+        model.addAttribute("auctionBookOrders", auctionOrders);
+        if(auctionOrders == null){
+            System.out.println("no auction orders");
+        }
+        return "myPage/auction/auctionOrderList";
     }
 }

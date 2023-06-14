@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
     <style>
         .container {
-            max-width: 900px;
+            max-width: 1000px;
         }
 
         .card {
@@ -57,13 +57,27 @@
         .card-link:hover {
             color: #007bff;
         }
+
+        .btn-custom {
+            background-color: #007bff;
+            border-color: #007bff;
+            color: #fff;
+        }
+
+        .btn-custom:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
     </style>
 </head>
 <div layout:fragment="content">
     <body>
     <div class="container">
         <br><br><br>
-        <h3>중고책</h3>
+        <div class="d-flex align-items-center">
+            <h3>중고책</h3>
+            <a href="/search/auction" class="ml-3 btn btn-custom">경매도서 추가</a>
+        </div>
         <div th:if="${auctionBooks != null and auctionBooks.size() > 0}">
             <div class="card-columns">
                 <div th:each="auctionBook : ${auctionBooks}" class="card">

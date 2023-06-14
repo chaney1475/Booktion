@@ -1,10 +1,106 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>자세히보기</title>
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            width: 1000px;
+            margin: 0 auto;
+        }
+        body {
+            font-family: 'Nanum Gothic', sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .myPageContent {
+            width: 800px;
+            padding: 20px;
+        }
+        .auction-book-orders {
+            margin-top: 20px;
+        }
+
+        .auction-book-orders h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .auction-book-orders table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .auction-book-orders th,
+        .auction-book-orders td {
+            border: 1px solid #b2d8e5;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .auction-book-orders th {
+            background-color: #b2d8e5;
+            font-weight: bold;
+        }
+
+
+    </style>
 </head>
 <body>
+<br><br><br>
+<div layout:fragment="content">
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+    var orderMsg = /*[[${orderMsg}]]*/ null;
+    if (orderMsg) {
+        alert(orderMsg);
+    }
+    /*]]>*/
+</script>
+    <br>
+    <br>
+    <div class="container">
+        <div class="sidebar-wrap">
+            <th:block th:replace="common/sidebar :: SidebarFragment"></th:block>
+        </div>
+        <div class="myPageContent">
+            <div class="auction-book-orders">
+                <h3>판매된 경매 도서</h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>책 사진</th>
+                        <th>이름</th>
+                        <th>가격</th>
+                        <th>주소</th>
+                        <th>받는 사람</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="auctionBookOrder : ${auctionBookOrders}">
+                        <td>
+                            <img th:src="${auctionBookOrder.auctionBook.book.imageUrl}" alt="Book Image">
+                        </td>
+                        <td th:text="${auctionBookOrder.auctionBook.book.title}"></td>
+                        <td th:text="${auctionBookOrder.order.price}"></td>
+                        <td th:text="' ' + ${auctionBookOrder.order.address.zipcode}
+                        + ' ' + ${auctionBookOrder.order.address.address1} + ' ' + ${auctionBookOrder.order.address.address2}"></td>
+                        <td th:text="${auctionBookOrder.order.name}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
+    </div>
+</div>
 </body>
 </html>

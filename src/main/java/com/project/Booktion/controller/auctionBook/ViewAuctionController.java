@@ -44,7 +44,7 @@ public class ViewAuctionController {
         return "auction/book";
     }
     @Transactional
-    @PostMapping("/{bookId}") // 경매책 상세 보기
+    @PostMapping("/{bookId}")
     public String bidding(@ModelAttribute AuctionBook auctionBook, @PathVariable Long bookId,
                           @RequestParam int price, HttpSession session, RedirectAttributes redirectAttributes) {
         String userId = (String) session.getAttribute("userId");

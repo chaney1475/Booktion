@@ -19,7 +19,7 @@
 <div class="search-form">
     <div class="search-box-wrapper">
         <h1>
-            <a th:href="@{/main}" style="text-decoration: none; color: black;">Booktion</a>
+            <a th:href="@{/}" style="text-decoration: none; color: black;">Booktion</a>
         </h1>
         <form action="/search" method="post" class="search-box">
             <select id="type" name="type">
@@ -34,7 +34,7 @@
 </div>
 
 <div class="navbar-menu" style="margin-top: 20px;">
-    <a href="#">일반도서</a>
+    <a href="@{/book/list}">일반도서</a>
     <a th:href="@{/used/main}">중고도서</a>
     <a th:href="@{/auction/books}">경매도서</a>
 </div>

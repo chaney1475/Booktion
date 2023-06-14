@@ -16,6 +16,6 @@ public class LogoutController {
     public String logout(HttpSession session) {
         // 세션을 만료시킴으로써 로그아웃 처리
         session.invalidate();
-        return "redirect:/main"; // 로그아웃 후 메인페이지로,
+        return "redirect:/"; // 로그아웃 후 메인페이지로,
     }
 }

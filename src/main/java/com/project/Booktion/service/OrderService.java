@@ -40,40 +40,39 @@ public class OrderService {
         List<BookForm> bookForms = orderForm.getBooks();
         List<OrderItem> orderItems = new ArrayList<>();
         int price = 0;
-        System.out.println("      " + orderForm.getBooks().size());
+
         for (BookForm bookForm : bookForms) {
             Book book = bookForm.getBook();
-            System.out.println("넘어온 책 : " + book.getTitle());
             int quantity = bookForm.getQuantity();
 
             OrderItem orderItem = new OrderItem();
             orderItem.setBook(book);
-            System.out.println("주문 : " + orderItem.getBook().getTitle());
             orderItem.setQuantity(quantity);
-            System.out.println("주문 : " + orderItem.getQuantity());
+
             price += (book.getPrice() * quantity);
-            System.out.println("주문금액 : " + price);
 
             orderItems.add(orderItem);
         }
 
         Order order = orderForm.getOrder();
-
         order.setUser(user);
-        order.setOrderItems(orderItems);
         order.setOrderDate(new Date());
-        order.setStatus(0); //주문 접수 설정
+        order.setStatus(0);
         order.setOrderType(1);
         order.setPrice(price);
 
-        // Order를 데이터베이스에 저장
-        orderRepository.save(order);
 
-        // OrderItem을 데이터베이스에 저장
         for (OrderItem orderItem : orderItems) {
-            orderItem.setOrder(order);
-            orderItemRepository.save(orderItem);
+            order.addOrderItem(orderItem); // Order에 OrderItem 추가
         }
+
+        orderRepository.save(order); // order 저장 후 orderId 생성
+//        for (OrderItem orderItem : orderItems) {
+//            orderItem.setOrder(order); // orderId가 생성된 후에 orderItem에 order 설정
+//            System.out.println("order.orderId " + order.getOrderId());
+//            System.out.println("orderItem.order " + orderItem.getOrder().getOrderId() + " " + orderItem.getOrderItemId() + " " + orderItem.getBook().getBookId() + " " + orderItem.getQuantity());
+//            //orderItemRepository.save(orderItem);
+//        }
 
         // 주문 처리 후 장바구니에서 모든 아이템을 삭제
         if (orderForm.isFromCart()) {

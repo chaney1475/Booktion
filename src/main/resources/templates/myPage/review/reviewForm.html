@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/layout}">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 <head>
   <meta charset="UTF-8">
   <title>리뷰 작성하기</title>
@@ -20,14 +18,15 @@
     th {
       background-color: #f2f2f2;
     }
-    <script>
+  </style>
+  <script>
     // 리뷰가 작성되었을 때 alert 창을 띄우고 reviewList 페이지로 이동하는 함수
     function showReviewCreatedAlert() {
-        alert("리뷰가 작성되었습니다.");
-        location.href = "/review";
+      alert("작성이 완료되었습니다!");
+      window.location.href = "/review";
     }
 </script>
-  </style>
+
 </head>
 <body>
 <div layout:fragment="content">
@@ -38,7 +37,6 @@
       <select id="bookId" name="book.bookId" required>
         <option th:each="orderItem : ${orderItems}" th:value="${orderItem.book.bookId}" th:text="${orderItem.book.title}"></option>
       </select>
-
     </div>
     <div>
       <label for="title">제목:</label>
@@ -48,7 +46,7 @@
       <label for="contents">내용:</label>
       <textarea id="contents" name="contents" required th:text="${review.contents}"></textarea>
     </div>
-    <button type="submit">작성 완료</button>
+    <button type="submit" onclick="showReviewCreatedAlert()">작성 완료</button>
   </form>
 </div>
 </body>

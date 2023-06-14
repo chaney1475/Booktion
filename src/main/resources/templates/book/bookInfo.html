@@ -7,6 +7,9 @@
   <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
 </head>
 <body>
+<div th:if="${errorMessage}" class="alert alert-danger">
+  <p th:text="${errorMessage}"></p>
+</div>
 <h1>책 정보</h1>
 <div th:if="${book}">
   <h2 th:text="${book.title}"></h2>

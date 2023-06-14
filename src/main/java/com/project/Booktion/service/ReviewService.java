@@ -1,15 +1,12 @@
 package com.project.Booktion.service;
 
-import com.project.Booktion.model.Book;
 import com.project.Booktion.model.Review;
 
 import com.project.Booktion.model.User;
 import com.project.Booktion.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 @RequiredArgsConstructor
 @Service
@@ -34,10 +31,8 @@ public class ReviewService {
     public List<Review> getReviewByUser(User user) {
         return reviewRepository.findByUserId(user);
     }
-    public void deleteReview(long reviewId) {
-
-        //reviewRepository.deleteById(reviewId);
-
+    public void deleteReview(Review review) {
+        reviewRepository.delete(review);
     }
 
     public Review getReviewById(long reviewId) {

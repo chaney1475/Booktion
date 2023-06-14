@@ -1,106 +1,197 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
 <head>
   <meta charset="UTF-8">
   <title>책 상세 정보</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+  <style>
+        body {
+            font-family: 'Nanum Gothic', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        #content {
+            margin-top: 20px;
+            text-align: left;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+
+        .book-main-info {
+            background-color: #b2d8e5;
+            color: #333333;
+            padding: 20px 0 20px 0;
+            margin: 10px;
+        }
+
+        .book-content {
+            background-color: #ffffff;
+            padding: 20px;
+        }
+
+        .book-img {
+            display: inline-block;
+            vertical-align: top;
+            width: 50%;
+            text-align : center;
+        }
+
+        .book-img img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .book-order-info {
+            display: inline-block;
+            vertical-align: top;
+            align-items: center; /* 세로 가운데 정렬 */
+        }
+
+        .book-order-info a {
+            display: inline-block;
+            margin-top: 10px;
+            margin-right: 10px;
+            color: #fff;
+            background-color: #b2d8e5;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            text-decoration: none;
+        }
+
+        .book-order-info a:first-child {
+            margin-left: 0;
+        }
+
+        .book-order-info a:hover {
+            background-color: #70a9bd;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .book-order-info a span {
+            display: block;
+            text-align: center;
+        }
+
+        .book-detail{
+            background-color: #ffffff;
+            padding: 20px;
+        }
+
+        .custom-button {
+          background-color: #b2d8e5;
+          color: #fff;
+          border: none;
+          border-radius: 5px;
+          padding: 0.5em 1em;
+          text-decoration: none;
+          width: auto;
+        }
+
+        .custom-button:hover {
+          background-color: #70a9bd;
+          color: #fff;
+          text-decoration: none;
+        }
+    </style>
 </head>
 <body>
-<div th:if="${errorMessage}" class="alert alert-danger">
-  <p th:text="${errorMessage}"></p>
-</div>
-<h1>책 정보</h1>
-<div th:if="${book}">
-  <h2 th:text="${book.title}"></h2>
-  <p th:text="${book.author}"></p>
-  <p th:text="${book.publisher}"></p>
-  <p th:text="${book.pubDate}"></p>
-  <p th:text="${book.isbn}"></p>
-  <hr>
-  <p>
-    <img th:src="${book.imageUrl}" alt="Book Image" />
-  </p>
-  <form th:action="@{/book/order/form}" method="GET" onsubmit="return checkLogin()">
-    <table>
-      <tr>
-        <th>한 권당 가격</th>
-        <th>수량</th>
-      </tr>
-      <tr>
-        <td th:text="${book.price}"></td>
-        <td>
-          <input id="quantity" type="number" min="1" name="quantity" value="1">
-        </td>
-      </tr>
-    </table>
-    <input type="hidden" name="bookId" th:value="${book.bookId}">
-    <button type="submit" >주문하기</button>
-  </form>
-  <form th:action="@{/cart/add}" method="POST" onsubmit="setCartQuantity()">
-    <input id="cartQuantity" type="hidden" name="cartQuantity" value="1">
-    <input type="hidden" name="bookId" th:value="${book.bookId}">
-    <button type="submit">장바구니에 담기</button>
-  </form>
-  <script>
-   function setCartQuantity() {
-    const quantityValue = document.getElementById('quantity').value;
-    document.getElementById('cartQuantity').value = quantityValue;
-  }
-</script>
-
-</div>
-<hr>
-<h3>책 소개</h3>
-<p th:text="${book.description}"></p>
-<hr>
-<h3>리뷰</h3>
-<!-- 리뷰 작성 처리 -->
-<form th:action="@{/book/{id}/review(id=${book.bookId})}" method="post" th:object="${review}">
-  <textarea th:field="*{contents}" placeholder="리뷰를 작성하세요"></textarea>
-  <button type="submit">리뷰 작성</button>
-  <!-- 알림 메시지 표시 -->
-  <p th:if="${alert}" th:text="${alert}" class="alert alert-danger"></p>
-</form>
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    function checkReviewForm() {
-        var contents = document.getElementById("contents").value;
-        if (!contents.trim()) {
-            alert("리뷰 내용을 작성하세요.");
-            return false;
+<div layout:fragment="content" id="content">
+  <div th:if="${book}" class="book-info">
+    <div class="book-main-info">
+      <div class="book-title"><h2 th:text="${book.title}"></h2></div>
+        작가: <span th:text="${book.author}"></span>
+        출판사: <span th:text="${book.publisher}"></span>
+        출판일: <span th:text="${#dates.format(book.pubDate, 'yyyy년 MM월 dd일')}"></span>
+    </div>
+    <div class="book-content">
+      <div class="book-img"><img th:src="${book.imageUrl}" alt="Book Image"></div>
+      <div class="book-order-info">
+          <form th:action="@{/book/order/form}" method="GET" onsubmit="return checkLogin()">
+            <table class="table">
+              <tr>
+                <th scope="col">한 권당 가격</th>
+                <th scope="col">수량</th>
+              </tr>
+              <tr>
+                <td th:text="${book.price}"></td>
+                <td>
+                  <div class="input-group">
+                    <input id="quantity" type="number" min="1" name="quantity" value="1" class="form-control">
+                  </div>
+                </td>
+              </tr>
+            </table>
+            <input type="hidden" name="bookId" th:value="${book.bookId}">
+            <button type="submit" class="custom-button">주문하기</button>
+          </form>
+          <form th:action="@{/cart/add}" method="POST" onsubmit="setCartQuantity()">
+            <input id="cartQuantity" type="hidden" name="cartQuantity" value="1">
+            <input type="hidden" name="bookId" th:value="${book.bookId}" >
+            <button type="submit" class="custom-button">장바구니에 담기</button>
+          </form>
+      </div>
+        <script>
+         function setCartQuantity() {
+          const quantityValue = document.getElementById('quantity').value;
+          document.getElementById('cartQuantity').value = quantityValue;
         }
-        return true;
-    }
-    /*]]>*/
-</script>
+      </script>
+    </div>
+  </div>
+<hr>
+  <div class="book-detail">
+    <h2 style="background-color: #b2d8e5; padding: 10px;">책 소개</h2>
+    <span th:text="${book.description}"></span><br/>
+    <h2 style="background-color: #b2d8e5; padding: 10px;">isbn</h2>
+    <span th:text="${book.isbn}"></span>
+  </div>
+  <div class="container">
+    <h3>리뷰</h3>
+    <!-- 리뷰 작성 처리 -->
+    <form th:action="@{/book/{id}/review(id=${book.bookId})}" method="post" th:object="${review}">
+      <div class="form-group">
+        <div class="d-flex">
+          <textarea class="form-control mr-2" th:field="*{contents}" placeholder="리뷰를 작성하세요" style="width: 85%;"></textarea>
+          <button type="submit" class="custom-button">작성하기</button>
+        </div>
+      </div>
+      <!-- 알림 메시지 표시 -->
+      <p th:if="${alert}" th:text="${alert}" class="alert alert-danger"></p>
+    </form>
 
+    <!-- 리뷰 리스트 표시 -->
+    <table class="table">
+      <thead>
+      <tr>
+        <th>작성자</th>
+        <th>내용</th>
+        <th>작성일자</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="review : ${reviews}">
+        <td th:text="${review.userId.userId}"></td>
+        <td th:text="${review.title}"></td>
+        <td th:text="${review.createDate}"></td>
+      </tr>
+      </tbody>
+    </table>
 
-<!-- 리뷰 리스트 표시 -->
-<table>
-  <thead>
-  <tr>
-    <th>작성자</th>
-    <th>내용</th>
-    <th>작성일자</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="review : ${reviews}">
-    <td th:text="${review.userId.userId}"></td>
-    <td th:text="${review.title}"></td>
-    <td th:text="${review.createDate}"></td>
-  </tr>
-  </tbody>
-</table>
-
-<!-- 리뷰가 없을 경우 메시지 표시 -->
-<div th:unless="${reviews != null and not reviews.isEmpty()}">
-  <p>리뷰가 없습니다.</p>
-</div>
-<div th:if="${book == null}">
-  <h2>존재하지 않는 책입니다.</h2>
-</div>
+    <!-- 리뷰가 없을 경우 메시지 표시 -->
+    <div th:unless="${reviews != null and not reviews.isEmpty()}">
+      <p>리뷰가 없습니다.</p>
+    </div>
+    <div th:if="${book == null}">
+      <h2>존재하지 않는 책입니다.</h2>
+    </div>
+  </div>
 <script th:inline="javascript">
     /*<![CDATA[*/
     function checkLogin() {
@@ -114,5 +205,6 @@
     }
     /*]]>*/
 </script>
+</div>
 </body>
 </html>

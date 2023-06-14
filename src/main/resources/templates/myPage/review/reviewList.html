@@ -75,6 +75,13 @@
             text-align: right;
         }
     </style>
+    <script>
+        function confirmReviewDeletion(reviewId) {
+            if (confirm("삭제하겠습니까?")) {
+                location.href = "/review/delete/" + reviewId;
+            }
+        }
+    </script>
 </head>
 <body>
 <br><br><br>
@@ -96,6 +103,7 @@
                     <th>내용</th>
                     <th>날짜</th>
                     <th> </th>
+                    <th> </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -112,6 +120,10 @@
                     <td th:text="${review.createDate}"></td>
                     <td>
                         <a th:href="@{/review/editReview/{reviewId}(reviewId=${review.reviewId})}">수정</a>
+                    </td>
+                    <td>
+                        <a th:href="@{/review/deleteReview/{reviewId}(reviewId=${review.reviewId})}"
+                           onclick="confirmReviewDeletion('${review.reviewId}')">삭제</a>
                     </td>
                 </tr>
                 </tbody>

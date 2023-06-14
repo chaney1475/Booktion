@@ -144,8 +144,31 @@ public class reviewController {
 
         model.addAttribute("message", "리뷰가 작성되었습니다.");
 
-        return "mypage/review/reviewList";
+        return "redirect:/review";
     }
 
+    @GetMapping("/deleteReview/{reviewId}") // 리뷰 삭제
+    public String deleteReview(@PathVariable("reviewId") long reviewId, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("userId") == null) {
+            return "user/signIn";
+        }
+
+        String userId = (String) session.getAttribute("userId");
+        User user = userService.getUser(userId);
+        if (user == null) {
+            return "user/signIn";
+        }
+
+        Review review = reviewService.getReviewById(reviewId);
+        if (review == null || !review.getUserId().equals(user)) {
+            // Handle the case where the review does not exist or the user does not own the review
+            return "error-page";
+        }
+
+        reviewService.deleteReview(review);
+
+        return "redirect:/review";
+    }
 
 }

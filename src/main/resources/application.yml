@@ -22,6 +22,8 @@ spring:
   mvc:
    interceptor:
     include: /**
+  messages:
+    basename: validation
 
 
 logging:
@@ -44,3 +46,4 @@ server:
     prefix: classpath:/templates/
     suffix: .html
     enabled: true
+

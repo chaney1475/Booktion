@@ -8,12 +8,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j // 로그 찍는 기능
@@ -38,7 +40,10 @@ public class MyPageController {
     }
 
     @PostMapping
-    public String modifyUserInfo(HttpSession session, @ModelAttribute("userInfo")User user){
+    public String modifyUserInfo(HttpSession session, @Valid @ModelAttribute("userInfo")User user, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "myPage/main";
+        }
         log.info("user Info is change");
         user = userService.updateUser(user);
         return "myPage/main";

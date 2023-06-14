@@ -8,12 +8,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @Slf4j // 로그 찍는 기능
 @Controller
@@ -27,7 +29,13 @@ public class SignFormController { // 회원가입
     }
 
     @PostMapping
-    public String processSignupForm(@ModelAttribute("user") User user, HttpSession session,Model model) {
+    public String processSignupForm(@Valid @ModelAttribute("user") User user,
+                                    BindingResult bindingResult,
+                                    HttpSession session,
+                                    Model model) {
+        if(bindingResult.hasErrors()){
+            return "user/signUp";
+        }
         User save = userRepository.save(user);
         session.setAttribute("userId",save.getUserId());
         model.addAttribute("name", save.getName());

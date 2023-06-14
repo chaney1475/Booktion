@@ -1,6 +1,7 @@
 package com.project.Booktion.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 
 @Entity
@@ -8,10 +9,17 @@ import java.io.Serializable;
 public class User implements Serializable {
     @Id
     @Column(name="client_id")
+    @NotEmpty @Size(min=4, max=20)
     private String userId;
+    @NotEmpty
+    @Size(min=5)
     private String password;
+    @NotEmpty
     private String name;
+    @NotEmpty @Email
     private String email;
+    @NotNull
+    @Pattern(regexp = "0\\d{2}-\\d{4}-\\d{4}|0\\d{2}-\\d{3}-\\d{4}")
     private String phoneNumber;
     @Embedded
     private Address address;

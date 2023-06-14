@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/main")
+@RequestMapping("/")
 public class MainController {
     private final BookService bookService;
     @GetMapping

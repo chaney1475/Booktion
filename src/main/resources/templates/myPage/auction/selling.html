@@ -1,35 +1,100 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Auctions</title>
+    <title>판매중인 경매 도서</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            width: 1000px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        body {
+            font-family: 'Nanum Gothic', sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .myPageContent {
+            width: 860px;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #b2d8e5;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #b2d8e5;
+            font-weight: bold;
+        }
+        a {
+            color: #2892c6;
+            text-decoration: none;
+        }
+        form {
+            margin: 0;
+        }
+        button {
+            background-color: transparent;
+            border: none;
+            color: #2892c6;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-<h1>Auctions</h1>
-<table>
-    <thead>
-    <tr>
-        <th>제목</th>
-        <th>가격</th>
-        <th>경매시작가</th>
-        <th>자세히보기</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="auctionBook : ${auctionBooks}">
-        <td th:text="${auctionBook.book.title}"></td>
-        <td th:text="${auctionBook.author}"></td>
-        <td th:text="${auctionBook.price}"></td>
-        <td>
-            <a th:href="@{/auction/books/{bookId}(bookId=${auctionBook.bookId})}">클릭</a>
-        </td>
-        <td>
-            <form th:action="@{/auction/books/{bookId}/endAuction(bookId=${auctionBook.bookId})}" method="post">
-                <button type="submit">경매 종료</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<br><br><br>
+<div layout:fragment="content">
+    <br>
+    <div class="container">
+        <div class="sidebar-wrap">
+            <th:block th:replace="common/sidebar :: SidebarFragment"></th:block>
+        </div>
+        <div class="myPageContent">
+            <table>
+                <h3>판매중인 경매 도서</h3>
+                <thead>
+                <tr>
+                    <th>제목</th>
+                    <th>경매 시작가</th>
+                    <th>자세히 보기</th>
+                    <th>경매 종료</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="auctionBook : ${auctionBooks}">
+                    <td th:text="${auctionBook.book.title}"></td>
+                    <td th:text="${auctionBook.startPrice}"></td>
+                    <td>
+                        <a th:href="@{/auction/books/{bookId}(bookId=${auctionBook.auctionBookId})}">클릭</a>
+                    </td>
+                    <td>
+                        <form th:action="@{/auction/order/{bookId}/temp(bookId=${auctionBook.auctionBookId})}" method="post">
+                            <button type="submit">경매 종료</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 </body>
 </html>

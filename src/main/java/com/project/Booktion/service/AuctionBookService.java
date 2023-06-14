@@ -33,6 +33,7 @@ public class AuctionBookService {
 
         Order order = new Order();
         AuctionBook auctionBook = findById(tempOrder.getAuctionBookId());
+        auctionBook.setStatus(1);
         User user = userService.getUser(tempOrder.getUserId());
         int price = tempOrder.getBid().getPrice();
 

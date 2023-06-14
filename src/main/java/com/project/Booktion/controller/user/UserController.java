@@ -38,7 +38,7 @@ public class UserController { // 내 정보 보기
     public String deleteUser(@PathVariable("userId") String userId) {
         // 사용자 정보 삭제 로직
         repository.deleteByUserId(userId);
-        return "redirect:/main";
+        return "redirect:/";
     }
 
 }

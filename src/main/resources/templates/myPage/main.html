@@ -12,7 +12,7 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            width: 900px;
+            width: 1000px;
             margin: 0 auto;
         }
         body {
@@ -60,7 +60,7 @@
         }
 
         .myPageContent {
-            width: 800px;
+            width: 860px;
             padding: 20px;
         }
 
@@ -103,8 +103,8 @@
             <th:block th:replace="common/sidebar :: SidebarFragment"></th:block>
         </div>
         <div class="myPageContent">
-            <h2 class="title">주문서를 작성해주세요!</h2>
-            <div class="order-list">
+            <h2 class="title" th:if="${TempOrderList}">주문서를 작성해주세요!</h2>
+            <div class="order-list" th:if="${TempOrderList}">
                 <th:block th:each="tempOrder : ${TempOrderList}">
                     <div class="order-item">
                         <img th:src="${tempOrder.bookInfo.imageUrl}" alt="Book Image">

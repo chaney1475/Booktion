@@ -65,6 +65,17 @@
             font-size: 16px;
             font-weight: bold;
         }
+        .order-title {
+          font-size: 20px;
+          font-weight: bold;
+          margin-top: 20px;
+        }
+        hr {
+            margin-top: 20px;
+            border: none;
+            border-top: 2px solid #b2d8e5;
+        }
+
     </style>
 </head>
 <body>
@@ -76,33 +87,28 @@
       <th:block th:replace="common/sidebar :: SidebarFragment"></th:block>
     </div>
     <div class="myPageContent">
+    <div th:each="order : ${basicBookOrderList}">
+      <p>주문 날짜: <span th:text="${#dates.format(order.orderDate, 'yy-MM-dd')}"></span>
+        이름: <span th:text="${order.name}"></span></p>
+      <p class="order-title">주문 항목</p>
       <table>
         <thead>
         <tr>
-          <th>주문일자</th>
-          <th>이름</th>
-          <th>상품 정보</th>
+          <th>책 이미지</th>
+          <th>책 제목</th>
           <th>수량</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="order : ${basicBookOrderList}">
-          <td th:text="${#dates.format(order.orderDate, 'yy-MM-dd')}"></td>
-          <td th:text="${order.name}"></td>
-          <td>
-                        <span th:each="orderItem : ${order.orderItems}">
-                            <img th:src="${orderItem.book.imageUrl}" alt="Book Image" />
-                            <span th:text="${orderItem.book.title}"></span>
-                        </span>
-          </td>
+        <tr th:each="orderItem : ${order.orderItems}">
+          <td><img th:src="${orderItem.book.imageUrl}" alt="Book Image" /></td>
+          <td th:text="${orderItem.book.title}"></td>
           <td th:text="${orderItem.quantity}"></td>
-        </tr>
-
-        <tr th:if="${noOrdersMessage != null}">
-          <td colspan="4" th:text="${noOrdersMessage}" class="no-orders-message"></td>
         </tr>
         </tbody>
       </table>
+      <hr>
+    </div>
     </div>
   </div>
 </div>

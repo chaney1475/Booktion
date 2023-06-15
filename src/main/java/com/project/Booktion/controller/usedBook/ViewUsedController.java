@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -50,5 +51,15 @@ public class ViewUsedController {
         log.info("saleBook data check : " + saleBookList.toString());
         model.addAttribute("saleBookList", saleBookList);
         return "used/usedMain";
+    }
+
+    @RequestMapping("/books/new/{isbn}")
+    public String newBook(@PathVariable String isbn){
+        //bookType이 1인 책 검색하기
+        Book book = bookService.findByIsbnAndType(isbn, 1);
+        if(book == null){
+            return "noBook"; //상품이 없다는 페이지로 이동
+        }
+        return "redirect:/book/" + book.getBookId();
     }
 }

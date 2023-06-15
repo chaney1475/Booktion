@@ -19,6 +19,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     List<Book> findTop4ByBookTypeAndPriceLessThanEqualOrderByBookIdDesc(int bookType, int price);
 
+    Book findByIsbnAndBookType(String isbn, int i);
+  
     List<Book> findByTitleContaining(String query);
 
 }

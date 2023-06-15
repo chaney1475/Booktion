@@ -34,4 +34,9 @@ public class BookService {
     public Book getBookById(long bookId) {
         return bookRepository.findById(bookId).orElse(null);
     }
+
+    public Book findByIsbnAndType(String isbn, int i) {
+        Book book = bookRepository.findByIsbnAndBookType(isbn, i);
+        return book;
+    }
 }

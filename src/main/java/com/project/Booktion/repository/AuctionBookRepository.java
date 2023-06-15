@@ -14,4 +14,7 @@ public interface AuctionBookRepository extends JpaRepository<AuctionBook, Long>{
     // userId로 acutionBook 검색
     @Query("SELECT ab FROM AuctionBook ab WHERE ab.book.user.userId = :userId AND ab.status = 0")
     List<AuctionBook> findByUserSelling(@Param("userId") String userId);
+
+    List<AuctionBook> findByBookTitleContaining(String title);
+
 }

@@ -17,6 +17,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findTop4ByBookTypeOrderByBookIdDesc(int bookType);
 
     List<Book> findTop4ByBookTypeAndPriceLessThanEqualOrderByBookIdDesc(int bookType, int price);
+
+    Book findByIsbnAndBookType(String isbn, int i);
 //    List<Book> findByIsbn(String isbn); // isbn으로 검색 list로 할지 book으로 할지..
 //
 //    List<Book> findByBookType(int bookType); // 북타입으로 검색

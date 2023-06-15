@@ -103,7 +103,7 @@
                 중고가:<span th:text="${book.price}"></span><br/>
                 배송사:<span th:text="${usedBook.shippingCompany}"></span><br/>
                 <a th:if="${usedBook.status == 0}" th:href="@{/used/order/{usedBookId}(usedBookId=${usedBook.usedBookId}, bookId=${book.bookId})}">주문하기</a>
-                <a href="#">새 상품으로 주문하기</a>
+                <a th:href="@{/used/books/new/{isbn}(isbn=${book.isbn})}">새 상품으로 주문하기</a>
             </div>
         </div>
         <div class="book-detail">

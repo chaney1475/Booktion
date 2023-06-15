@@ -44,4 +44,7 @@ public class ReviewService {
     }
 
 
+    public List<Long> getTopReviewBooks() {
+        return reviewRepository.findTop8BookIdsOrderByReviewCountDesc();
+    }
 }

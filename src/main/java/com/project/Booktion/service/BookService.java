@@ -5,6 +5,7 @@ import com.project.Booktion.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,5 +39,9 @@ public class BookService {
     public Book findByIsbnAndType(String isbn, int i) {
         Book book = bookRepository.findByIsbnAndBookType(isbn, i);
         return book;
+    }
+
+    public List<Book> getLatestBooks() {
+        return bookRepository.findTop8ByBookTypeAndPubDateBeforeOrderByPubDateDesc(1, new Date());
     }
 }

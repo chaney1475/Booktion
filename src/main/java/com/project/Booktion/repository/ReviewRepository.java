@@ -1,9 +1,9 @@
 package com.project.Booktion.repository;
 
-import com.project.Booktion.model.Book;
 import com.project.Booktion.model.Review;
 import com.project.Booktion.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,4 +25,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     //void deleteById(long reviewId);
 
     Optional<Object> findById(long reviewId);
+
+    @Query("SELECT r.book.bookId FROM Review r GROUP BY r.book.bookId ORDER BY COUNT(r.book.bookId) DESC")
+    List<Long> findTop8BookIdsOrderByReviewCountDesc();
 }

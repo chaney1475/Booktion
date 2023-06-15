@@ -28,14 +28,6 @@ public class CartService {
     private final UserRepository userRepository;
     private final HttpSession session;
 
-    public List<CartItem> getCartItems(String userId) {
-        Cart cart = cartRepository.findByUserId(userId);
-        if (cart != null) {
-            return cart.getCartItemList();
-        }
-        return new ArrayList<>();
-    }
-
     public boolean isBookInCart(String userId, long bookId) {
         Cart cart = cartRepository.findByUserId(userId);
         if (cart != null) {
@@ -64,11 +56,4 @@ public class CartService {
         }
     }
 
-//    @Transactional
-//    public void removeItemFromCart(String userId, Long bookId) {
-//        Cart cart = cartRepository.findByUserId(userId);
-//        if (cart != null) {
-//            cart.removeItem(bookId);
-//        }
-//    }
 }

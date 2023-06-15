@@ -50,12 +50,10 @@ public class CartController {
             return "cart/noCart";
         }
 
-        List<CartItem> cartItemList = cart.getCartItemList();
-        for (CartItem cartItem : cartItemList) {
+        for (CartItem cartItem : cart.getCartItemList()) {
             System.out.println(cartItem.getBook().getBookId());
         }
-        List<CartItem> cartItems = cartService.getCartItems(userId);
-        model.addAttribute("cartItems", cartItems);
+        model.addAttribute("cartItems", cart.getCartItemList());
 
         return "cart/cartList";
     }

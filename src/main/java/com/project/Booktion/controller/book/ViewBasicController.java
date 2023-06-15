@@ -32,6 +32,12 @@ public class ViewBasicController {
     private final ReviewService reviewService;
     private final UserService userService;
 
+    @GetMapping("/list")
+    public String viewBookList(Model model) {
+        List<Book> bookList = bookService.getBooksByBookType(1);
+        model.addAttribute("bookList", bookList);
+        return "book/bookList";
+    }
     @GetMapping("/{id}")
     public String viewBook(@PathVariable("id") long bookId, Model model) {
         //책 상세페이지로 이동, 책이 없으면 noBook 페이지로 이동

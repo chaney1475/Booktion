@@ -14,11 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
-
 @Slf4j //로그 찍는 기능
 @Controller
 @RequestMapping("/book/order")
@@ -37,7 +33,6 @@ public class BasicOrderFormController {
                           HttpSession session, Model model) {
         String userId = (String) session.getAttribute("userId");
         User user = userService.getUser(userId);
-        System.out.println("userId" + userId);
 
         // 이전에 선택한 책 초기화
         session.removeAttribute("orderForm");
@@ -64,7 +59,6 @@ public class BasicOrderFormController {
 
         } else if(bookId == 0){
             Cart cart = cartService.getCartByUserId(userId);
-            System.out.println("Cart" + cart.getCartId());
             if (cart == null || cart.getCartItemList().isEmpty()) {
                 model.addAttribute("error", "장바구니가 비어있습니다.");
                 return "book/orderForm";
@@ -74,7 +68,6 @@ public class BasicOrderFormController {
             int totalPrice = 0;
             for (CartItem cartItem : cart.getCartItemList()) {
                 Book book = cartItem.getBook();
-                System.out.println("책 정보: " + book.getTitle());
                 BookForm bookForm = new BookForm(book);
                 int cartItemQuantity = cartItem.getQuantity();
                 bookForm.setQuantity(cartItemQuantity);
@@ -104,8 +97,6 @@ public class BasicOrderFormController {
         String userId = (String) session.getAttribute("userId");
         User user = userService.getUser(userId);
 
-        System.out.println("orderForm: " + orderForm);
-        System.out.println("orderForm: " + orderForm.getOrder().getName());
 
         OrderForm savedOrderForm = (OrderForm) session.getAttribute("orderForm"); // 이전에 세션에 저장된 orderForm 가져오기
 
@@ -156,7 +147,6 @@ public class BasicOrderFormController {
         Order order = orderService.findByOrderId(orderId);
         List<OrderItem> orderItems = order.getOrderItems();
 
-        System.out.println(orderItems.get(0).getBook().getTitle());
         if (order == null) {
             model.addAttribute("error", "주문 정보를 찾을 수 없습니다.");
             return "book/orderForm";

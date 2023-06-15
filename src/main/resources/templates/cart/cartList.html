@@ -42,6 +42,12 @@
             background-color: #0069d9; /* 수정된 부분 */
             border-color: #0069d9; /* 수정된 부분 */
         }
+         .empty-cart-message {
+        margin-bottom: 20px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #999999;
+    }
     </style>
     <script>
         function confirmCartItemDeletion(itemId) {
@@ -50,49 +56,49 @@
             }
         }
     </script>
-</head>
-<body>
+</head><body>
 <div layout:fragment="content">
     <div class="container">
-    <div th:if="${successMessage}" class="alert alert-success">
-        <p th:text="${successMessage}"></p>
+        <div th:if="${successMessage}" class="alert alert-success">
+            <p th:text="${successMessage}"></p>
+        </div>
+        <div th:if="${errorMessage}" class="alert alert-danger">
+            <p th:text="${errorMessage}"></p>
+        </div>
+        <h1>장바구니</h1>
+        <table th:if="${not #lists.isEmpty(cartItems)}">
+            <tr>
+                <th>책 이름</th>
+                <th>수량</th>
+                <th>가격</th>
+                <th>총 가격</th>
+                <th></th>
+            </tr>
+            <tr th:each="cartItem : ${cartItems}">
+                <td th:text="${cartItem.book.title}"></td>
+                <td>
+                    <form class="quantity-form" th:action="@{/cart/update}" method="post">
+                        <input type="hidden" name="itemId" th:value="${cartItem.cartItemId}" />
+                        <input type="number" name="cartQuantity" min="1" th:value="${cartItem.quantity}" />
+                        <button type="submit" class="btn btn-primary">수정</button>
+                    </form>
+                </td>
+                <td th:text="${cartItem.book.price}"></td>
+                <td th:text="${cartItem.book.price * cartItem.quantity}"></td>
+                <td>
+                    <form th:action="@{/cart/delete}" method="post">
+                        <input type="hidden" name="itemId" th:value="${cartItem.cartItemId}" />
+                        <button type="submit" class="btn btn-danger" onclick="return confirmCartItemDeletion(${cartItem.cartItemId})">삭제</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+        <p class="empty-cart-message" th:if="${#lists.isEmpty(cartItems)}">장바구니가 비었습니다! 도서를 추가해보세요.</p>
+        <form th:if="${not #lists.isEmpty(cartItems)}" th:action="@{/book/order/form}" method="get">
+            <input type="hidden" name="bookId" value="0" />
+            <button type="submit" class="btn btn-primary">주문하기</button>
+        </form>
     </div>
-    <div th:if="${errorMessage}" class="alert alert-danger">
-        <p th:text="${errorMessage}"></p>
-    </div>
-    <h1>장바구니</h1>
-    <table>
-        <tr>
-            <th>책 이름</th>
-            <th>수량</th>
-            <th>가격</th>
-            <th>총 가격</th>
-            <th> </th>
-        </tr>
-        <tr th:each="cartItem : ${cartItems}">
-            <td th:text="${cartItem.book.title}"></td>
-            <td>
-                <form class="quantity-form" th:action="@{/cart/update}" method="post">
-                    <input type="hidden" name="itemId" th:value="${cartItem.cartItemId}" />
-                    <input type="number" name="cartQuantity" min="1" th:value="${cartItem.quantity}" />
-                    <button type="submit" class="btn btn-primary">수정</button>
-                </form>
-            </td>
-            <td th:text="${cartItem.book.price}"></td>
-            <td th:text="${cartItem.book.price}*${cartItem.quantity}"></td>
-            <td>
-                <form th:action="@{/cart/delete}" method="post">
-                    <input type="hidden" name="itemId" th:value="${cartItem.cartItemId}" />
-                    <button type="submit" class="btn btn-danger" onclick="return confirmCartItemDeletion(${cartItem.cartItemId})">삭제</button>
-                </form>
-            </td>
-        </tr>
-    </table>
-    <form th:action="@{/book/order/form}" method="get">
-        <input type="hidden" name="bookId" value="0" />
-        <button type="submit" class="btn btn-primary">주문하기</button>
-    </form>
-</div>
 </div>
 </body>
 </html>

@@ -79,33 +79,63 @@
             margin-top: 5px;
         }
 
-        li{
+        li {
             list-style-type: none;
+        }
+
+        /* 추가된 CSS 코드 */
+        .card {
+            border: 2px solid #b2d8e5;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card-body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card-img-top {
+            flex-shrink: 0;
+            width: 150px;
+            margin-right: 20px;
+        }
+
+        .card-title {
+            font-family: 'Nanum Gothic', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
         }
     </style>
 </head>
-<body>
-<h3>일반 도서 목록</h3>
-<table>
-    <tr>
-        <th></th>
-        <th>책 제목</th>
-        <th>ISBN</th>
-        <th>저자</th>
-        <th>출판사</th>
-        <th>가격</th>
-    </tr>
-    <!-- bookList를 반복하여 출력 -->
-    <tr th:each="book : ${bookList}">
-        <td>
-            <img th:src="${book.imageUrl}" alt="Book Image" />
-        </td>
-        <td th:text="${book.isbn}"></td>
-        <td><a th:href="@{/book/{id}(id=${book.bookId})}" th:text="${book.title}"></a></td>
-        <td th:text="${book.author}"></td>
-        <td th:text="${book.publisher}"></td>
-        <td th:text="${book.price}"></td>
-    </tr>
-</table>
-</body>
+
+<div layout:fragment="content">
+    <body>
+    <div class="container">
+        <h3>일반 도서 목록</h3>
+        <div class="row">
+            <!-- bookList를 반복하여 출력 -->
+            <div th:each="book : ${bookList}" class="col-md-3 mb-4">
+                <div class="card">
+                    <a th:href="@{/book/{id}(id=${book.bookId})}">
+                        <img class="card-img-top" th:src="${book.imageUrl}" alt="Book Image" />
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${book.title}">제목 없음</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+</div>
 </html>

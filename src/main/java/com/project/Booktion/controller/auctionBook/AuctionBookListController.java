@@ -2,8 +2,12 @@ package com.project.Booktion.controller.auctionBook;
 
 import com.project.Booktion.model.AuctionBook;
 import com.project.Booktion.model.AuctionBookOrder;
+import com.project.Booktion.model.Bid;
 import com.project.Booktion.repository.AuctionBookOrderRepository;
 import com.project.Booktion.repository.AuctionBookRepository;
+import com.project.Booktion.service.AuctionBookOrderService;
+import com.project.Booktion.service.AuctionBookService;
+import com.project.Booktion.service.BiddingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,13 +22,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AuctionBookListController {
 
-    private final AuctionBookRepository auctionBookR;
-    private final AuctionBookOrderRepository auctionOrderR;
+
+    private final AuctionBookService auctionBookS;
+    private final AuctionBookOrderService auctionBOS;
+    private final BiddingService biddingService;
+
 
     @GetMapping
     public String bookList(Model model){ // 전체 경매 책 불러오기
-        List<AuctionBook> auctionBooks = auctionBookR.findAll();
-        model.addAttribute("auctionBooks", auctionBooks);
+        List<AuctionBook> allBooks = auctionBookS.getAllBooks();
+        model.addAttribute("auctionBooks", allBooks);
         return "auction/books";
     }
 
@@ -33,8 +40,7 @@ public class AuctionBookListController {
     public String sellingList(HttpSession session, Model model){
         String userId = (String) session.getAttribute("userId");
 
-        List<AuctionBook> sellingBooks = auctionBookR.findByUserSelling(userId);
-        // 반환된 책들중 id를 검색해서 oder가 잇는지 보고 order가 없는 것만 반환
+        List<AuctionBook> sellingBooks = auctionBookS.getSellingBooks(userId);
 
         model.addAttribute("auctionBooks", sellingBooks);
         return "myPage/auction/selling";
@@ -42,8 +48,21 @@ public class AuctionBookListController {
     @GetMapping("/sold") //  userId 읽고 user가 경매 완료 책
     public String SoldList(HttpSession session, Model model){
         String userId = (String) session.getAttribute("userId");
-        List<AuctionBookOrder> auctionBookOrders = auctionOrderR.findByUserIdSold(userId);
-        model.addAttribute("auctionBookOrders", auctionBookOrders);
+
+        model.addAttribute("auctionBookOrders", auctionBOS.getUserOrder(userId));
         return "myPage/auction/sold";
+    }
+
+
+
+    @GetMapping("/bids")
+    public String myBids( HttpSession session, Model model){
+        String userId = (String) session.getAttribute("userId");
+        if(userId == null){
+            return "redirect:/signIn";
+        }
+        List<Bid> bids = biddingService.myBids(userId);
+        model.addAttribute("bids", bids);
+        return "myPage/auction/myBids";
     }
 }

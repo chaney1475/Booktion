@@ -4,7 +4,7 @@
       layout:decorate="~{layout/layout}">
 <head>
     <meta charset="UTF-8">
-    <title>팔린 중고책</title>
+    <title>주문한 경매 도서</title>
     <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
     <style>
         .container {
@@ -24,42 +24,32 @@
             width: 860px;
             padding: 20px;
         }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        .bids-table {
             margin-top: 20px;
         }
 
-        th, td {
+        .bids-table h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .bids-table table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .bids-table th,
+        .bids-table td {
             border: 1px solid #b2d8e5;
             padding: 8px;
             text-align: left;
         }
 
-        th {
+        .bids-table th {
             background-color: #b2d8e5;
             font-weight: bold;
         }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        tr:hover {
-            background-color: #f5f5f5;
-        }
-
-       .detail {
-            margin-right: 10px;
-            color: #f2f2f2;
-            text-decoration: none;
-            border-radius: 5px;
-            padding: 5px 10px;
-            background-color: #b2d8e5;
-    }
-
-
     </style>
 </head>
 <body>
@@ -71,22 +61,27 @@
             <th:block th:replace="common/sidebar :: SidebarFragment"></th:block>
         </div>
         <div class="myPageContent">
-            <table>
-                <tr>
-                    <th>날짜</th>
-                    <th>가격</th>
-                    <th>구매자</th>
-                    <th></th>
-                </tr>
-                <tr th:each="soldOrder : ${orderList}">
-                    <td th:text="${#dates.format(soldOrder.order.orderDate, 'yyyy/MM/dd')}"></td>
-                    <td th:text="${soldOrder.order.price}"></td>
-                    <td th:text="${soldOrder.order.user.userId}"></td>
-                    <td>
-                        <a class="detail" th:href="@{/myPage/used/sold/{orderId}(orderId=${soldOrder.order.orderId})}">자세히보기</a>
-                    </td>
-                </tr>
-            </table>
+            <div class="bids-table">
+                <h3>경매 입찰 목록</h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>책 이미지</th>
+                        <th>책 제목</th>
+                        <th>입찰가</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="bid : ${bids}">
+                        <td>
+                            <img th:src="${bid.auctionBook.book.imageUrl}" alt="Book Image">
+                        </td>
+                        <td th:text="${bid.auctionBook.book.title}"></td>
+                        <td th:text="${bid.price}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

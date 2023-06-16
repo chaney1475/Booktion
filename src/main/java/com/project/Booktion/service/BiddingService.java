@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class BiddingService {
@@ -40,5 +42,14 @@ public class BiddingService {
             return tempOrder;
         }
         return null;
+    }
+    public List<Bid> getBids (long bookId){
+        return bidRepository.findByAuctionBookAuctionBookId(bookId);
+    }
+    public Bid addBid(Bid bid){
+        return bidRepository.save(bid);
+    }
+    public List<Bid> myBids(String userId){
+        return bidRepository.findByBidderId(userId);
     }
 }

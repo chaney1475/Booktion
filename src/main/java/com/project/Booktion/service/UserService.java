@@ -12,30 +12,15 @@ import java.util.Optional;
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    public User authenticateUser(String username, String password) {
-        return null;
-    }
-
     public User getUser(String userId) {
         Optional<User> user = userRepository.findById(userId);
         if(user.isPresent()) return user.get();
         return null;
     }
 
-    public User registerUser(User userDto) {
-        return null;
-    }
-
-    public User getUserById(String userId) {
-        return null;
-    }
-
     public User updateUser(User user) {
         User modifiedUser = userRepository.save(user);
         return modifiedUser;
-    }
-
-    public void deleteUser(String userId) {
     }
 
 }

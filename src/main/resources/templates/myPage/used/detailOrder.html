@@ -42,6 +42,15 @@
             font-weight: bold;
         }
 
+        .status {
+            margin-right: 10px;
+            color: #f2f2f2;
+            text-decoration: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            background-color: #b2d8e5;
+    }
+
     </style>
 </head>
 <body>
@@ -92,6 +101,9 @@
                     <td colspan="3" th:text="${orderItem.order.payment}">content</td>
                 </tr>
             </table>
+            <br><br>
+            <a class="status" th:if="${orderItem.order.status == 0}" th:href="@{/myPage/used/sold/{orderId}/status(orderId=${orderItem.order.orderId}, status=${orderItem.order.status})}">배송중으로 변경</a>
+            <a class="status" th:if="${orderItem.order.status == 1}" th:href="@{/myPage/used/sold/{orderId}/status(orderId=${orderItem.order.orderId}, status=${orderItem.order.status})}">배송완료로 변경</a>
         </div>
     </div>
 </div>

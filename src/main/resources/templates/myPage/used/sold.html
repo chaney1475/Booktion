@@ -79,7 +79,7 @@
                     <th></th>
                 </tr>
                 <tr th:each="soldOrder : ${orderList}">
-                    <td th:text="${#dates.format(soldOrder.order.orderDate, 'yyyy/MM/dd hh:mm:ss')}"></td>
+                    <td th:text="${#dates.format(soldOrder.order.orderDate, 'yyyy/MM/dd')}"></td>
                     <td th:text="${soldOrder.order.price}"></td>
                     <td th:text="${soldOrder.order.user.userId}"></td>
                     <td>

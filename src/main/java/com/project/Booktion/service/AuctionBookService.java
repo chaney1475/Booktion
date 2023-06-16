@@ -25,6 +25,13 @@ public class AuctionBookService {
     }
 
 
+    public List<AuctionBook> getSellingBooks(String userId){
+        return auctionBookR.findByUserSelling(userId);
+    }
+
+    public List<AuctionBook> getAllBooks(){
+        return auctionBookR.findAll();
+    }
     public AuctionBook findById(Long bookId) {
         return auctionBookR.findById(bookId).orElse(null);
     }
@@ -64,8 +71,4 @@ public class AuctionBookService {
         return savedOrder;
     }
 
-    public AuctionBook addNewBook(AuctionBook book) {
-        AuctionBook saved = auctionBookR.save(book);
-        return saved;
-    }
 }

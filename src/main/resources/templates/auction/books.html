@@ -47,6 +47,7 @@
 
         .card-columns {
             column-count: 4;
+            column-gap: 20px;
         }
 
         .card-link {
@@ -74,9 +75,9 @@
 <div layout:fragment="content">
     <body>
     <div class="container">
-        <br><br><br>
+        <br>
         <div class="d-flex align-items-center">
-            <h3>중고책</h3>
+            <h3>경매 도서</h3>
             <a href="/search/auction" class="ml-3 btn btn-custom">경매도서 추가</a>
         </div>
         <div th:if="${auctionBooks != null and auctionBooks.size() > 0}">

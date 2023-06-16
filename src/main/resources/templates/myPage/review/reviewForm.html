@@ -4,19 +4,44 @@
   <meta charset="UTF-8">
   <title>리뷰 작성하기</title>
   <style>
-    table {
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #b2d8e5;
+    }
+
+    label {
+      display: inline-block;
+      margin-bottom: 5px;
+    }
+
+    select, input, textarea {
       width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
     }
 
-    th, td {
-      border: 1px solid black;
-      padding: 8px;
+    button[type="submit"] {
+      margin-top: 10px;
+      padding: 8px 16px;
+      background-color: #b2d8e5;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
     }
 
-    th {
-      background-color: #f2f2f2;
+    button[type="submit"]:hover {
+      background-color: #85b6c9;
     }
   </style>
   <script>
@@ -25,29 +50,30 @@
       alert("작성이 완료되었습니다!");
       window.location.href = "/review";
     }
-</script>
-
+  </script>
 </head>
 <body>
 <div layout:fragment="content">
-  <h1>리뷰 작성</h1>
-  <form th:action="@{/review/saveReview}" method="post">
-    <div>
-      <label for="bookId">책 선택:</label>
-      <select id="bookId" name="book.bookId" required>
-        <option th:each="orderItem : ${orderItems}" th:value="${orderItem.book.bookId}" th:text="${orderItem.book.title}"></option>
-      </select>
-    </div>
-    <div>
-      <label for="title">제목:</label>
-      <input type="text" id="title" name="title" th:value="${review.title}" required>
-    </div>
-    <div>
-      <label for="contents">내용:</label>
-      <textarea id="contents" name="contents" required th:text="${review.contents}"></textarea>
-    </div>
-    <button type="submit" onclick="showReviewCreatedAlert()">작성 완료</button>
-  </form>
+  <div class="container">
+    <h1>리뷰 작성</h1>
+    <form th:action="@{/review/add}" method="post">
+      <div>
+        <label for="bookId">책 선택:</label>
+        <select id="bookId" name="book.bookId" required>
+          <option th:each="book : ${books}" th:value="${book.bookId}" th:text="${book.title}"></option>
+        </select>
+      </div>
+      <div>
+        <label for="title">제목:</label>
+        <input type="text" id="title" name="title" th:value="${review.title}" required>
+      </div>
+      <div>
+        <label for="contents">내용:</label>
+        <textarea id="contents" name="contents" required th:text="${review.contents}"></textarea>
+      </div>
+      <button type="submit" onclick="showReviewCreatedAlert()">작성 완료</button>
+    </form>
+  </div>
 </div>
 </body>
 </html>

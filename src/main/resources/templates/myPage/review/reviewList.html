@@ -84,7 +84,7 @@
     </script>
 </head>
 <body>
-<br><br><br>
+<br>
 <div layout:fragment="content">
     <br>
     <div class="container">
@@ -97,7 +97,6 @@
                 <thead>
                 <tr>
                     <th> </th>
-                    <th>글 번호</th>
                     <th>책 이름</th>
                     <th>제목</th>
                     <th>내용</th>
@@ -113,7 +112,6 @@
                             <img th:src="${review.book.imageUrl}" alt="Book Image" />
                         </p>
                     </td>
-                    <td th:text="${review.reviewId}"></td>
                     <td th:text="${review.book.title}"></td>
                     <td th:text="${review.title}"></td>
                     <td th:text="${review.contents}"></td>
@@ -129,7 +127,7 @@
                 </tbody>
             </table>
             <div class="write-review-button-container">
-                <a class="write-review-button" th:href="@{/review/createReview}">리뷰 작성하기</a>
+                <a class="write-review-button" th:href="@{/review/add}">리뷰 작성하기</a>
             </div>
         </div>
     </div>

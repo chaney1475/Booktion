@@ -1,5 +1,6 @@
 package com.project.Booktion.controller;
 
+import com.fasterxml.classmate.ResolvedTypeWithMembers;
 import com.project.Booktion.model.*;
 import com.project.Booktion.service.BookService;
 import com.project.Booktion.service.OrderService;
@@ -54,7 +55,7 @@ public class reviewController {
             return "error-page";
         }
         model.addAttribute("review", review);
-        return "mypage/review/editReview";
+        return "myPage/review/editReview";
     }
 
     @PostMapping("/editReview/{reviewId}") // 리뷰 수정
@@ -71,64 +72,54 @@ public class reviewController {
         return "redirect:/review";
     }
 
-    @GetMapping("/createReview") // 리뷰 작성
-    public String showCreateReviewForm(Model model, HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("userId") == null) {
-            return "user/signIn";
-        }
-
+    @GetMapping("/add") // 리뷰 작성
+    public String reviewForm(Model model, HttpSession session) {
         String userId = (String) session.getAttribute("userId");
-        User user = userService.getUser(userId);
-        if (user == null) {
+        if (userId == null) {
             return "user/signIn";
         }
+        User user = userService.getUser(userId);
 
         List<Order> orderList = orderService.getOrdersByUser(user);
-        if (orderList.isEmpty()) {
+        List<Review> reviewList = reviewService.getReviewByUser(user);
+
+        // 리뷰가 작성된 book
+        List<Book> reviewedBook =new ArrayList<>();
+        for(Review review:reviewList){
+            reviewedBook.add(review.getBook());
+        }
+
+        // 사용자가 구매한 전체 book
+        List<Book> unReviewedBooks = new ArrayList<>();
+        for (Order order : orderList) {
+            for (OrderItem items : order.getOrderItems()) {
+                Book book = items.getBook();
+                if (!reviewedBook.contains(book)) {
+                    unReviewedBooks.add(book);
+                }
+            }
+        }
+
+        if (unReviewedBooks.isEmpty()) {
             // Handle the case where the user does not have any orders
-            String errorMessage = "주문항목이 없습니다.";
+            String errorMessage = "작성할 리뷰가 없습니다";
             model.addAttribute("errorMessage", errorMessage);
             return "myPage/review/reviewList";
         }
 
-        Order order = orderList.get(0); // Assuming you want to select the first order
-        List<OrderItem> orderItems = order.getOrderItems();
-        if (orderItems.isEmpty()) {
-            // Handle the case where the order does not have any items
-            String errorMessage = "주문항목이 없습니다.";
-            model.addAttribute("errorMessage", errorMessage);
-            return "myPage/review/reviewList";
-        }
-
-        // Assuming you want to select the first order item to write a review for
-        OrderItem orderItem = orderItems.get(0);
-        Book book = orderItem.getBook();
-        if (book == null) {
-            // Handle the case where the book does not exist
-            String errorMessage = "책을 찾을 수 없습니다.";
-            model.addAttribute("errorMessage", errorMessage);
-            return "myPage/review/reviewList";
-        }
-
-        model.addAttribute("orderItems", orderItems);
+        model.addAttribute("books", unReviewedBooks);
         model.addAttribute("review", new Review());
-        return "mypage/review/reviewForm";
+        return "myPage/review/reviewForm";
     }
 
 
-    @PostMapping("/saveReview") // 작성한 리뷰 저장
-    public String saveReview(@ModelAttribute("review") Review review, HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("userId") == null) {
-            return "user/signIn";
-        }
-
+    @PostMapping("/add") // 작성한 리뷰 저장
+    public String saveReview(@ModelAttribute("review") Review review, HttpSession session, Model model) {
         String userId = (String) session.getAttribute("userId");
-        User user = userService.getUser(userId);
-        if (user == null) {
+        if (userId == null) {
             return "user/signIn";
         }
+        User user = userService.getUser(userId);
 
         Long bookId = review.getBook().getBookId();
         Book book = bookService.getBookById(bookId);
@@ -137,9 +128,9 @@ public class reviewController {
         }
 
         review.setBook(book);
-
         review.setUserId(user);
         review.setCreateDate(LocalDateTime.now());
+
         reviewService.createReview(review);
 
         model.addAttribute("message", "리뷰가 작성되었습니다.");

@@ -16,8 +16,8 @@ public class AuctionBookOrderService {
         return auctionOrderR.findByUserIdSold(userId);
     }
     public boolean findAuctionBook(long bookId){
-        AuctionBook book = auctionOrderR.findByAuctionBookAuctionBookId(bookId);
-        if(book != null){
+        AuctionBookOrder order = auctionOrderR.findByAuctionBookAuctionBookId(bookId);
+        if(order != null){
             return true;
         }
         return false;

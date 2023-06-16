@@ -75,10 +75,10 @@
 <div layout:fragment="content">
     <body>
     <div class="container">
-        <br>
         <div class="d-flex align-items-center">
             <h3>경매 도서</h3>
             <a href="/search/auction" class="ml-3 btn btn-custom">경매도서 추가</a>
+            <br>
         </div>
         <div th:if="${auctionBooks != null and auctionBooks.size() > 0}">
             <div class="card-columns">

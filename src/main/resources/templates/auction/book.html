@@ -153,6 +153,9 @@
                 </li>
             </ul>
         </div>
+        <div th:if="${soldMessage}">
+            <p th:text="${soldMessage}"></p>
+        </div>
         <div th:if="${seller}" th:unless="${soldMessage}">
             <div class="auction-info">
                 <form class="auction-form" th:action="@{/auction/order/{bookId}/temp(bookId=${auctionBook.auctionBookId})}" method="post">

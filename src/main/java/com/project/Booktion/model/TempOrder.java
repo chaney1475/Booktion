@@ -18,6 +18,7 @@ public class TempOrder implements Serializable {
     @JoinColumn(name = "bid_id")
     private Bid bid;
 
+    @Column
     private String userId;
 
     @OneToOne

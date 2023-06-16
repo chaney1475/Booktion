@@ -68,10 +68,10 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <img th:src="${order.book.imageUrl}" alt="Book Image">
+                        <img th:src="${book.imageUrl}" alt="Book Image">
                     </td>
-                    <td th:text="${order.book.title}"></td>
-                    <td th:text="${order.book.price}"></td>
+                    <td th:text="${book.title}"></td>
+                    <td th:text="${book.price}"></td>
                 </tr>
                 <tr>
                     <th colspan="4">구매자 정보</th>
@@ -103,7 +103,7 @@
             </table>
             <br>
             <div style="text-align: center; margin-top: 20px;">
-                <a href="/auction/order/list" style="padding: 10px 20px; background-color: #b2d8e5; color: #fff; text-decoration: none;">
+                <a href="/myPage/order/acution" style="padding: 10px 20px; background-color: #b2d8e5; color: #fff; text-decoration: none;">
                     경매 주문 리스트로 이동
                 </a>
             </div>

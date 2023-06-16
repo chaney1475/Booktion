@@ -58,6 +58,8 @@ public class AuctionOrderFormController {
         Order order = newOrder.getOrder();
         model.addAttribute("orderMsg","주문이 완료되었습니다!");
         model.addAttribute("order",order);
+        Book book = newOrder.getAuctionBook().getBook();
+        model.addAttribute("book",book);
         return "myPage/auction/detailOrder";
     }
 

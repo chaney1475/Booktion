@@ -67,6 +67,6 @@ public class UsedOrderFormController {
         log.info("UsedOrderFormController#addForm is run!!!!!! BookId : " + bookId);
         log.info("usedBookOrder info : " + usedBookOrder.toString());
         usedBookService.submitOrderForm(bookId, usedBookOrder);
-        return "redirect:/myPage/order/used";//주문완료 후 마이페이지로 수정해야됨
+        return "redirect:/myPage/order/used";//주문완료 후 마이페이지로
     }
 }

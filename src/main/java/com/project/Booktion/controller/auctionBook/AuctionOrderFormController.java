@@ -75,7 +75,6 @@ public class AuctionOrderFormController {
     public String getOrderDetail(HttpSession session, Model model){
         String userId = (String) session.getAttribute("userId");
         if(userId == null) {return "/user/signIn";}
-        //model.addAttribute("auctionBookOrders", auctionOrders);
         return "myPage/auctionOrderList";
     }
 }

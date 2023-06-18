@@ -98,8 +98,7 @@
         <div class="book-content">
             <div class="book-img"><img th:src="${book.imageUrl}" alt="Book Image"></div>
             <div class="book-order-info">
-                주문 가능 여부: <span th:text="${usedBook.status == 0 ? '가능' : '불가능'}"
-                                th:onclick="orderClicked(event)"></span><br/>
+                주문 가능 여부: <span th:text="${usedBook.status == 0 ? '가능' : '불가능'}"></span><br/>
                 중고가:<span th:text="${book.price}"></span><br/>
                 배송사:<span th:text="${usedBook.shippingCompany}"></span><br/>
                 <a th:if="${usedBook.status == 0}" th:href="@{/used/order/{usedBookId}(usedBookId=${usedBook.usedBookId}, bookId=${book.bookId})}">주문하기</a>

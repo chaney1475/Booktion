@@ -16,7 +16,4 @@ public interface BidRepository extends JpaRepository<Bid,Long> {
     List<Bid> findByAuctionBookAuctionBookId(long auctionBookId);
     @Query(value = "SELECT b FROM Bid b WHERE b.auctionBook.auctionBookId = :auctionBookId ORDER BY b.price DESC")
     List<Bid> gethighestBid(@Param("auctionBookId") Long auctionBookId);
-
-    //Bid findFirstByAuctionBookAuctionBookIdOrderByPriceDesc(Long auctionBookId);
-
 }

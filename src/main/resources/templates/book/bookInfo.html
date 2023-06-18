@@ -109,38 +109,38 @@
   <div th:if="${book}" class="book-info">
     <div class="book-main-info">
       <div class="book-title"><h2 th:text="${book.title}"></h2></div>
-        작가: <span th:text="${book.author}"></span>
-        출판사: <span th:text="${book.publisher}"></span>
-        출판일: <span th:text="${#dates.format(book.pubDate, 'yyyy년 MM월 dd일')}"></span>
+      작가: <span th:text="${book.author}"></span>
+      출판사: <span th:text="${book.publisher}"></span>
+      출판일: <span th:text="${#dates.format(book.pubDate, 'yyyy년 MM월 dd일')}"></span>
     </div>
     <div class="book-content">
       <div class="book-img"><img th:src="${book.imageUrl}" alt="Book Image"></div>
       <div class="book-order-info">
-          <form th:action="@{/book/order/form}" method="GET" onsubmit="return checkLogin()">
-            <table class="table">
-              <tr>
-                <th scope="col">한 권당 가격</th>
-                <th scope="col">수량</th>
-              </tr>
-              <tr>
-                <td th:text="${book.price}"></td>
-                <td>
-                  <div class="input-group">
-                    <input id="quantity" type="number" min="1" name="quantity" value="1" class="form-control">
-                  </div>
-                </td>
-              </tr>
-            </table>
-            <input type="hidden" name="bookId" th:value="${book.bookId}">
-            <button type="submit" class="custom-button">주문하기</button>
-          </form>
-          <form th:action="@{/cart/add}" method="POST" onsubmit="setCartQuantity()">
-            <input id="cartQuantity" type="hidden" name="cartQuantity" value="1">
-            <input type="hidden" name="bookId" th:value="${book.bookId}" >
-            <button type="submit" class="custom-button">장바구니에 담기</button>
-          </form>
+        <form th:action="@{/book/order/form}" method="GET" onsubmit="return checkLogin()">
+          <table class="table">
+            <tr>
+              <th scope="col">한 권당 가격</th>
+              <th scope="col">수량</th>
+            </tr>
+            <tr>
+              <td th:text="${book.price}"></td>
+              <td>
+                <div class="input-group">
+                  <input id="quantity" type="number" min="1" name="quantity" value="1" class="form-control">
+                </div>
+              </td>
+            </tr>
+          </table>
+          <input type="hidden" name="bookId" th:value="${book.bookId}">
+          <button type="submit" class="custom-button">주문하기</button>
+        </form>
+        <form th:action="@{/cart/add}" method="POST" onsubmit="setCartQuantity()">
+          <input id="cartQuantity" type="hidden" name="cartQuantity" value="1">
+          <input type="hidden" name="bookId" th:value="${book.bookId}" >
+          <button type="submit" class="custom-button">장바구니에 담기</button>
+        </form>
       </div>
-        <script>
+      <script>
          function setCartQuantity() {
           const quantityValue = document.getElementById('quantity').value;
           document.getElementById('cartQuantity').value = quantityValue;
@@ -148,7 +148,7 @@
       </script>
     </div>
   </div>
-<hr>
+  <hr>
   <div class="book-detail">
     <h2 style="background-color: #b2d8e5; padding: 10px;">책 소개</h2>
     <span th:text="${book.description}"></span><br/>
@@ -181,7 +181,7 @@
       <tbody>
       <tr th:each="review : ${reviews}">
         <td th:text="${review.userId.userId}"></td>
-        <td th:text="${review.title}"></td>
+        <td th:text="${review.contents}"></td>
         <td th:text="${review.createDate}"></td>
       </tr>
       </tbody>
@@ -195,7 +195,7 @@
       <h2>존재하지 않는 책입니다.</h2>
     </div>
   </div>
-<script th:inline="javascript">
+  <script th:inline="javascript">
     /*<![CDATA[*/
     function checkLogin() {
         var userId = /*[[${#httpServletRequest.getSession().getAttribute('userId')}]]*/ null;

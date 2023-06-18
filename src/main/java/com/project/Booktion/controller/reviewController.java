@@ -94,7 +94,7 @@ public class reviewController {
         for (Order order : orderList) {
             for (OrderItem items : order.getOrderItems()) {
                 Book book = items.getBook();
-                if (!reviewedBook.contains(book)) {
+                if (!reviewedBook.contains(book) && book.getBookType() == 1) {
                     unReviewedBooks.add(book);
                 }
             }

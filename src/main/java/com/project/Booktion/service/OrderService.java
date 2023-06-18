@@ -22,14 +22,6 @@ public class OrderService {
     private final CartRepository cartRepository;
     private final OrderItemRepository orderItemRepository;
 
-//    public List<Order> findAll() {
-//        return null;
-//    }
-//
-//    public Order findById(long userId) {
-//        return null;
-//    }
-
     public Order findByOrderId(long orderId) {
         return orderRepository.findByOrderId(orderId);
     }

@@ -14,16 +14,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     List<Review> findByUserId(User userId);
     List<Review> findByBookBookId(long bookId);
-    //Review findByReviewIdAndClientId(Long reviewId, Long clientId);
-
-    //void deleteByUserIdAndReviewId(String userId, Long reviewId);
-
-    //long count();
-
-    //List<com.project.Booktion.model.Review> findByUser(User currentUser);
-
-    //void deleteById(long reviewId);
-
     Optional<Object> findById(long reviewId);
 
     @Query("SELECT r.book.bookId FROM Review r GROUP BY r.book.bookId ORDER BY COUNT(r.book.bookId) DESC")

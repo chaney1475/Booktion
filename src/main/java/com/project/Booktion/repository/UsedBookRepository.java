@@ -9,6 +9,5 @@ import java.util.List;
 @Repository
 public interface UsedBookRepository extends JpaRepository<UsedBook, Long> {
     List<UsedBook> findByStatusAndBookUserUserId(int status, String sellerId);
-    //@Query(value="SELECT ub FROM UsedBook ub WHERE ub.bookId = :bookId", nativeQuery=true)
     UsedBook findByBookBookId(Long bookId);
 }

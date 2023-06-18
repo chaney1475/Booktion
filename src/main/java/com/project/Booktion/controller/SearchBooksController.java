@@ -5,7 +5,6 @@ import com.project.Booktion.model.Book;
 import com.project.Booktion.repository.AuctionBookRepository;
 import com.project.Booktion.repository.BookRepository;
 import com.project.Booktion.repository.UsedBookRepository;
-import com.project.Booktion.service.SearchBookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -20,9 +19,7 @@ import java.util.List;
 @RequestMapping("/search")
 @RequiredArgsConstructor
 public class SearchBooksController {
-    private final SearchBookService searchBookService;
     private final AuctionBookRepository auctionBookRepository;
-    private final UsedBookRepository usedBookRepository;
     private final BookRepository bookRepository;
 
     @PostMapping

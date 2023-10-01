@@ -13,12 +13,12 @@ public class UsedBook implements Serializable {
     @Column
     private long usedBookId;
 
-    @Column
-    private int status;
-
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "book_id")
     private Book book;
+
+    @Column
+    private int status;
 
     private String shippingCompany;
 

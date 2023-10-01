@@ -22,13 +22,6 @@ public class OrderService {
     private final CartRepository cartRepository;
     private final OrderItemRepository orderItemRepository;
 
-//    public List<Order> findAll() {
-//        return null;
-//    }
-//
-//    public Order findById(long userId) {
-//        return null;
-//    }
 
     public Order findByOrderId(long orderId) {
         return orderRepository.findByOrderId(orderId);
@@ -66,25 +59,11 @@ public class OrderService {
             order.addOrderItem(orderItem); // Order에 OrderItem 추가
         }
 
-        orderRepository.save(order); // order 저장 후 orderId 생성
-//        for (OrderItem orderItem : orderItems) {
-//            orderItem.setOrder(order); // orderId가 생성된 후에 orderItem에 order 설정
-//            System.out.println("order.orderId " + order.getOrderId());
-//            System.out.println("orderItem.order " + orderItem.getOrder().getOrderId() + " " + orderItem.getOrderItemId() + " " + orderItem.getBook().getBookId() + " " + orderItem.getQuantity());
-//            //orderItemRepository.save(orderItem);
-//        }
+        orderRepository.save(order);
 
-        // 주문 처리 후 장바구니에서 모든 아이템을 삭제
         if (orderForm.isFromCart()) {
             cartService.clearCartByUserId(user.getUserId());
         }
-        // 선택된 아이템만 장바구니에서 삭제
-//        if (orderForm.isFromCart()) {
-//            List<BookForm> selectedBooks = orderForm.getBooks();
-//            for (BookForm selectedBook : selectedBooks) {
-//                cartService.removeItemFromCart(user.getUserId(), selectedBook.getBook().getBookId());
-//            }
-//        }
 
         return order;
     }

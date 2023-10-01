@@ -16,6 +16,9 @@
             margin: 0 auto;
             padding: 30px;
         }
+        .image-size{
+            width:200px;
+        }
         body {
             font-family: 'Nanum Gothic', sans-serif;
             background-color: #ffffff;
@@ -109,7 +112,7 @@
                 <tr th:each="review : ${reviews}">
                     <td>
                         <p>
-                            <img th:src="${review.book.imageUrl}" alt="Book Image" />
+                            <img th:src="${review.book.imageUrl}" class="image-size" alt="Book Image" />
                         </p>
                     </td>
                     <td th:text="${review.book.title}"></td>

@@ -15,7 +15,7 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
             request.setAttribute("userId", userId);
             return true;
         } else {
-            response.sendRedirect("/login"); // 로그인 페이지로 이동하거나 다른 처리를 수행할 수 있습니다.
+            response.sendRedirect("/login");
             return false;
         }
     }

@@ -56,8 +56,6 @@ public class AuctionBookService {
         order.setPhoneNumber(form.getPhoneNumber());
         order.setStatus(1);
         order.setOrderItems(null);
-
-
         // Order 엔티티 생성
         AuctionBookOrder ABOrder = new AuctionBookOrder();
 

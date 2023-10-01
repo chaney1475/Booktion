@@ -136,7 +136,7 @@
 --  DDL for Table BOOK
 --------------------------------------------------------
 
-  CREATE TABLE "SS230205"."BOOK" 
+  CREATE TABLE "BOOK"
    (	"BOOK_ID" NUMBER, 
 	"ISBN" VARCHAR2(100 BYTE) COLLATE "USING_NLS_COMP", 
 	"TITLE" VARCHAR2(100 BYTE) COLLATE "USING_NLS_COMP", 

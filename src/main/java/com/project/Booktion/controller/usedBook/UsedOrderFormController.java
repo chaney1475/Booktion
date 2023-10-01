@@ -34,19 +34,16 @@ public class UsedOrderFormController {
         UsedBook usedBook = usedBookService.getUsedBookById(usedBookId);
         if(usedBook.getStatus() == 1){
             //구매 불가 상태
-            log.error("UserOrderFormController#newFrom is fail : already sold!!!!!!!!!");
             return "redirect:/used/main";
         }
         //로그인 상태 확인
         String userId = (String) session.getAttribute("userId");
         if(userId == null) {
-            log.error("UserOrderFormController#newFrom is fail : user is null!!!!!!!!!!!!!");
             return "/user/signIn";
         }
         //판매자 본인 확인
         Book book = bookService.getBookById(bookId);
         if(userId.equals(book.getUser().getUserId())){
-            log.error("buyer == seller!!!!!!!!!!!!!!!!!!!!!");
             return "redirect:/used/main";
         }
         User user = userService.getUser(userId);
@@ -64,7 +61,6 @@ public class UsedOrderFormController {
                           HttpSession session,
                           @ModelAttribute("usedBookOrder") UsedBookOrder usedBookOrder){
         //중고 주문폼 제출
-        log.info("UsedOrderFormController#addForm is run!!!!!! BookId : " + bookId);
         log.info("usedBookOrder info : " + usedBookOrder.toString());
         usedBookService.submitOrderForm(bookId, usedBookOrder);
         return "redirect:/myPage/order/used";//주문완료 후 마이페이지로 수정해야됨

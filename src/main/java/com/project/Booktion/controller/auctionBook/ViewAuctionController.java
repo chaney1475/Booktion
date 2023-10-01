@@ -56,7 +56,6 @@ public class ViewAuctionController {
         if(userId == null){
             return "redirect:/signIn";
         }
-        System.out.println(auctionBook.getAuctionBookId() + ", " + auctionBook.getBook().getTitle());
         Bid bid = new Bid(auctionBook, userId, price);
         Bid saved = biddingService.addBid(bid);
         int savedPrice = saved.getPrice();

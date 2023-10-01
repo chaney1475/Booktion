@@ -55,10 +55,10 @@
 </head>
 <body>
 <div layout:fragment="content">
-  <h1>리뷰 수정</h1>
   <form th:action="@{/review/editReview/{reviewId}(reviewId=${review.reviewId})}" method="post"
         onsubmit="showSuccessMessage()">
     <div>
+      <h1>리뷰 수정</h1>
       <label for="title">제목:</label>
       <input type="text" id="title" name="title" th:value="${review.title}" required>
     </div>

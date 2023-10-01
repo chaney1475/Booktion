@@ -16,6 +16,10 @@
             margin: 0 auto;
             padding: 30px;
         }
+        .img-class{
+          width: 200px;
+        }
+
         body {
             font-family: 'Nanum Gothic', sans-serif;
             background-color: #ffffff;
@@ -101,7 +105,7 @@
         </thead>
         <tbody>
         <tr th:each="orderItem : ${order.orderItems}">
-          <td><img th:src="${orderItem.book.imageUrl}" alt="Book Image" /></td>
+          <td><img th:src="${orderItem.book.imageUrl}" class = "img-class" alt="Book Image" /></td>
           <td th:text="${orderItem.book.title}"></td>
           <td th:text="${orderItem.quantity}"></td>
         </tr>

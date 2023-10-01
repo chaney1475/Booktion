@@ -12,19 +12,18 @@ public class AuctionBook implements Serializable {
     @Column
     private long auctionBookId;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "book_id")
+    private Book book;
+
+    @Column
+    private String shippingCompany;
     @Column
     private double startPrice;
 
     @Column
     private int status;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "book_id")
-    private Book book;
-    @Column
-    private String shippingCompany;
-
-    // Constructors, getters and setters, etc.
 
     public AuctionBook() {
     }

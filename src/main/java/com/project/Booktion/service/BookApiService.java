@@ -21,9 +21,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class BookApiService {
-    private final String API_URL = "https://dapi.kakao.com/v3/search/book";
     private final String REST_API_KEY = "965bad6936add0f81a377b0186e1758b";
-
     public List<Book> getBooksByTitle(String query) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();

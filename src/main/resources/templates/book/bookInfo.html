@@ -32,12 +32,15 @@
         .book-content {
             background-color: #ffffff;
             padding: 20px;
+            border-radius: 10px;
+            border: 3px solid #b2d8e5; /* 테두리 색상과 두께를 설정하는 속성 */
         }
+
 
         .book-img {
             display: inline-block;
-            vertical-align: top;
-            width: 50%;
+            vertical-align: middle;
+            width: 28%;
             text-align : center;
         }
 
@@ -49,6 +52,7 @@
         .book-order-info {
             display: inline-block;
             vertical-align: top;
+            padding : 40px;
             align-items: center; /* 세로 가운데 정렬 */
         }
 
@@ -84,6 +88,27 @@
             padding: 20px;
         }
 
+            .book-info-details {
+      width: 100%;
+      color: #212529;
+      font-family: 'Nanum Gothic', sans-serif;
+      border-collapse: collapse;
+    }
+
+    .book-title {
+      font-size: 1.5em;
+      margin: 0.5em 0;
+    }
+
+    .book-info-details div {
+      padding: 0.5em 0;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    .book-info-details div:last-child {
+      border-bottom: none;
+    }
+
         .custom-button {
           background-color: #b2d8e5;
           color: #fff;
@@ -99,7 +124,32 @@
           color: #fff;
           text-decoration: none;
         }
-    </style>
+    .book-detail{
+        background-color: #f7fafc;
+        padding: 20px;
+        border-radius: 10px;
+        border: 2px solid #b2d8e5;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .book-detail h2{
+        background-color: #b2d8e5;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-size: 24px;
+        margin-bottom: 15px;
+        color: #fff;
+    }
+
+    .book-detail span{
+        font-size: 18px;
+        line-height: 1.5;
+        display: block;
+        margin-bottom: 15px;
+    }
+
+  </style>
 </head>
 <body>
 <div layout:fragment="content" id="content">
@@ -107,16 +157,15 @@
     <p th:text="${errorMessage}"></p>
   </div>
   <div th:if="${book}" class="book-info">
-    <div class="book-main-info">
-      <div class="book-title"><h2 th:text="${book.title}"></h2></div>
-        작가: <span th:text="${book.author}"></span>
-        출판사: <span th:text="${book.publisher}"></span>
-        출판일: <span th:text="${#dates.format(book.pubDate, 'yyyy년 MM월 dd일')}"></span>
-    </div>
     <div class="book-content">
       <div class="book-img"><img th:src="${book.imageUrl}" alt="Book Image"></div>
       <div class="book-order-info">
-          <form th:action="@{/book/order/form}" method="GET" onsubmit="return checkLogin()">
+        <div class="book-info-details">
+          <div class="book-title" th:text="${book.title}"></div>
+          <div>작가 : <span th:text="${book.author}"></span></div>
+          <div>출판사 : <span th:text="${book.publisher}"></span></div>
+          <div>출판일 : <span th:text="${#dates.format(book.pubDate, 'yyyy년 MM월 dd일')}"></span></div>
+        </div>
             <table class="table">
               <tr>
                 <th scope="col">한 권당 가격</th>
@@ -150,9 +199,9 @@
   </div>
 <hr>
   <div class="book-detail">
-    <h2 style="background-color: #b2d8e5; padding: 10px;">책 소개</h2>
+    <h2>책 소개</h2>
     <span th:text="${book.description}"></span><br/>
-    <h2 style="background-color: #b2d8e5; padding: 10px;">isbn</h2>
+    <h2>isbn</h2>
     <span th:text="${book.isbn}"></span>
   </div>
   <div class="container">
@@ -181,7 +230,7 @@
       <tbody>
       <tr th:each="review : ${reviews}">
         <td th:text="${review.userId.userId}"></td>
-        <td th:text="${review.title}"></td>
+        <td th:text="${review.contents}"></td>
         <td th:text="${review.createDate}"></td>
       </tr>
       </tbody>

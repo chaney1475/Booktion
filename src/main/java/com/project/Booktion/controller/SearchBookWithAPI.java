@@ -33,6 +33,7 @@ public class SearchBookWithAPI {
         model.addAttribute("bookType", bookType);
         List<Book> books = bookApiService.getBooksByTitle(keyword);
         model.addAttribute("books", books);
+        model.addAttribute("keyword", keyword);
         return "searchApi";
     }
 
@@ -42,10 +43,8 @@ public class SearchBookWithAPI {
                               HttpSession session, Model model) {
         User user = userRepository.findByUserId((String)session.getAttribute("userId"));
         if(user == null){
-            log.info("Book Regist SearchBookWithAPI user is null!!!!!!!!!!!!!");
             return "user/signIn";
         }
-        log.info("Book Regist SearchBookWithAPI User ID : " + user.getUserId());
         String[] parts = selectedBook.split(" ");
         String isbn = parts[0];
         Book book = bookApiService.getBookByISBN(isbn);
@@ -96,23 +95,5 @@ public class SearchBookWithAPI {
 
         return saved.getAuctionBookId();
     }
-    Book getBookByISBN(List<Book> books, String isbn){
-        isbn = "1234567890"; // 찾고자 하는 ISBN 값
-        String finalIsbn = isbn;
-        Book foundBook = books.stream()
-                .filter(book -> book.getIsbn().equals(finalIsbn))
-                .findFirst()
-                .orElse(null);
-        if (foundBook != null) {
-            // 해당 ISBN에 해당하는 책을 찾은 경우에 수행할 작업을 추가합니다.
-            System.out.println("ISBN: " + foundBook.getIsbn());
-            System.out.println("Title: " + foundBook.getTitle());
-            return foundBook;
-        } else {
-            System.out.println("해당 ISBN에 해당하는 책을 찾지 못했습니다.");
-        }
-        return null;
-    }
-
 
 }

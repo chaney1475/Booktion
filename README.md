@@ -1,4 +1,6 @@
 [1.서비스소개](#서비스소개)
+[2.기술스택](#기술스택)
+[3.시연영상](#시연영상)
 
 
 ![book2](https://github.com/chaney1475/Booktion/assets/86292444/5441cfc2-5e33-4302-b575-18656a93930d)
@@ -36,4 +38,20 @@
 - 장바구니 - 수정, 삭제포함
 - 리뷰 - 수정 삭제 포함
 
-- 프로젝트 설계
+#프로젝트 설계
+---
+| 분류                   | 항목                    |
+|------------------------|-------------------------|
+| 프로그래밍 언어       | Java, SQL, JavaScript  |
+| 마크업/템플릿 언어    | HTML, Thymeleaf, CSS    |
+| 프레임워크            | Spring Boot, Web Flux   |
+| 라이브러리             | JPA, Jackson, JUnit     |
+| 외부 서비스 API       | 카카오 도서 API, 다음 주소 API |
+| 데이터베이스          | OracleDB                |
+| IDE                    | IntelliJ               |
+| 모델링 툴             | ERwin, StarUML         |
+
+#시연영상
+---
+[![유튜브링크](https://www.youtube.com/watch?v=Ht_ncXuw08w)(https://www.youtube.com/watch?v=Ht_ncXuw08w)]
+

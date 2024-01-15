@@ -1,5 +1,7 @@
 [1.서비스소개](#서비스소개)
+
 [2.기술스택](#기술스택)
+
 [3.시연영상](#시연영상)
 
 
@@ -53,5 +55,5 @@
 
 #시연영상
 ---
-[![유튜브링크](https://www.youtube.com/watch?v=Ht_ncXuw08w)(https://www.youtube.com/watch?v=Ht_ncXuw08w)]
+https://www.youtube.com/watch?v=Ht_ncXuw08w
 
